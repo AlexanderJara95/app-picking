@@ -1,19 +1,42 @@
+import * as xlsx from 'xlsx/xlsx.mjs';
 
 function ContainerIndex() {
-  return (
-    <div className="container-fluid">
-        <div className="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 className="h3 mb-0 text-gray-800">Lista de Informes</h1>
-            <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                <i className="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-        </div>
+    const readUploadFile = (e) => {
+        e.preventDefault();
+        if (e.target.files) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                console.log("ingresando");
+                const data = e.target.result;
+                const workbook = xlsx.read(data, { type: "array" });
+                const sheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[sheetName];
+                const json = xlsx.utils.sheet_to_json(worksheet);
+                console.log(json);
+            };
+            reader.readAsArrayBuffer(e.target.files[0]);
+        }
+    };
+    return (
+        <div className="container-fluid">
+            <h1 className="col-4 m-0 font-weight-bold text-primary p-3">Sube tu archivo</h1>
             <div className="row">
                 <div className="row">
                     <div className="col">
-                        
                         <div className="card shadow mb-4">
-                            <div className="card-header py-3">
-                                <h6 className="m-0 font-weight-bold text-primary">Development Approach</h6>
+                            <div className="card-header py-5">
+                                <div className="row container justify-content-center">
+                                    <form>
+                                        <label htmlFor="upload">(Solo de tipo xlsx)</label>
+                                        <input
+                                            className='col form-control'
+                                            type="file"
+                                            name="upload"
+                                            id="upload"
+                                            onChange={readUploadFile}
+                                        />
+                                    </form>
+                                </div>                                
                             </div>
                             <div className="card-body">
                                 <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce

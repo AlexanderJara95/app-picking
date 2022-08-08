@@ -15,8 +15,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
-    <script src="./js/jquery.min.js"></script>
-    <script src="./js/sb-admin-2.min.js"></script>
   </React.StrictMode>
 );
 

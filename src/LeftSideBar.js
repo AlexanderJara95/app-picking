@@ -1,4 +1,5 @@
-
+import iconoTexto from './img/icono-texto.png';
+import iconoLogotipo from './img/icono-logotipo.png';
 function LeftSideBar() {
   return (
     <>
@@ -7,9 +8,9 @@ function LeftSideBar() {
         {/*<!-- Sidebar - Brand -->*/}
         <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
             <div className="sidebar-brand-icon rotate-n-15">
-                <i className="fas fa-laugh-wink"></i>
+                <img src={iconoLogotipo} style={{width:'40px'}}></img>
             </div>
-            <div className="sidebar-brand-text mx-3"><img src="../img/icono-texto.png"></img> </div>
+            <div className="sidebar-brand-text mx-3"><img src={iconoTexto} style={{width:'100px'}}></img></div>
         </a>
 
         {/*<!-- Divider -->*/}
