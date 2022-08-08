@@ -1,25 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
-
+//import TableIndex from './TableIndex';
+import LeftSideBar from './LeftSideBar';
+import HeaderIndex from './HeaderIndex';
+import ContainerIndex from './ContainerIndex';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="wrapper">
+      <LeftSideBar></LeftSideBar>
+      <div id="content-wrapper" className="d-flex flex-column">
+          <div id="content">
+            <HeaderIndex></HeaderIndex>
+            <ContainerIndex></ContainerIndex>
+          </div>
+      </div>
+      {/*<div className='container'>
+        <TalbeIndex/>
+      </div> */}  
     </div>
   );
 }
 
 export default App;
+
+
+
