@@ -1,6 +1,24 @@
 import * as xlsx from 'xlsx/xlsx.mjs';
+import {useState} from 'react';
+import TableIndex from './TableIndex';
 
 function ContainerIndex() {
+    
+    const initialInfoExcel={
+        Almacen: "",
+        Codigodearticulo: "",
+        Fechadeentrega: "",
+        Iddeloteinterno: "",
+        Iddepallet: "",
+        Numerodelote: "",
+        Reservado: "",
+        Seleccionar: "",
+        Seleccionarcantidad: "",
+        Sublotedecalidad: "",
+        Ubicacion: "",
+    }
+    const [infoExcel,setInfoExcel] = useState();
+
     const readUploadFile = (e) => {
         e.preventDefault();
         if (e.target.files) {
@@ -11,15 +29,17 @@ function ContainerIndex() {
                 const workbook = xlsx.read(data, { type: "array" });
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[sheetName];
-                const json = xlsx.utils.sheet_to_json(worksheet);
-                console.log(json);
+                const json= xlsx.utils.sheet_to_json(worksheet);
+                console.log(json,"json");
+                setInfoExcel(json);
             };
             reader.readAsArrayBuffer(e.target.files[0]);
         }
     };
+    
     return (
         <div className="container-fluid">
-            <h1 className="col-4 m-0 font-weight-bold text-primary p-3">Sube tu archivo</h1>
+            <h1 className="col m-0 font-weight-bold text-primary p-3">Sube tu archivo</h1>
             <div className="row">
                 <div className="row">
                     <div className="col">
@@ -38,13 +58,14 @@ function ContainerIndex() {
                                     </form>
                                 </div>                                
                             </div>
-                            <div className="card-body">
-                                <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                    CSS bloat and poor page performance. Custom CSS classes are used to create
-                                    custom components and custom utility classes.</p>
-                                <p className="mb-0">Before working with this theme, you should become familiar with the
-                                    Bootstrap framework, especially the utility classes.</p>
-                            </div>
+                            {
+                                infoExcel?
+                                    <div className="card-body">
+                                        <h3 className="col m-0 font-weight-bold text-primary p-3">Previsualización</h3>
+                                        <TableIndex datosTabla={infoExcel}></TableIndex>                                
+                                    </div>
+                                :null
+                             }
                         </div>
                     </div>
                 </div>

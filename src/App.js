@@ -1,8 +1,8 @@
 import './App.css';
 //import TableIndex from './TableIndex';
-import LeftSideBar from './LeftSideBar';
-import HeaderIndex from './HeaderIndex';
-import ContainerIndex from './ContainerIndex';
+import LeftSideBar from './views/layouts/partials/LeftSideBar';
+import HeaderIndex from './views/layouts/partials/HeaderIndex';
+import ContainerIndex from './views/index/ContainerIndex';
 function App() {
   return (
     <div id="wrapper">

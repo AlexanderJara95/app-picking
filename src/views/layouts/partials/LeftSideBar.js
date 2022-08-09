@@ -1,5 +1,5 @@
-import iconoTexto from './img/icono-texto.png';
-import iconoLogotipo from './img/icono-logotipo.png';
+import iconoTexto from '../../../img/icono-texto.png';
+import iconoLogotipo from '../../../img/icono-logotipo.png';
 function LeftSideBar() {
   return (
     <>

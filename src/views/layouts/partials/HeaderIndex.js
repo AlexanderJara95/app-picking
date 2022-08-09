@@ -1,4 +1,4 @@
-import userimg from './img/undraw_profile_2.svg';
+import userimg from '../../../img/undraw_profile_2.svg';
 
 function HeaderIndex() {
   return (
