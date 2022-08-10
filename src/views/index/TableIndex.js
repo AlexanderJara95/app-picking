@@ -2,7 +2,11 @@ import { useEffect } from 'react';
 import {Table} from 'react-bootstrap';
 import SwitchValue from './SwitchValue';
 
-function TableIndex(datosTabla) {
+const TableIndex = ({datosTabla}) =>{
+
+  useEffect(()=>{
+    if(datosTabla) console.log("datosTabla",datosTabla);
+  },[]);
 
   return (
     <Table responsive bordered hover>
@@ -22,8 +26,8 @@ function TableIndex(datosTabla) {
         </tr>
       </thead>
       <tbody>
-        {Array.from(datosTabla.datosTabla) && 
-        Array.from(datosTabla.datosTabla).map((item,index) =>(
+        {datosTabla && 
+        datosTabla.map((item,index) =>(
           <tr key={index} className="text-center">
               <td>{item?.Almacen}</td>
               <td>{item.Codigodearticulo}</td>

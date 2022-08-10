@@ -1,22 +1,16 @@
-import './App.css';
 //import TableIndex from './TableIndex';
 import LeftSideBar from './views/layouts/partials/LeftSideBar';
 import HeaderIndex from './views/layouts/partials/HeaderIndex';
 import ContainerIndex from './views/index/ContainerIndex';
-function App() {
+const App = () => {
   return (
-    <div id="wrapper">
+    <section id="body-pd">
+      <HeaderIndex></HeaderIndex>
       <LeftSideBar></LeftSideBar>
-      <div id="content-wrapper" className="d-flex flex-column">
-          <div id="content">
-            <HeaderIndex></HeaderIndex>
-            <ContainerIndex></ContainerIndex>
-          </div>
+      <div className="">
+          <ContainerIndex></ContainerIndex>
       </div>
-      {/*<div className='container'>
-        <TalbeIndex/>
-      </div> */}  
-    </div>
+    </section>
   );
 }
 

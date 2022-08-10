@@ -1,64 +1,48 @@
 import userimg from '../../../img/undraw_profile_2.svg';
 
-function HeaderIndex() {
+const HeaderIndex = () => {
   return (
-    <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-        {/* Sidebar Toggle (Topbar) */}
-        <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
-            <i className="fa fa-bars"></i>
-        </button>
-
-        {/* Topbar Search */}
-        <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div className="input-group">
-                <input type="text" className="form-control bg-light border-0 small" placeholder="Buscar..."
-                    aria-label="Search" aria-describedby="basic-addon2"/>
-                <div className="input-group-append">
-                    <button className="btn btn-primary" type="button">
-                        <i className="bi bi-search"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-
-        {/* Topbar Navbar */}
-        <ul className="navbar-nav ml-auto">
-
-            <div className="topbar-divider d-none d-sm-block"></div>
-
-            {/* Nav Item - User Information */}
-            <li className="nav-item dropdown no-arrow">
-                <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span className="mr-2 d-none d-lg-inline text-gray-600 small">Alexander Jara</span>
-                    <img className="img-profile rounded-circle" src={userimg}></img>
-                </a>
-                {/* Dropdown - User Information */}
-                <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                    aria-labelledby="userDropdown">
-                    <a className="dropdown-item" href="#">
-                        <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Profile
-                    </a>
-                    <a className="dropdown-item" href="#">
-                        <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Settings
-                    </a>
-                    <a className="dropdown-item" href="#">
-                        <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Activity Log
-                    </a>
-                    <div className="dropdown-divider"></div>
-                    <a className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                        <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Logout
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </nav>
-      
+    <header className="header" id="header">
+        <div className="header_toggle"> <i className='bx bx-menu' id="header-toggle"></i> </div>
+        <div className="header_img"> <img src={userimg} alt=""/></div>
+    </header>
   );
 }
+document.addEventListener("DOMContentLoaded", function(event) {
+  const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+  const toggle = document.getElementById(toggleId),
+  nav = document.getElementById(navId),
+  bodypd = document.getElementById(bodyId),
+  headerpd = document.getElementById(headerId)  
+  // Validate that all variables exist
+    if(toggle && nav && bodypd && headerpd){
+      toggle.addEventListener('click', ()=>{
+        // show navbar
+        nav.classList.toggle('show')
+        // change icon
+        toggle.classList.toggle('bx-x')
+        // add padding to body
+        bodypd.classList.toggle('body-pd')
+        // add padding to header
+        headerpd.classList.toggle('body-pd')
+      })
+    }
+  }
+  
+  showNavbar('header-toggle','nav-bar','body-pd','header');
+  
+  /*===== LINK ACTIVE =====*/
+  const linkColor = document.querySelectorAll('.nav_link')
+  
+  function colorLink(){
+    if(linkColor){
+      linkColor.forEach(l=> l.classList.remove('active'))
+      this.classList.add('active')
+    }
+  }
+  linkColor.forEach(l=> l.addEventListener('click', colorLink))
+  
+   // Your code to run since DOM is loaded and ready
+  });
 
 export default HeaderIndex;

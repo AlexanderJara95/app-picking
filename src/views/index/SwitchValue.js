@@ -1,8 +1,8 @@
 import { useEffect,useState } from "react";
 import { FormCheck } from "react-bootstrap";
 
-function SwitchValue(valorSwitch) {
-    const [toggle, setToggle] = useState();
+const SwitchValue = (valorSwitch) =>{
+    const [toggle, setToggle] = useState('');
 
     const triggerToggle = () => {
         setToggle( !toggle )

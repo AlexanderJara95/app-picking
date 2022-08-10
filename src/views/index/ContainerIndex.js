@@ -2,9 +2,9 @@ import * as xlsx from 'xlsx/xlsx.mjs';
 import {useState} from 'react';
 import TableIndex from './TableIndex';
 
-function ContainerIndex() {
+const ContainerIndex = ()=> {
     
-    const initialInfoExcel={
+    /*const initialInfoExcel={
         Almacen: "",
         Codigodearticulo: "",
         Fechadeentrega: "",
@@ -16,7 +16,7 @@ function ContainerIndex() {
         Seleccionarcantidad: "",
         Sublotedecalidad: "",
         Ubicacion: "",
-    }
+    }*/
     const [infoExcel,setInfoExcel] = useState();
 
     const readUploadFile = (e) => {
