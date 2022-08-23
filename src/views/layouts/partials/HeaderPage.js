@@ -1,6 +1,6 @@
 import userimg from '../../../img/undraw_profile_2.svg';
 
-const HeaderIndex = () => {
+const HeaderPage = () => {
   return (
     <header className="header" id="header">
         <div className="header_toggle"> <i className='bx bx-menu' id="header-toggle"></i> </div>
@@ -45,4 +45,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
    // Your code to run since DOM is loaded and ready
   });
 
-export default HeaderIndex;
+export default HeaderPage;

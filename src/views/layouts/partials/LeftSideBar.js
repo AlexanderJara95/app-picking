@@ -1,6 +1,6 @@
 import iconoTexto from '../../../img/icono-texto.png';
 import iconoLogotipo from '../../../img/icono-logo.png';
-const LeftSideBar = () => {
+const LeftSidebar = () => {
   return (
     <div className="l-navbar" id="nav-bar">
         <nav className="nav">
@@ -11,4 +11,4 @@ const LeftSideBar = () => {
     </div>
   );
 }
-export default LeftSideBar;
+export default LeftSidebar;
