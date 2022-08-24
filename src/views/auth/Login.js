@@ -26,19 +26,17 @@ const Login = () => {
 	const iniciarSesion = async e => {
 		try {
 			e.preventDefault();
-
 			showPreloader();
 			const response = await store.dispatch(solicitarAcceso(credencial));
 
-			console.log(response);
+			console.log("user",response.usuario.nombre);
 
 			if (response.status === StatusCodes.OK) {
 				toastme.success(
-					`Bienvenido al sistema ${response.usuario.persona.nombre}`,
+					`Bienvenido al sistema ${response.usuario.nombre}`,
 				);
 				guardarAutorizacion(response.usuario);
-
-				window.location.href = '/';
+                window.location.href = '/';				
 			}
 
 			hidePreloader();
@@ -52,20 +50,19 @@ const Login = () => {
         <div className='row d-flex justify-content-center'>
             <Form className='col-4 d-grid gap-5'>
                 <FormControl
-                    type='email'
-                    name='usuario'
-                    value={credencial.usuario}
+                    type='input'
+                    name='username'
+                    value={credencial.username}
                     onChange={cambiosEnFormulario}
-                    placeholder='Correo electrónico'
-                    autoComplete='email'
+                    placeholder='Nombre de usuario'
                     required
                     autoFocus
                 />
 
                 <FormControl
                     type='password'
-                    name='clave'
-                    value={credencial.clave}
+                    name='password'
+                    value={credencial.password}
                     onChange={cambiosEnFormulario}
                     placeholder='Contraseña'
                     required

@@ -10,8 +10,7 @@ const Auth = () => (
 				<div className='card-body'>
 					<div className='text-primary  text-center p-3'>
 						<h1 className='fw-bold'>SIS PICKING</h1>
-						<h5 className='text-primary'> v1.0</h5>
-						
+						<h5 className='text-primary'> v1.0</h5>						
 					</div>
 					<BrowserRouter>
 						<RouterView />

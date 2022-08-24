@@ -6,7 +6,7 @@ import LeftSidebar from './partials/LeftSidebar';
 import FooterPage from './partials/FooterPage';
 
 const Admin = () => (
-    <section id="body-pd">
+    <section id="body-pd" className='section-body'>
         <BrowserRouter>
             <HeaderPage/>
             <LeftSidebar/>

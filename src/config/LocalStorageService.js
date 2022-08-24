@@ -2,6 +2,7 @@ const ALMACENAMIENTO_DE_AUTORIZACION = 'ALMACENAMIENTO_DE_AUTORIZACION';
 
 export const guardarAutorizacion = data => {
 	localStorage.setItem(ALMACENAMIENTO_DE_AUTORIZACION, JSON.stringify(data));
+	console.log("data",localStorage.getItem(ALMACENAMIENTO_DE_AUTORIZACION));
 };
 
 export const obtenerAutorizacion = () => {
@@ -14,11 +15,11 @@ export const obtenerAutorizacion = () => {
 
 export const obtenerTokenAcceso = () => {
 	const autorizacion = localStorage.getItem(ALMACENAMIENTO_DE_AUTORIZACION);
-
+	//console.log("autorizacion",autorizacion);
 	if (autorizacion !== null) {
 		const usuario = JSON.parse(autorizacion);
-
-		return usuario.tokenAcceso;
+		//console.log("usuario",usuario);
+		return usuario.passwordHash;
 	}
 
 	throw new Error('Se requiere iniciar sesión');

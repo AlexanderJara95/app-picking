@@ -1,17 +1,13 @@
 import { Navigate, Outlet } from 'react-router-dom';
-//import useAuth from '../hooks/auth/useAuth';
+import useAuth from '../hooks/auth/useAuth';
 
 export const PrivateOutlet = () => {
-	//const auth = useAuth();
-    console.log("No logueado privado");
-	const auth = false;
-
+	const auth = useAuth();
+	//console.log("auth",auth);
 	return auth ? <Outlet /> : <Navigate to='/login' />;
 };
 
 export const PublicOutlet = () => {
-	//const auth = useAuth();
-    console.log("No logueado publico");
-	const auth = false;
+	const auth = useAuth();
 	return !auth ? <Outlet /> : <Navigate to='/' />;
 };
