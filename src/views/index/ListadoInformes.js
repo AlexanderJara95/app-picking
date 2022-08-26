@@ -17,7 +17,6 @@ const ListadoInformes = () =>{
             }
         )
   }
-
   useEffect(()=>{
     listadoDeInformes();
   },[]);

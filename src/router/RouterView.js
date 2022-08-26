@@ -9,6 +9,7 @@ import SendResetLink from '../views/auth/SendResetLink';
 import HomeIndex from '../views/home/HomeIndex';
 import UsuarioIndex from '../views/usuario/UsuarioIndex';
 import OrdenVentaIndex from '../views/ordenVenta/OrdenVentaIndex';
+import InformeIndex from '../views/Informe/InformeIndex';
 
 const RouterView = () => (
 	<Routes>
@@ -29,6 +30,9 @@ const RouterView = () => (
 		</Route>*/}
 		<Route path='/orden' element={<PrivateOutlet />}>
 			<Route path='' element={<OrdenVentaIndex />} />
+		</Route>
+		<Route path='/importar' element={<PrivateOutlet />}>
+			<Route path='' element={<InformeIndex />} />
 		</Route>
     </Routes>
 );

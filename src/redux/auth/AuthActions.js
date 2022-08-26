@@ -2,6 +2,7 @@ import axios from 'axios';
 import { AUTH_LOGIN } from './AuthTypes';
 import { API_BASE_URL } from '../../config/Services';
 
+
 export const solicitarAcceso = paramData => async dispatch => {
 	var formData = new FormData();
 	formData.append("username", paramData.username);

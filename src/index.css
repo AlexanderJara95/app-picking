@@ -208,3 +208,68 @@ a {
         padding-left: calc(var(--nav-width) + 188px)
     }
 }
+
+
+/*Moises crack*/
+#progressbar{
+    width: 50%;
+}
+#exampleModalCenter.modal{
+    --bs-modal-width: auto;
+    position: fixed;
+    left: 5%;
+    right: 10%;
+    min-width: 100px;
+    max-width: 90%;
+}
+
+/*PARA EXPANDIR PANTALLA OSCURA DEL MODAL */
+body.modal-open>div.modal-backdrop.fade.show{
+
+    width: calc(var(--nav-width) + 100%);
+
+}
+
+
+tr.active::before{
+
+    display: none;
+
+}
+
+tr.active{
+
+    color: #ffffff;
+    background-color: #369978;
+
+}
+
+#exampleModalCenter {
+    --nav-width: 100%;
+}
+
+
+
+
+
+
+.toastme-content{
+    padding: 1em 2em;
+    border-radius: 20px;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+}
+.success .toastme-content{
+    background-color: #44be63;
+    color: #fff;
+}
+.error .toastme-content{
+    background-color: #b84444;
+    color: #fff;
+}
+
+.info .toastme-content{
+    background-color: #ddc454;
+    color: #fff;
+}
