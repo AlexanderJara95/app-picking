@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
+import { faCheck, faEdit, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import OrdenVenta from './OrdenVenta';
-import ProgressBar from 'react-bootstrap/ProgressBar'
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import { Table } from 'react-bootstrap';
 
 class DetalleOrden extends Component {
 
@@ -12,7 +13,8 @@ class DetalleOrden extends Component {
       listaDetalle: [],
       ordenSeleccionada: '',
       progreso: 0,
-      checked: false
+      checked: false,
+      count:0,
     }
   }
 
@@ -24,12 +26,15 @@ class DetalleOrden extends Component {
   */
 
   
+  
   componentDidUpdate(props){
     //console.log(props.detalleOrden.idOrden, "antes del if");
+
     if(props.detalleOrden.idOrden > 0 ){
     this.leerDetalle(props.detalleOrden.pedidoDeVentas)
     //console.log(props.detalleOrden.idOrden, "despues del if")
   }
+
   }
 
   leerDetalle(pedidoDeVentas) {
@@ -40,32 +45,37 @@ class DetalleOrden extends Component {
     fetch(rutaServicio, { method: 'POST', body: formData })
       .then(res => res.json())
       .then((result) => {
-        //console.log(result);
-        this.setState({ listaDetalle: result, progreso: 0 })
+        this.setState({ count: result.length})
+        this.setState({ listaDetalle: result})
       })
   }
 
   cambiarProgreso = (e) => {
     const checked = e.target.checked;
     if (checked) {
-      this.setState({ progreso: this.state.progreso + 1 });
+      this.setState({ progreso: this.state.progreso + 100/ this.state.count });
       //console.log("marcado ", this.state.progreso + 1);
 
     }
 
     else {
-      this.setState({ progreso: this.state.progreso - 1 })
+      this.setState({ progreso: this.state.progreso - 100/ this.state.count  })
       //console.log("desmarcado ", this.state.progreso - 1);
 
     }
   };
 
 
+  limpiarDetalle(){
+    this.setState({progreso: 0});
+    this.setState({count: 0});
+  }
+  
   dibujarTabla(datosTabla) {
     return (
       <div className="table-responsive table-bordered container-fluid" id="tabla" role="tabpanel" aria-labelledby="home-tab">
-        <table className="table">
-          <thead className="thead-dark">
+        <Table className="table" responsive bordered hover>
+          <thead className="thead-dark" >
             <tr>
               {/*<th>Id Orden</th>*/}
               <th>Id</th>
@@ -103,33 +113,45 @@ class DetalleOrden extends Component {
                 </td>
                 <td><FontAwesomeIcon icon={faEdit}
                   onClick={() => this.mostrarActualizar(itemDetalle)} /></td>
-                <td><FontAwesomeIcon icon={faTimes}
+                <td><FontAwesomeIcon icon={faCheck}
                   onClick={() => this.mostrarEliminar(itemDetalle)} /></td>
               </tr>
             )}
           </tbody>
-        </table>
+        </Table>
+      </div>
+    )
+  }
+
+
+  
+
+  mostrarTodo(){
+    let contenidoDetalleOrden = this.dibujarTabla(this.state.listaDetalle)
+    //let contenidoFormularioActualizar = this.dibujarFormularioActualizar();
+    let progreso = <ProgressBar animated now={this.state.progreso} label={`${this.state.progreso.toFixed(2)}%`} />
+    return(
+      <div>
+      <div className="container-fluid">
+        <div className="">
+          {progreso}
+        </div>
+
+      </div>
+      {/*{contenidoFormularioActualizar}*/}
+      {contenidoDetalleOrden}
       </div>
     )
   }
 
 
   render() {
-    let contenidoDetalleOrden = this.dibujarTabla(this.state.listaDetalle)
-    //let contenidoFormularioActualizar = this.dibujarFormularioActualizar();
+
     return (
       <section className="container-fluid" id="detalleorden" >
         <div className="container-fluid" >
-          <h2>Detalle de Orden</h2>
-          <div className="container-fluid">
-            <div className="progress">
-              <div id="progressbar" className="progress-bar" role="progressbar" aria-label="Basic example" aria-valuenow="20"   aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
 
-          </div>
-          {/*{contenidoFormularioActualizar}*/}
-          {contenidoDetalleOrden}
-
+          {this.mostrarTodo()}
 
         </div>
       </section>
@@ -137,4 +159,4 @@ class DetalleOrden extends Component {
   }
 }
 
-export default DetalleOrden
+export default DetalleOrden;

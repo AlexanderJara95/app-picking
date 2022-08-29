@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import DetalleOrden from './DetalleOrden';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faEdit, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
-import { Table } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faEdit, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
+import { Table, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
 
 class OrdenVenta extends Component {
     constructor(props) {
@@ -23,14 +26,14 @@ class OrdenVenta extends Component {
 
     componentDidMount() {
         this.leerOrdenes();
-        
+
     }
 
     componentDidUpdate() {
         this.leerOrdenes();
     }
 
-    
+
     leerOrdenes() {
         const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarorden.php"
         fetch(rutaServicio)
@@ -46,11 +49,12 @@ class OrdenVenta extends Component {
             )
     }
 
-
     dibujarTabla(datosTabla) {
+
         return (
-            <div className="" id="tabla" role="tabpanel" aria-labelledby="home-tab" >
-                <Table id="tabla" responsive bordered hover>
+
+            <div className="table-responsive table-bordered" id="tabla" role="tabpanel" aria-labelledby="home-tab" >
+                <Table id="tabla" className="table table-hover" >
                     <thead id="thead" className="table thead-dark bg-dark text-white">
                         <tr>
                             <th>Id Orden</th>
@@ -58,7 +62,7 @@ class OrdenVenta extends Component {
                             <th>Id Cliente AX</th>
                             <th>Nombre Cliente</th>
                             <th>Referencia</th>
-                            <th>Asignado por</th>
+                            <th>Asignar</th>
                             <th>Completado por</th>
                             <th>Fecha de Subida</th>
                             <th>Fecha de Inicio</th>
@@ -67,7 +71,7 @@ class OrdenVenta extends Component {
                             <th colSpan={3}>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                         {datosTabla.map((itemOrden) =>
                             <tr key={itemOrden.idOrden}
                                 id={"li-orden-" + itemOrden.idOrden}
@@ -77,17 +81,26 @@ class OrdenVenta extends Component {
                                 <td>{itemOrden.idClienteAx}</td>
                                 <td>{itemOrden.nombreCliente}</td>
                                 <td>{itemOrden.referencia}</td>
-                                <td>{itemOrden.asignadoPor}</td>
+                                <td style={{minWidth:'150px'}}>
+                                    <select class="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
+                                        <option selected>Seleccione</option>
+                                        <option value="1">Mateo</option>
+                                        <option value="2">Marcos</option>
+                                        <option value="3">Lucas</option>
+                                    </select>
+                                    {/*{itemOrden.asignadoPor}*/}
+                                </td>
                                 <td>{itemOrden.completadoPor}</td>
                                 <td>{itemOrden.fechaSubida}</td>
                                 <td>{itemOrden.fechaInicio}</td>
                                 <td>{itemOrden.fechaCompletado}</td>
                                 <td>{itemOrden.estado}</td>
-                                <td><FontAwesomeIcon icon={faEdit} data-bs-toggle="modal" data-bs-target="#exampleModalCenter" /> </td>
-                                <td><FontAwesomeIcon icon={faTimes} onClick={() => this.mostrarEliminar(itemOrden)} /></td>
+                                <td><FontAwesomeIcon icon={faEye} data-bs-toggle="modal" data-bs-target="#exampleModalCenter" /> </td>
+                                <td><FontAwesomeIcon icon={faCheck} onClick={() => this.mostrarEliminar(itemOrden)} /></td>
                             </tr>
                         )}
                     </tbody>
+                    <button className='btn btn-primary'>Proceder</button>
                 </Table>
             </div>
         )
@@ -121,15 +134,18 @@ class OrdenVenta extends Component {
         } else {
             this.alertaDetalle();
         }
-        this.setState({ ordenSeleccionada: itemOrden });
+
+        this.setState({ ordenSeleccionada: itemOrden })
 
         document.getElementById("li-orden-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
     }
-    
-    /*<DetalleOrden detalleOrden={this.state.ordenSeleccionada} />*/ 
+
+
+
+    /*<DetalleOrden detalleOrden={this.state.ordenSeleccionada} />*/
     render() {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
-        let contenidoTablaDetalle = <DetalleOrden detalleOrden={this.state.ordenSeleccionada} />
+        let contenidoTablaDetalle = <DetalleOrden detalleOrden={this.state.ordenSeleccionada}/>
 
         return (
             <section id="orden" className="padded">
@@ -141,12 +157,14 @@ class OrdenVenta extends Component {
                         <div className="modal-dialog   modal-dialog-centered container-fluid" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
+
+
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#exampleModalCenterTitle">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div className="modal-body">
-                                        { contenidoTablaDetalle}
+                                    {contenidoTablaDetalle}
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleModalCenterTitle">Cerrar</button>
