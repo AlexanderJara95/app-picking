@@ -6,7 +6,7 @@ import { obtenerAutorizacion } from '../../config/LocalStorageService';
 
 const Layout = () => {
 	const auth = useAuth();
-	if(Auth) {
+	if(auth) {
 		let data = obtenerAutorizacion();
     	window.usuario = data;
     	console.log("window.user",window.usuario);
