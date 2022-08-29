@@ -32,13 +32,10 @@ const HomeIndex = ()=> {
                     </h3>
                     <div>                                
                         <h5 className="text-primary mb-1">
-                            {
-                                usuario && 
-                                `${usuario.nombre}`
-                            }
+                        {window.usuario && window.usuario.correo}
                         </h5>
                         <i className="text-secondary">
-                            {usuario && usuario.correo}
+                            {window.usuario && window.usuario.correo}
                         </i>
                     </div>
                 </div>

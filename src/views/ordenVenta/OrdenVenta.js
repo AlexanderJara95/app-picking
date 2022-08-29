@@ -7,13 +7,13 @@ import { Table, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 
 
 
+
 class OrdenVenta extends Component {
     constructor(props) {
         super(props)
         this.state = {
             listaOrdenes: [],
             ordenSeleccionada: ''
-
         }
     }
 
