@@ -8,7 +8,6 @@ const NivelUsuario = ({nivel}) => {
     },[]);
 
     const validarNivel=()=>{
-        console.log("nivel",nivel);
         switch (nivel){
             case '1':
                 setChangeNivel("Super Admin");

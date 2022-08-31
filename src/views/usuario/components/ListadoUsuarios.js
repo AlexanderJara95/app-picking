@@ -12,14 +12,12 @@ const ListadoUsuarios = () =>{
     const [datosTabla,setDatosTabla] = useState([]);
     const [ordenSeleccionada,setOrdenSeleccionada] = useState({});
     useEffect(()=>{
-        console.log("muestra");
         listaUsuarioServicio();        
     },[]);
 
     const listaUsuarioServicio= async()=>{
         try {
             const response = await store.dispatch(listarUsuarios());
-            console.log("listaUsuarios",response.usuarios);
 
             if (response.status === StatusCodes.OK) {	
                 setDatosTabla(response.usuarios);
@@ -64,7 +62,7 @@ const ListadoUsuarios = () =>{
                             <td>{itemUsuario.correo}</td>
                             <td>{itemUsuario.username}</td>
                             <td><NivelUsuario nivel={itemUsuario.nivelUsuario}></NivelUsuario></td>
-                            <td><i class='bx bx-edit'data-bs-toggle="modal" data-bs-target="#exampleModalCenter" /> </td>
+                            <td><i className='bx bx-edit'data-bs-toggle="modal" data-bs-target="#exampleModalCenter" /> </td>
                             <td><FontAwesomeIcon icon={faCheck} onClick={() => this.mostrarEliminar(itemUsuario)} /></td>
                         </tr>
                     )}
