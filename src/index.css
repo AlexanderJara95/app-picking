@@ -249,16 +249,11 @@ tr.active{
 }
 
 
-
-
-
-
-.toastme-content{
-    padding: 1em 2em;
-    border-radius: 20px;
+.toastme-list{
     position: absolute;
     bottom: 1em;
     right: 1em;
+    list-style-type: none;
 }
 .success .toastme-content{
     background-color: #44be63;
@@ -272,4 +267,11 @@ tr.active{
 .info .toastme-content{
     background-color: #ddc454;
     color: #fff;
+}
+.toastme-content{
+    padding: 1em 2em;    
+    border-radius: 10px;
+}
+.toastme-close{
+    border: transparent;
 }

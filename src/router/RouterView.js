@@ -31,6 +31,9 @@ const RouterView = () => (
 		<Route path='/orden' element={<PrivateOutlet />}>
 			<Route path='' element={<OrdenVentaIndex />} />
 		</Route>
+		<Route path='/usuario' element={<PrivateOutlet />}>
+			<Route path='' element={<UsuarioIndex />} />
+		</Route>
 		<Route path='/importar' element={<PrivateOutlet />}>
 			<Route path='' element={<InformeIndex />} />
 		</Route>

@@ -31,13 +31,17 @@ const Login = () => {
 
 			console.log("user",response.usuario.nombre);
 
-			if (response.status === StatusCodes.OK) {
+			if (response.status === StatusCodes.OK && Object.keys(response.usuario).length !== 0) {
 				toastme.success(
 					`Bienvenido al sistema ${response.usuario.nombre}`,
 				);
 				guardarAutorizacion(response.usuario);
                 window.location.href = '/';				
-			}
+			}else{
+                toastme.error(
+					`Usuario o contraseña inválidos`,
+				);
+            }
 
 			hidePreloader();
 		} catch (error) {
