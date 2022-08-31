@@ -89,7 +89,7 @@ class DetalleOrden2 extends Component {
                 <td>{itemDetalle.nombreCliente}</td>
                 <td>{itemDetalle.pedidoVentas}</td>
                 <td>{itemDetalle.asignadoPor}</td>
-                {/*<td>{itemDetalle.completadoPor}</td>*/}
+                {/*<td>{itemDetalle.asignadoA}</td>*/}
                 {/*<td>{itemDetalle.Seleccionar}</td>*/}
                 <td>{itemDetalle.Iddeloteinterno}</td>
                 <td>{itemDetalle.Codigodearticulo}</td>
