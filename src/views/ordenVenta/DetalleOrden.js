@@ -4,9 +4,11 @@ import { faCheck, faCirclePlus, faEdit, faTimes, faWindowRestore } from '@fortaw
 import OrdenVenta from './OrdenVenta';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { Table, Button  } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 
 class DetalleOrden extends Component {
 
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -16,7 +18,7 @@ class DetalleOrden extends Component {
       checked: false,
       count:0,
     }
-  }
+    }
 
 
   /*componentWillReceiveProps(props) {
@@ -47,7 +49,7 @@ class DetalleOrden extends Component {
       .then((result) => {
         this.setState({ count: result.length})
         this.setState({ listaDetalle: result})
-      })
+    })
   }
 
   cambiarProgreso = (e) => {

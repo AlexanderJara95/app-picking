@@ -52,13 +52,12 @@ export const registrarOrdenDetalle = (paramData) => async dispatch => {
 }  
 export const listarOrdenDetallePorId = (id) => async dispatch => {
 	var formData = new FormData();
-    formData.append("CodOrden", id)
-    const response = await axios.get(`${API_BASE_URL}/servicioconsultardetalleorden.php`,formData);
-	console.log("ListaDetalle",response.data);
+    formData.append("pedidoDeVentas", id);
+    const response = await axios.post(`${API_BASE_URL}/servicioconsultardetalleorden.php`,formData);
     return dispatch({
         type: LISTAR_ORDEN_DETALLE,
 		status: response.status,
-        listaOrder: response.data
+        detalleOrden: response.data
     })
 }
 

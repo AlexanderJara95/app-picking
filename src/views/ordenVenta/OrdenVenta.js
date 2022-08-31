@@ -3,6 +3,7 @@ import DetalleOrden from './DetalleOrden';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEdit, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import { Table, Button} from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -124,7 +125,7 @@ class OrdenVenta extends Component {
                                 <td>{itemOrden.fechaInicio}</td>
                                 <td>{itemOrden.fechaCompletado}</td>
                                 <td>{itemOrden.estado}</td>
-                                <td><Button data-bs-toggle="modal" data-bs-target="#exampleModalCenter" ><FontAwesomeIcon icon={faEye} /> </Button></td>
+                                <td><NavLink to={"/detalleorden/"+ itemOrden.pedidoDeVentas} className="nav_link"><FontAwesomeIcon icon={faEye} /> </NavLink></td>
                                 <td><Button className="btn-success" onClick={event => this.activarBoton(event)}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                             </tr>
                         )}
