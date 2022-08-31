@@ -1,12 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ProgressBar } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb";
 import ListadoDetalle from "./components/ListadoDetalle";
 const DetalleOrdenIndex = () =>{
     const param = useParams();
+    const [progress,setProgress] = useState(0);
     useEffect(()=>{
         console.log("listadoDestalle", param.id);
     },[]);
+    useEffect(()=>{
+        console.log("act");
+    },[progress]);
     return(
         <>
             <Breadcrumb>
@@ -22,13 +27,17 @@ const DetalleOrdenIndex = () =>{
                     </Breadcrumb.Item>
                 </Breadcrumb.Items>
             </Breadcrumb>
-            <div className="container-fluid">
+            <div className="container-fluid row">
                 <div className="col m-0 font-weight-bold text-primary pb-3">
                     <h1><strong>Detalle de Orden</strong></h1>
                     <h3>Listado de artículos</h3>
                 </div>
+                <div className="col text-primary">
+                    <h2><strong>Procentaje de avance</strong></h2>
+                    <ProgressBar variant='success' animated now={progress} label={progress.toFixed(2)}></ProgressBar>
+                </div>
             </div>
-            <ListadoDetalle id={param.id}></ListadoDetalle>
+            <ListadoDetalle id={param.id} setProgress={setProgress} progreso={progress}></ListadoDetalle>
         </>
     );
 }
