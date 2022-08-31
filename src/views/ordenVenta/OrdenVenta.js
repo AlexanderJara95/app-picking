@@ -113,8 +113,9 @@ class OrdenVenta extends Component {
                                 <td>{itemOrden.referencia}</td>
                                 <td style={{ minWidth: '130px' }}>
                                     <select className="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
+                                        <option value='0' onClick={this.seleccionarUsuario}>Seleccione</option>
                                         {this.state.listaUsuarios.map((usuario) => (
-                                            <option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option>
+                                            usuario.nivelUsuario==3?<option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option>:null
                                         ))}
                                     </select>
                                 </td>
