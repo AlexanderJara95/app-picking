@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faEdit, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
+import { faCheck, faCirclePlus, faEdit, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import OrdenVenta from './OrdenVenta';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import { Table } from 'react-bootstrap';
+import { Table, Button  } from 'react-bootstrap';
 
 class DetalleOrden extends Component {
 
@@ -111,10 +111,8 @@ class DetalleOrden extends Component {
                     <input className="form-check-input" type="checkbox" id="checkdetalle" onChange={(e) => { this.cambiarProgreso(e) }} />
                   </div>
                 </td>
-                <td><FontAwesomeIcon icon={faEdit}
-                  onClick={() => this.mostrarActualizar(itemDetalle)} /></td>
-                <td><FontAwesomeIcon icon={faCheck}
-                  onClick={() => this.mostrarEliminar(itemDetalle)} /></td>
+                <td><Button onClick={() => this.mostrarActualizar(itemDetalle)} ><FontAwesomeIcon icon={faCirclePlus} /></Button></td>
+                <td><Button onClick={() => this.mostrarEliminar(itemDetalle)}> <FontAwesomeIcon icon={faTimes}   /></Button></td>
               </tr>
             )}
           </tbody>

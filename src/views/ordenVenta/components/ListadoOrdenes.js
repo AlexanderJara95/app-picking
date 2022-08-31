@@ -67,7 +67,7 @@ const ListadoOrdenes = () =>{
                                 <td>{itemOrden.nombreCliente}</td>
                                 <td>{itemOrden.referencia}</td>
                                 <td>{itemOrden.asignadoPor}</td>
-                                <td>{itemOrden.completadoPor}</td>
+                                <td>{itemOrden.asignadoA}</td>
                                 <td>{itemOrden.fechaSubida}</td>
                                 <td>{itemOrden.fechaInicio}</td>
                                 <td>{itemOrden.fechaCompletado}</td>

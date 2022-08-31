@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import DetalleOrden from './DetalleOrden';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEdit, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
-import { Table, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+import { Table, Button} from 'react-bootstrap';
 
 
 
@@ -13,7 +12,11 @@ class OrdenVenta extends Component {
         super(props)
         this.state = {
             listaOrdenes: [],
-            ordenSeleccionada: ''
+            listaUsuarios: [],
+            ordenSeleccionada: '',
+            usuarioAsignado: 0,
+            confirmarAsignar: '',
+            checkAsignar: false
         }
     }
 
@@ -25,29 +28,56 @@ class OrdenVenta extends Component {
     */
 
     componentDidMount() {
+        this.leerUsuarios();
+
         this.leerOrdenes();
 
     }
 
     componentDidUpdate() {
-        this.leerOrdenes();
+       // this.leerOrdenes();
     }
 
 
     leerOrdenes() {
-        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarorden.php"
-        fetch(rutaServicio)
-            .then(
-                res => res.json() //indicamos que el objeto devuelto por dicha solicitud al servicio, sera un Json
-            )
-            .then(
-                (result) => {
-                    this.setState({
-                        listaOrdenes: result
-                    });  //aca se crean las variables globales/ de estado
-                }
-            )
+            const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarorden.php"
+            fetch(rutaServicio)
+                .then(
+                    res => res.json() //indicamos que el objeto devuelto por dicha solicitud al servicio, sera un Json
+                )
+                .then(
+                    (result) => {
+                        this.setState({
+                            listaOrdenes: result
+                        });  //aca se crean las variables globales/ de estado
+                    }
+                )
+        }
+        
+        leerUsuarios() {
+            const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarusuarios.php"
+            fetch(rutaServicio)
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        this.setState({
+                            listaUsuarios: result
+                        });
+                    })
+        }
+    
+    /*ES PARA OBTENER EL ID DEL USUARIO CLICKEADO EN LA LISTA DE SELECCION PARA ASIGNAR LA ORDEN */
+    seleccionarUsuario = event => {
+        console.log(event.currentTarget.value);
+        this.setState({usuarioAsignado: event.currentTarget.value});
     }
+
+    /*sin uso aun*/
+    activarBoton = (event, key) => {
+        console.log(event.target, key);
+    }
+
+
 
     dibujarTabla(datosTabla) {
 
@@ -63,7 +93,7 @@ class OrdenVenta extends Component {
                             <th>Nombre Cliente</th>
                             <th>Referencia</th>
                             <th>Asignar</th>
-                            <th>Completado por</th>
+                            <th>Asignado A</th>
                             <th>Fecha de Subida</th>
                             <th>Fecha de Inicio</th>
                             <th>Fecha Terminado</th>
@@ -81,26 +111,23 @@ class OrdenVenta extends Component {
                                 <td>{itemOrden.idClienteAx}</td>
                                 <td>{itemOrden.nombreCliente}</td>
                                 <td>{itemOrden.referencia}</td>
-                                <td style={{minWidth:'150px'}}>
-                                    <select class="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
-                                        <option selected>Seleccione</option>
-                                        <option value="1">Mateo</option>
-                                        <option value="2">Marcos</option>
-                                        <option value="3">Lucas</option>
+                                <td style={{ minWidth: '130px' }}>
+                                    <select className="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
+                                        {this.state.listaUsuarios.map((usuario) => (
+                                            <option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option>
+                                        ))}
                                     </select>
-                                    {/*{itemOrden.asignadoPor}*/}
                                 </td>
-                                <td>{itemOrden.completadoPor}</td>
+                                <td>{itemOrden.asignadoA}</td>
                                 <td>{itemOrden.fechaSubida}</td>
                                 <td>{itemOrden.fechaInicio}</td>
                                 <td>{itemOrden.fechaCompletado}</td>
                                 <td>{itemOrden.estado}</td>
-                                <td><FontAwesomeIcon icon={faEye} data-bs-toggle="modal" data-bs-target="#exampleModalCenter" /> </td>
-                                <td><FontAwesomeIcon icon={faCheck} onClick={() => this.mostrarEliminar(itemOrden)} /></td>
+                                <td><Button data-bs-toggle="modal" data-bs-target="#exampleModalCenter" ><FontAwesomeIcon icon={faEye} /> </Button></td>
+                                <td><Button className="btn-success" onClick={event => this.activarBoton(event)}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                             </tr>
                         )}
                     </tbody>
-                    <button className='btn btn-primary'>Proceder</button>
                 </Table>
             </div>
         )
