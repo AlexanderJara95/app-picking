@@ -92,7 +92,7 @@ const ListadoDetalle = ({id,progreso,setProgress}) =>{
                             <input className="form-check-input" type="checkbox" id="checkdetalle" onChange={(e)=>cambiarProgreso(e)} />
                         </div>
                         </td>
-                        <td><Button onClick={() => this.mostrarActualizar(itemDetalle)} ><FontAwesomeIcon icon={faCirclePlus} /></Button></td>
+                        <td><i className='bx bxs-edit' data-bs-toggle="modal" data-bs-target="#exampleModalCenter" ></i></td>
                         <td><Button onClick={() => this.mostrarEliminar(itemDetalle)}> <FontAwesomeIcon icon={faTimes}   /></Button></td>
                     </tr>
                     )}

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE, LISTAR_ARTICULO} from './OrdenVentaTypes';
+import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE, LISTAR_ARTICULO_DETALLE} from './OrdenVentaTypes';
 import { API_BASE_URL } from '../../config/Services';
 
 export const listarOrden = () => async dispatch => {
