@@ -93,6 +93,7 @@ const ListadoDetalle = ({id,progreso,setProgress}) =>{
                         </div>
                         </td>
                         <td><i className='bx bxs-edit' data-bs-toggle="modal" data-bs-target="#exampleModalCenter" ></i></td>
+                        <td><NavLink to={"/detallearticulo/"+itemDetalle.idArticulo} className="nav_link"><FontAwesomeIcon icon={faEdit} /> </NavLink></td>
                         <td><Button onClick={() => this.mostrarEliminar(itemDetalle)}> <FontAwesomeIcon icon={faTimes}   /></Button></td>
                     </tr>
                     )}
