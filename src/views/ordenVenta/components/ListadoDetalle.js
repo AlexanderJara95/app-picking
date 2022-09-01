@@ -93,7 +93,7 @@ const ListadoDetalle = ({id,progreso,setProgress}) =>{
                             <input className="form-check-input" type="checkbox" id="checkdetalle" onChange={(e)=>cambiarProgreso(e)} />
                         </div>
                         </td>
-                        <td><NavLink to={"/detalleorden/"+ itemDetalle.pedidoDeVentas+'/'+itemDetalle.idArticulo} className="nav_link"><FontAwesomeIcon icon={faEdit} /> </NavLink></td>
+                        <td><NavLink to={"/detallearticulo/"+itemDetalle.idArticulo} className="nav_link"><FontAwesomeIcon icon={faEdit} /> </NavLink></td>
                         <td><Button onClick={() => this.mostrarEliminar(itemDetalle)}> <FontAwesomeIcon icon={faTimes}   /></Button></td>
                     </tr>
                     )}
