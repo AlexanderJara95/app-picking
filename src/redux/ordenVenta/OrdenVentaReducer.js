@@ -4,7 +4,9 @@ import {
 	LISTAR_ORDEN_DETALLE,
 	REGISTRAR_ORDEN,
 	REGISTRAR_ORDEN_DETALLE,
-	MODIFICAR_ORDEN
+	MODIFICAR_ORDEN,
+	LISTAR_ARTICULO_DETALLE
+	
 } from './OrdenVentaTypes';
 
 const OrdenVentaReducer = (state = {}, action) => {
@@ -27,6 +29,17 @@ const OrdenVentaReducer = (state = {}, action) => {
 				listarOrden: action.listarOrden,
 			};
 		}
+
+		/* CODIGO AGREGADO POR MOISES  */
+		case LISTAR_ARTICULO_DETALLE: {
+			return {
+				...state,
+				detalleArticulo: action.detalleArticulo,
+			};
+		}
+		
+		/* CODIGO AGREGADO POR MOISES  */
+
 		case REGISTRAR_ORDEN: {
 			return {
 				...state,

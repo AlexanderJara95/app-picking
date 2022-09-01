@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE} from './OrdenVentaTypes';
+import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE, LISTAR_ARTICULO} from './OrdenVentaTypes';
 import { API_BASE_URL } from '../../config/Services';
 
 export const listarOrden = () => async dispatch => {
@@ -58,6 +58,19 @@ export const listarOrdenDetallePorId = (id) => async dispatch => {
         type: LISTAR_ORDEN_DETALLE,
 		status: response.status,
         detalleOrden: response.data
+    })
+}
+
+
+/*  NUEVO SERVICIO - MOISES    */
+export const listarArticuloPorId = (id) => async dispatch => {
+	var formData = new FormData();
+    formData.append("idArticulo", id);
+    const response = await axios.post(`${API_BASE_URL}/servicioconsultardetallearticulo.php`,formData);
+    return dispatch({
+        type: LISTAR_ARTICULO_DETALLE,
+		status: response.status,
+        detalleArticulo: response.data
     })
 }
 
