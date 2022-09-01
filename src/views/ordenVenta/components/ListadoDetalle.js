@@ -2,16 +2,15 @@ import { useEffect, useState } from 'react';
 import { listarOrdenDetallePorId } from '../../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
-import { Button, Table } from 'react-bootstrap';
+import { Button, ProgressBar, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
-const ListadoDetalle = ({id}) =>{
+const ListadoDetalle = ({id,progreso,setProgress}) =>{
 
     const [datosTabla,setDatosTabla] = useState([]);
     const [ordenSeleccionada,setOrdenSeleccionada] = useState({});
-    const [progreso,setProgreso] = useState({});
 
     useEffect(()=>{
         console.log("muestra",id);
@@ -42,20 +41,22 @@ const ListadoDetalle = ({id}) =>{
     }
     const cambiarProgreso = (e) =>{
         const checked = e.target.checked;
+        console.log("checked",checked);
         if (checked) {
-            setProgreso(progreso + 100/datosTabla.length);
+            console.log("datosTabla.length",datosTabla.length);
+            console.log("progreso",progreso);
+            setProgress(progreso + 100/datosTabla.length);
         }      
         else {
-            setProgreso(progreso + 100/datosTabla.length); 
+            setProgress(progreso - 100/datosTabla.length); 
         }
     }
 
     return(
-        <>
-            
+        <>         
             <div className="table-responsive table-bordered container-fluid" id="tabla" role="tabpanel" aria-labelledby="home-tab">
             <Table className="table" responsive bordered hover>
-                <thead className="thead-dark" >
+                <thead className="thead-dark bg-dark text-white" >
                     <tr>
                     {/*<th>Id Orden</th>*/}
                     <th>Id</th>
