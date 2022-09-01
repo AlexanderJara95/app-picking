@@ -1,53 +1,41 @@
 import React, { Component, useEffect, useState } from 'react'
 import TableRows from "./TableRows";
+import { Table } from 'react-bootstrap';
 
-function ModificarArticulo({id}) {
 
-    const [rowsData, setRowsData] = useState([]);
+function ModificarArticulo({articulo,setArticulo}) {
 
     useEffect(()=>{
-        
-        setRowsData([
-            {
-                ubicacion: 'a',
-                pallet: 'b',
-                lote: 'c',
-                fecha: 'e',
-                cantidad: '3'
-            },
-            {
-                ubicacion: 'e',
-                pallet: 'r',
-                lote: 't',
-                fecha: 'y',
-                cantidad: '7'
-            },
-            {
-                ubicacion: 'h',
-                pallet: 'j',
-                lote: 'k',
-                fecha: 'l',
-                cantidad: '8'
-            },
-            {
-                ubicacion: 'q',
-                pallet: 'w',
-                lote: 'r',
-                fecha: 'b',
-                cantidad: '6'
-            }
-        ]);
-    },[]);
+      console.log("articulo,",articulo);
+      if(Object.keys(articulo).length !== 0){
+        setRowsData([...rowsData, {
+            idArticulo: articulo.idArticulo,
+            pedidoDeVentas: articulo.pedidoDeVentas,
+            codigoArticulo: articulo.codigoArticulo,
+            descripcion: articulo.descripcion,
+            numeroLote: articulo.numeroLote,
+            ubicacion: articulo.ubicacion,
+            idPallet: articulo.idPallet,
+            fechaCaducidad: articulo.fechaCaducidad,
+            cantidad: articulo.cantidad
+        }]);
+      }
+    },[articulo]);
 
+    const [rowsData, setRowsData] = useState([]);
     const addTableRows = () => {
-
         //crear array constante con los campos a usar para las lineas
+        console.log("articulo",articulo.ubicacion);
         const rowsInput = {
-            ubicacion: '',
-            pallet: '',
-            lote: '',
-            fecha: '',
-            cantidad: ''
+          idArticulo: articulo.idArticulo,
+          pedidoDeVentas: articulo.pedidoDeVentas,
+          codigoArticulo: articulo.codigoArticulo,
+          descripcion: articulo.descripcion,
+          numeroLote: articulo.numeroLote,
+          ubicacion: articulo.ubicacion,
+          idPallet: articulo.idPallet,
+          fechaCaducidad: articulo.fechaCaducidad,
+          cantidad: articulo.cantidad
         }
         //con esto usando solo el "rowsInput" es para agregar lineas usando el array constante creado arriba, con la instancia de useState "setRowsData"
         //se agregar el "...rowsData" para que mantengan la linea/data ya ingresada y solo agregue una nueva posterior
@@ -68,44 +56,25 @@ function ModificarArticulo({id}) {
         setRowsData(rowsInput);
     }
 
-
-
     return (
-        <div className="container">
+        <div className="container-fluid">
             <div className="row">
                 <div className="col-sm-8">
-                    
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>Cliente</th>
-                            <th>Pedido de Ventas</th>
-                            <th>Asignado por</th>
-                            <th>Codigo de Articulo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <td>Dimexa</td>
-                        <td>PV_TEST001</td>
-                        <td>Diego</td>
-                        <td>0001-0001001</td>
-                    </tbody>
-                </table>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Ubicacion</th>
-                                <th>Pallet</th>
-                                <th>Lote</th>
-                                <th>Fecha Caducidad</th>
-                                <th>Cantidad</th>
-                                <th><button className="btn btn-outline-success" onClick={addTableRows} >+</button></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />
-                        </tbody>
-                    </table>
+                  <Table className="table" bordered>
+                      <thead className='bg-dark text-white text-center'>
+                          <tr>
+                              <th>Ubicacion</th>
+                              <th>Pallet</th>
+                              <th>Lote</th>
+                              <th>Fecha Caducidad</th>
+                              <th>Cantidad</th>
+                              <th><button className="btn btn-outline-success" onClick={addTableRows} >+</button></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />
+                      </tbody>
+                  </Table>
                 </div>
                 <div className="col-sm-4">
 
