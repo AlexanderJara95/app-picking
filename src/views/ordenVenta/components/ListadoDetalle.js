@@ -4,7 +4,8 @@ import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
 import { Button, ProgressBar, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faEdit, faEye, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
 
 
 const ListadoDetalle = ({id,progreso,setProgress}) =>{
@@ -92,7 +93,7 @@ const ListadoDetalle = ({id,progreso,setProgress}) =>{
                             <input className="form-check-input" type="checkbox" id="checkdetalle" onChange={(e)=>cambiarProgreso(e)} />
                         </div>
                         </td>
-                        <td><Button onClick={() => this.mostrarActualizar(itemDetalle)} ><FontAwesomeIcon icon={faCirclePlus} /></Button></td>
+                        <td><NavLink to={"/detalleorden/"+ itemDetalle.pedidoDeVentas+'/'+itemDetalle.idArticulo} className="nav_link"><FontAwesomeIcon icon={faEdit} /> </NavLink></td>
                         <td><Button onClick={() => this.mostrarEliminar(itemDetalle)}> <FontAwesomeIcon icon={faTimes}   /></Button></td>
                     </tr>
                     )}
