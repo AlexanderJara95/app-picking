@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import DetalleOrden from './DetalleOrden';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEdit, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import { Table, Button} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-
-
 
 
 class OrdenVenta extends Component {
@@ -21,12 +18,12 @@ class OrdenVenta extends Component {
         }
     }
 
-    /*
+    
     componentWillReceiveProps(props) {
         console.log(props.detalleOrden)
         this.leerDetalle(props.detalleOrden.idOrden)
     }
-    */
+    
 
     componentDidMount() {
         this.leerUsuarios();
@@ -174,7 +171,6 @@ class OrdenVenta extends Component {
     /*<DetalleOrden detalleOrden={this.state.ordenSeleccionada} />*/
     render() {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
-        let contenidoTablaDetalle = <DetalleOrden detalleOrden={this.state.ordenSeleccionada}/>
 
         return (
             <section id="orden" className="padded">
@@ -193,7 +189,6 @@ class OrdenVenta extends Component {
                                     </button>
                                 </div>
                                 <div className="modal-body">
-                                    {contenidoTablaDetalle}
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleModalCenterTitle">Cerrar</button>

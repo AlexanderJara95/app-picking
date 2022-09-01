@@ -11,6 +11,7 @@ import UsuarioIndex from '../views/usuario/UsuarioIndex';
 import OrdenVentaIndex from '../views/ordenVenta/OrdenVentaIndex';
 import InformeIndex from '../views/Informe/InformeIndex';
 import DetalleOrdenIndex from '../views/ordenVenta/DetalleOrdenIndex';
+import ArticuloIndex from '../views/ordenVenta/ArticuloIndex';
 
 
 const RouterView = () => (
@@ -35,6 +36,9 @@ const RouterView = () => (
 		</Route>
 		<Route path='/detalleorden/:id' element={<PrivateOutlet />}>
 			<Route path='' element={<DetalleOrdenIndex/>} />
+		</Route>
+		<Route path='/detalleorden/:id/:idArticulo' element={<PrivateOutlet />}>
+			<Route path='' element={<ArticuloIndex/>} />
 		</Route>
 		<Route path='/usuario' element={<PrivateOutlet />}>
 			<Route path='' element={<UsuarioIndex />} />
