@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import { listarOrdenDetallePorId } from '../../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
-import { Button, ProgressBar, Table } from 'react-bootstrap';
+import { Button, NavLink, ProgressBar, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faEdit, faEye, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { NavLink } from 'react-router-dom';
+import { faCirclePlus, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 const ListadoDetalle = ({ id, progreso, setProgress }) => {
@@ -89,13 +88,14 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                 <td>{itemDetalle.idPallet}</td>
                                 <td>{itemDetalle.fechaCaducidad}</td>
                                 <td>{itemDetalle.cantidad}</td>
-                                <td >
+                                <td>
                                     <div className="form-check">
                                         {/*<input className="form-check-input" type="checkbox" value="1" id="checkdetalle" onChange={()=>this.contarProgreso()}/> */}
                                         <input className="form-check-input" type="checkbox" id="checkdetalle" onChange={(e) => cambiarProgreso(e)} />
                                     </div>
-                                </td>
                                 <td><NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav_link"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink></td>
+                                <td><NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink></td>
+                                {/*<td><Button onClick={() => this.mostrarEliminar(itemDetalle)}> <FontAwesomeIcon icon={faTimes}/></Button></td> */}
                             </tr>
                         )}
                     </tbody>

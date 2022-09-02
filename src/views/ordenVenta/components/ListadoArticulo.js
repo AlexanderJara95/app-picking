@@ -14,10 +14,10 @@ const ListadoArticulo = ({id}) =>{
 
     useEffect(()=>{
         console.log("muestra",id);
-        listaProductoServicio(id);
+        listaArticuloServicio(id);
     },[]);
 
-    const listaProductoServicio= async(id)=>{
+    const listaArticuloServicio= async(id)=>{
         try {
             const response = await store.dispatch(listarArticuloPorId(id));
             console.log("listaArticulo",response.detalleArticulo);
@@ -35,21 +35,6 @@ const ListadoArticulo = ({id}) =>{
         if (Object.keys(articuloSeleccionado).length !== 0) {
             document.getElementById("li-articulo-" + itemDetalle.idArticulo).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
         }            
-    }
-    const mostrarEliminar=()=>{
-        
-    }
-    const cambiarProgreso = (e) =>{
-        const checked = e.target.checked;
-        console.log("checked",checked);
-        if (checked) {
-            console.log("datosTabla.length",datosTabla.length);
-            console.log("progreso",progreso);
-            setProgress(progreso + 100/datosTabla.length);
-        }      
-        else {
-            setProgress(progreso - 100/datosTabla.length); 
-        }
     }
 
     return(

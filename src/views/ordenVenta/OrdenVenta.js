@@ -4,7 +4,6 @@ import { faCheck, faEdit, faEye, faTimes, faWindowRestore } from '@fortawesome/f
 import { Table, Button} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-
 class OrdenVenta extends Component {
     constructor(props) {
         super(props)
@@ -129,6 +128,9 @@ class OrdenVenta extends Component {
                                 <td><Button className="btn-success" onClick={event => this.activarBoton(event)}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                             </tr>
                         )}
+                        <tr>
+
+                        </tr>
                     </tbody>
                 </Table>
             </div>
