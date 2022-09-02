@@ -83,9 +83,8 @@ class OrdenVenta extends Component {
             <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab" >
             <Table className="table-sm border-white" responsive bordered hover striped> 
                 <thead className="thead-dark bg-dark text-white">
-                        <tr className='align-middle' scope="col"
-                         >
-                            <th  scope="col">Id Orden</th>
+                        <tr className='align-middle' scope="col">
+                            <th scope="col">Id Orden</th>
                             <th scope="col">Pedido de Ventas</th>
                             <th scope="col">Id Cliente AX</th>
                             <th scope="col">Nombre Cliente</th>

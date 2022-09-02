@@ -47,16 +47,12 @@ const ArticuloIndex = () =>{
                         <h1><strong>Modificación de Artículos</strong></h1>
                         <h3>{articulo.descripcion}</h3>
                     </div>
-                    <div className="col-4 text-center m-0 font-weight-bold text-primary pb-3">
+                    <div className="col-2 text-center m-0 font-weight-bold text-primary pb-3">
                         <h1><strong>Total: </strong>{articulo.cantidad}</h1>
-                        <div className="row">
-                            <div className="col-6">
-                                <h4 style={{backgroundColor:"#ffc107",color:"#fff",borderRadius:"15px"}}>Faltan: {resta}</h4>
-                            </div>
-                            <div className="col-6">                                
-                                <Button className="btn-primary">Agregar +</Button>
-                            </div>
-                        </div>
+                        <h4 style={{backgroundColor:"#ffc107",color:"#fff",borderRadius:"15px"}}>Faltan: {resta}</h4>
+                    </div>
+                    <div className="col-2">
+                        <Button className="btn-primary">Agregar +</Button>
                     </div>
                 </div>                
             </div>
