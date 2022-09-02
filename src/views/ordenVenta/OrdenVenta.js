@@ -4,7 +4,6 @@ import { faCheck, faEdit, faEye, faTimes, faWindowRestore } from '@fortawesome/f
 import { Table, Button} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-
 class OrdenVenta extends Component {
     constructor(props) {
         super(props)
@@ -81,29 +80,32 @@ class OrdenVenta extends Component {
 
         return (
 
-            <div className="table-responsive table-bordered" id="tabla" role="tabpanel" aria-labelledby="home-tab" >
-                <Table id="tabla" className="table table-hover" >
-                    <thead id="thead" className="table thead-dark bg-dark text-white">
-                        <tr>
-                            <th>Id Orden</th>
-                            <th>Pedido de Ventas</th>
-                            <th>Id Cliente AX</th>
-                            <th>Nombre Cliente</th>
-                            <th>Referencia</th>
-                            <th>Asignar</th>
-                            <th>Asignado A</th>
-                            <th>Fecha de Subida</th>
-                            <th>Fecha de Inicio</th>
-                            <th>Fecha Terminado</th>
-                            <th>Estado</th>
+            <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab" >
+            <Table className="table-sm border-white" responsive bordered hover striped> 
+                <thead className="thead-dark bg-dark text-white">
+                        <tr className='align-middle' scope="col"
+                         >
+                            <th  scope="col">Id Orden</th>
+                            <th scope="col">Pedido de Ventas</th>
+                            <th scope="col">Id Cliente AX</th>
+                            <th scope="col">Nombre Cliente</th>
+                            <th scope="col">Referencia</th>
+                            <th scope="col">Asignar</th>
+                            <th scope="col">Asignado A</th>
+                            <th scope="col">Fecha de Subida</th>
+                            <th scope="col">Fecha de Inicio</th>
+                            <th scope="col">Fecha Terminado</th>
+                            <th scope="col">Estado</th>
                             <th colSpan={3}>Acciones</th>
                         </tr>
                     </thead>
                     <tbody >
                         {datosTabla.map((itemOrden) =>
-                            <tr key={itemOrden.idOrden}
+                            <tr className='align-middle'
+                                scope="row"
+                                key={itemOrden.idOrden}
                                 id={"li-orden-" + itemOrden.idOrden}
-                                onClick={() => this.seleccionarOrden(itemOrden)}>
+                                onClick={() => this.seleccionarOrden(itemOrden)} >
                                 <td>{itemOrden.idOrden}</td>
                                 <td>{itemOrden.pedidoDeVentas}</td>
                                 <td>{itemOrden.idClienteAx}</td>
@@ -122,10 +124,13 @@ class OrdenVenta extends Component {
                                 <td>{itemOrden.fechaInicio}</td>
                                 <td>{itemOrden.fechaCompletado}</td>
                                 <td>{itemOrden.estado}</td>
-                                <td><NavLink to={"/detalleorden/"+ itemOrden.pedidoDeVentas} className="nav_link"><FontAwesomeIcon icon={faEye} /> </NavLink></td>
+                                <td><NavLink to={"/detalleorden/"+ itemOrden.pedidoDeVentas} className="nav"><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
                                 <td><Button className="btn-success" onClick={event => this.activarBoton(event)}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                             </tr>
                         )}
+                        <tr>
+
+                        </tr>
                     </tbody>
                 </Table>
             </div>
