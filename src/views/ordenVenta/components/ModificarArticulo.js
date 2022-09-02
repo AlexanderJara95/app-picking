@@ -1,9 +1,11 @@
 import React, { Component, useEffect, useState } from 'react'
 import TableRows from "./TableRows";
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 
 
 function ModificarArticulo({articulo,setArticulo}) {
+
+    const [restaCantidad,setRestaCantidad] = useState(0);
 
     useEffect(()=>{
       console.log("articulo,",articulo);
@@ -24,6 +26,11 @@ function ModificarArticulo({articulo,setArticulo}) {
 
     const [rowsData, setRowsData] = useState([]);
     const addTableRows = () => {
+        var contador=0;
+        rowsData.map((item)=>{
+          contador = contador + parseInt(item.cantidad);
+        });
+        console.log("contador",contador);
         //crear array constante con los campos a usar para las lineas
         console.log("articulo",articulo.ubicacion);
         const rowsInput = {
@@ -39,7 +46,7 @@ function ModificarArticulo({articulo,setArticulo}) {
         }
         //con esto usando solo el "rowsInput" es para agregar lineas usando el array constante creado arriba, con la instancia de useState "setRowsData"
         //se agregar el "...rowsData" para que mantengan la linea/data ya ingresada y solo agregue una nueva posterior
-        setRowsData([...rowsData, rowsInput])
+        if(contador <= articulo.cantidad) setRowsData([...rowsData, rowsInput])
 
     }
     //Eliminar lineas ejecutandolo en base al index de la linea clickeada, seleccionando solo la linea indicada, y no todas (por el "...rowsData")
@@ -49,17 +56,22 @@ function ModificarArticulo({articulo,setArticulo}) {
         setRowsData(rows);
     }
 
-    const handleChange = (index, evnt) => {
+    const handleChange = (index, evnt) => {     
         const { name, value } = evnt.target;
+        console.log("name,value", name, value);
+        console.log("cantidad", articulo.cantidad);
         const rowsInput = [...rowsData];
         rowsInput[index][name] = value;
-        setRowsData(rowsInput);
+        if(name == "cantidad" && value.length < articulo.cantidad.length){
+            console.log("ingrese");
+            setRowsData(rowsInput);
+        }        
     }
 
     return (
         <div className="container-fluid">
             <div className="row">
-                <div className="col-sm-8">
+                <div className="col-sm-12">
                   <Table className="table" bordered>
                       <thead className='bg-dark text-white text-center'>
                           <tr>
@@ -77,7 +89,7 @@ function ModificarArticulo({articulo,setArticulo}) {
                   </Table>
                 </div>
                 <div className="col-sm-4">
-
+                    <Button className='btn-secondary'>Cancelar</Button>
                 </div>
             </div>
         </div>
