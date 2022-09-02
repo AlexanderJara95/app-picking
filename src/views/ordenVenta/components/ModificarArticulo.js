@@ -107,7 +107,7 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
                               <th><button className="btn btn-outline-success" onClick={addTableRows} >+</button></th>
                           </tr>
                       </thead>
-                      <tbody>
+                      <tbody className='text-center'>
                           <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />
                       </tbody>
                   </Table>
@@ -118,7 +118,7 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
                           <Button className='btn-secondary col-sm-12'>Cancelar</Button>
                         </div>
                         <div className='col-6'>
-                          <Button className='btn-primary col-sm-12'>Guardar</Button>
+                          <Button className='btn-success col-sm-12'>Guardar</Button>
                         </div>
                     </div>                    
                 </div>
