@@ -2,14 +2,14 @@ import { BrowserRouter } from 'react-router-dom';
 import RouterView from '../../router/RouterView';
 
 import HeaderPage from './partials/HeaderPage';
-import LeftSidebar from './partials/LeftSidebar';
+import LeftSideBar from './partials/LeftSideBar';
 import FooterPage from './partials/FooterPage';
 
 const Admin = () => (
     <section id="body-pd" className='section-body'>
         <BrowserRouter>
             <HeaderPage/>
-            <LeftSidebar/>
+            <LeftSideBar/>
             <div className="">
                 <RouterView/>
             </div>     

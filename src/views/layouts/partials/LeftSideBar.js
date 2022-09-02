@@ -2,7 +2,7 @@ import iconoTexto from '../../../img/icono-texto.png';
 import iconoLogotipo from '../../../img/icono-logo.png';
 import { removerAutorizacion } from '../../../config/LocalStorageService';
 import { Outlet,NavLink } from 'react-router-dom';
-const LeftSidebar = () => {    
+const LeftSideBar = () => {    
   //NavLink => carga de componentes tipo Ajax            
   return (
     <div className="l-navbar" id="nav-bar">
@@ -23,4 +23,4 @@ const LeftSidebar = () => {
     </div>
   );
 }
-export default LeftSidebar;
+export default LeftSideBar;
