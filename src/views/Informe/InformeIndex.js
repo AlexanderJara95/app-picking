@@ -1,10 +1,10 @@
 import {useEffect,useState} from 'react';
-import Breadcrumb from '../../components/Breadcrumb';
 import HtmlToJson from '../../utils/HtmlToJson';
 import { registrarOrden,registrarOrdenDetalle } from '../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
 import { toastme } from 'toastmejs';
+import { Breadcrumb } from "react-bootstrap";
 
 const InformeIndex = ()=> {
 
@@ -79,14 +79,12 @@ const InformeIndex = ()=> {
     return (
         <>
             <Breadcrumb>
-                <Breadcrumb.Items>
-                    <Breadcrumb.Item href="/">
-                        Dashboard
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        Importar Informes
-                    </Breadcrumb.Item>
-                </Breadcrumb.Items>
+                <Breadcrumb.Item href="/">
+                    Dashboard
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                    Importar Informes
+                </Breadcrumb.Item>
             </Breadcrumb>
             <div className="container-fluid">
             <div className="col m-0 font-weight-bold text-primary pb-3">

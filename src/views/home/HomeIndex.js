@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
-import Breadcrumb from '../../components/Breadcrumb';
-
+import { Breadcrumb } from "react-bootstrap";
 import {obtenerAutorizacion} from '../../config/LocalStorageService';
 
 const HomeIndex = ()=> {
@@ -17,11 +16,9 @@ const HomeIndex = ()=> {
     return (
         <>
             <Breadcrumb>
-                <Breadcrumb.Items>
-                    <Breadcrumb.Item>
-                        Dashboard
-                    </Breadcrumb.Item>
-                </Breadcrumb.Items>
+                <Breadcrumb.Item>
+                    Dashboard
+                </Breadcrumb.Item>
             </Breadcrumb>
             <Card>                        
                 <Card.Body>
