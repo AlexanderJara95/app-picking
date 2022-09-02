@@ -1,5 +1,5 @@
 import {useEffect,useState} from 'react';
-import Breadcrumb from '../../components/Breadcrumb';
+import { Breadcrumb } from "react-bootstrap";
 import HtmlToJson from '../../utils/HtmlToJson';
 import ListadoOrdenes from './components/ListadoOrdenes';
 import OrdenVenta from './OrdenVenta';
@@ -13,14 +13,12 @@ const OrdenVentaIndex = ()=> {
     return (
         <>
             <Breadcrumb>
-                <Breadcrumb.Items>
-                    <Breadcrumb.Item href="/">
-                        Dashboard
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        Órdenes
-                    </Breadcrumb.Item>
-                </Breadcrumb.Items>
+                <Breadcrumb.Item href="/">
+                    Dashboard
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                    Órdenes
+                </Breadcrumb.Item>
             </Breadcrumb>
             <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'4em',zIndex:'1000'}}>
                 <div className="row pt-3">

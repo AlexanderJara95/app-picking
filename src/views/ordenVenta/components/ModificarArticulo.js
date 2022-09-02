@@ -1,10 +1,13 @@
 import React, { Component, useEffect, useState } from 'react'
 import TableRows from "./TableRows";
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
+import { toastme } from 'toastmejs';
 
 
-function ModificarArticulo({articulo,setArticulo}) {
+function ModificarArticulo({articulo,setArticulo,setResta}) {
 
+    const [restaCantidad,setRestaCantidad] = useState(0);
+    const [btnGuardar,setBtnGuardar] = useState(true); 
     useEffect(()=>{
       console.log("articulo,",articulo);
       if(Object.keys(articulo).length !== 0){
@@ -24,42 +27,75 @@ function ModificarArticulo({articulo,setArticulo}) {
 
     const [rowsData, setRowsData] = useState([]);
     const addTableRows = () => {
+        var contador=0;
+        rowsData.map((item)=>{
+          contador = contador + parseInt(item.cantidad);
+        });
         //crear array constante con los campos a usar para las lineas
-        console.log("articulo",articulo.ubicacion);
-        const rowsInput = {
-          idArticulo: articulo.idArticulo,
-          pedidoDeVentas: articulo.pedidoDeVentas,
-          codigoArticulo: articulo.codigoArticulo,
-          descripcion: articulo.descripcion,
-          numeroLote: articulo.numeroLote,
-          ubicacion: articulo.ubicacion,
-          idPallet: articulo.idPallet,
-          fechaCaducidad: articulo.fechaCaducidad,
-          cantidad: articulo.cantidad
-        }
+        
         //con esto usando solo el "rowsInput" es para agregar lineas usando el array constante creado arriba, con la instancia de useState "setRowsData"
         //se agregar el "...rowsData" para que mantengan la linea/data ya ingresada y solo agregue una nueva posterior
-        setRowsData([...rowsData, rowsInput])
+        if(contador < articulo.cantidad) {
+          const rowsInput = {
+            idArticulo: articulo.idArticulo,
+            pedidoDeVentas: articulo.pedidoDeVentas,
+            codigoArticulo: articulo.codigoArticulo,
+            descripcion: articulo.descripcion,
+            numeroLote: articulo.numeroLote,
+            ubicacion: articulo.ubicacion,
+            idPallet: articulo.idPallet,
+            fechaCaducidad: articulo.fechaCaducidad,
+            cantidad: articulo.cantidad - contador
+          }
+          setRowsData([...rowsData, rowsInput]);
+          setResta(0);
+          setBtnGuardar(true);
+        }else{
+          toastme.info(
+            "No puede agregar más cantidades"
+          );
+        }
 
     }
     //Eliminar lineas ejecutandolo en base al index de la linea clickeada, seleccionando solo la linea indicada, y no todas (por el "...rowsData")
     const deleteTableRows = (index) => {
-        const rows = [...rowsData];
-        rows.splice(index, 1);
-        setRowsData(rows);
+      var contador=0;
+      rowsData.map((item)=>{
+        contador = contador + parseInt(item.cantidad);
+      });   
+      setResta(articulo.cantidad-(contador - rowsData[index].cantidad));
+      console.log("rowsData - contador",contador);
+      console.log("rowsData - cantidad",rowsData[index].cantidad);
+      const rows = [...rowsData];
+      rows.splice(index, 1);         
+      setRowsData(rows);
+      setBtnGuardar(false);
     }
 
-    const handleChange = (index, evnt) => {
+    const handleChange = (index, evnt) => {     
         const { name, value } = evnt.target;
+        //console.log("name,value", name, value);
+        //console.log("cantidad", articulo.cantidad);
         const rowsInput = [...rowsData];
         rowsInput[index][name] = value;
+        console.log("ingrese");
         setRowsData(rowsInput);
+        var contador=0;
+        rowsData.map((item)=>{
+          contador = contador + parseInt(item.cantidad);
+        });   
+        if(contador < articulo.cantidad) {
+          setBtnGuardar(false);
+          setResta(articulo.cantidad-contador);
+        }
+        if(contador == articulo.cantidad){setBtnGuardar(true)};
+        
     }
 
     return (
         <div className="container-fluid">
             <div className="row">
-                <div className="col-sm-8">
+                <div className="col-sm-12">
                   <Table className="table" bordered>
                       <thead className='bg-dark text-white text-center'>
                           <tr>
@@ -76,8 +112,15 @@ function ModificarArticulo({articulo,setArticulo}) {
                       </tbody>
                   </Table>
                 </div>
-                <div className="col-sm-4">
-
+                <div className="offset-6 col-6">
+                    <div className='row'>
+                        <div className='col-6'>
+                          <Button className='btn-secondary col-sm-12'>Cancelar</Button>
+                        </div>
+                        <div className='col-6'>
+                          <Button className='btn-primary col-sm-12'>Guardar</Button>
+                        </div>
+                    </div>                    
                 </div>
             </div>
         </div>

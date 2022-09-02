@@ -1,6 +1,6 @@
 import {useEffect,useState} from 'react';
-import Breadcrumb from '../../components/Breadcrumb';
 import ListadoUsuarios from './components/ListadoUsuarios';
+import { Breadcrumb } from "react-bootstrap";
 
 const UsuarioIndex = ()=> {
     useEffect(()=>{
@@ -10,14 +10,12 @@ const UsuarioIndex = ()=> {
     return (
         <>
             <Breadcrumb>
-                <Breadcrumb.Items>
-                    <Breadcrumb.Item href="/">
-                        Dashboard
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        Usuarios
-                    </Breadcrumb.Item>
-                </Breadcrumb.Items>
+                <Breadcrumb.Item href="/">
+                    Dashboard
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                    Usuarios
+                </Breadcrumb.Item>
             </Breadcrumb>
             <div className="container-fluid">
                 <div className="col m-0 font-weight-bold text-primary pb-3">
