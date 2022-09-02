@@ -49,6 +49,7 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
           }
           setRowsData([...rowsData, rowsInput]);
           setResta(0);
+          setBtnGuardar(true);
         }else{
           toastme.info(
             "No puede agregar más cantidades"
@@ -58,9 +59,17 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
     }
     //Eliminar lineas ejecutandolo en base al index de la linea clickeada, seleccionando solo la linea indicada, y no todas (por el "...rowsData")
     const deleteTableRows = (index) => {
-        const rows = [...rowsData];
-        rows.splice(index, 1);
-        setRowsData(rows);
+      var contador=0;
+      rowsData.map((item)=>{
+        contador = contador + parseInt(item.cantidad);
+      });   
+      setResta(articulo.cantidad-(contador - rowsData[index].cantidad));
+      console.log("rowsData - contador",contador);
+      console.log("rowsData - cantidad",rowsData[index].cantidad);
+      const rows = [...rowsData];
+      rows.splice(index, 1);         
+      setRowsData(rows);
+      setBtnGuardar(false);
     }
 
     const handleChange = (index, evnt) => {     
@@ -76,9 +85,10 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
           contador = contador + parseInt(item.cantidad);
         });   
         if(contador < articulo.cantidad) {
-            setBtnGuardar(false);
-            setResta(articulo.cantidad-contador);
+          setBtnGuardar(false);
+          setResta(articulo.cantidad-contador);
         }
+        if(contador == articulo.cantidad){setBtnGuardar(true)};
         
     }
 
@@ -102,11 +112,15 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
                       </tbody>
                   </Table>
                 </div>
-                <div className="col-sm-4">
-                    <Button className='btn-secondary'>Cancelar</Button>
-                    {btnGuardar?
-                      <Button className='btn-primary'>Guardar</Button>:<></>
-                    }
+                <div className="offset-6 col-6">
+                    <div className='row'>
+                        <div className='col-6'>
+                          <Button className='btn-secondary col-sm-12'>Cancelar</Button>
+                        </div>
+                        <div className='col-6'>
+                          <Button className='btn-primary col-sm-12'>Guardar</Button>
+                        </div>
+                    </div>                    
                 </div>
             </div>
         </div>
