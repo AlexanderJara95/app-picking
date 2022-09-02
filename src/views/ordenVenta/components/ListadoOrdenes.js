@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { listarOrden } from '../../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
+
+
+
 const ListadoOrdenes = () =>{
 
     const [datosTabla,setDatosTabla] = useState([]);
