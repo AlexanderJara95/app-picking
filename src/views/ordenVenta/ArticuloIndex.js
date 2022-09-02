@@ -9,6 +9,7 @@ import { StatusCodes } from 'http-status-codes';
 const ArticuloIndex = () =>{
     const param = useParams();
     const [articulo,setArticulo] =useState({});
+    const [resta,setResta] =useState(0);
 
     useEffect(()=>{
         if(param.id)busquedaArticulo(param.id);  
@@ -48,11 +49,11 @@ const ArticuloIndex = () =>{
                     </div>
                     <div className="col-2 text-center m-0 font-weight-bold text-primary pb-3">
                         <h1><strong>Total: </strong>{articulo.cantidad}</h1>
-                        <div><h3 style={{backgroundColor:"#ffc107",color:"#fff",borderRadius:"15px"}}>Resta: {articulo.cantidad}</h3></div>
+                        <div><h3 style={{backgroundColor:"#ffc107",color:"#fff",borderRadius:"15px"}}>Resta: {resta}</h3></div>
                     </div>
                 </div>                
             </div>
-            <ModificarArticulo articulo={articulo} setArticulo={setArticulo}></ModificarArticulo>
+            <ModificarArticulo articulo={articulo} setArticulo={setArticulo} setResta={setResta}></ModificarArticulo>
         </>
     );
 }

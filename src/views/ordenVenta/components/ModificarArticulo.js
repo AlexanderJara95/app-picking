@@ -1,12 +1,13 @@
 import React, { Component, useEffect, useState } from 'react'
 import TableRows from "./TableRows";
 import { Button, Table } from 'react-bootstrap';
+import { toastme } from 'toastmejs';
 
 
-function ModificarArticulo({articulo,setArticulo}) {
+function ModificarArticulo({articulo,setArticulo,setResta}) {
 
     const [restaCantidad,setRestaCantidad] = useState(0);
-
+    const [btnGuardar,setBtnGuardar] = useState(true); 
     useEffect(()=>{
       console.log("articulo,",articulo);
       if(Object.keys(articulo).length !== 0){
@@ -30,23 +31,29 @@ function ModificarArticulo({articulo,setArticulo}) {
         rowsData.map((item)=>{
           contador = contador + parseInt(item.cantidad);
         });
-        console.log("contador",contador);
         //crear array constante con los campos a usar para las lineas
-        console.log("articulo",articulo.ubicacion);
-        const rowsInput = {
-          idArticulo: articulo.idArticulo,
-          pedidoDeVentas: articulo.pedidoDeVentas,
-          codigoArticulo: articulo.codigoArticulo,
-          descripcion: articulo.descripcion,
-          numeroLote: articulo.numeroLote,
-          ubicacion: articulo.ubicacion,
-          idPallet: articulo.idPallet,
-          fechaCaducidad: articulo.fechaCaducidad,
-          cantidad: articulo.cantidad
-        }
+        
         //con esto usando solo el "rowsInput" es para agregar lineas usando el array constante creado arriba, con la instancia de useState "setRowsData"
         //se agregar el "...rowsData" para que mantengan la linea/data ya ingresada y solo agregue una nueva posterior
-        if(contador <= articulo.cantidad) setRowsData([...rowsData, rowsInput])
+        if(contador < articulo.cantidad) {
+          const rowsInput = {
+            idArticulo: articulo.idArticulo,
+            pedidoDeVentas: articulo.pedidoDeVentas,
+            codigoArticulo: articulo.codigoArticulo,
+            descripcion: articulo.descripcion,
+            numeroLote: articulo.numeroLote,
+            ubicacion: articulo.ubicacion,
+            idPallet: articulo.idPallet,
+            fechaCaducidad: articulo.fechaCaducidad,
+            cantidad: articulo.cantidad - contador
+          }
+          setRowsData([...rowsData, rowsInput]);
+          setResta(0);
+        }else{
+          toastme.info(
+            "No puede agregar más cantidades"
+          );
+        }
 
     }
     //Eliminar lineas ejecutandolo en base al index de la linea clickeada, seleccionando solo la linea indicada, y no todas (por el "...rowsData")
@@ -58,14 +65,21 @@ function ModificarArticulo({articulo,setArticulo}) {
 
     const handleChange = (index, evnt) => {     
         const { name, value } = evnt.target;
-        console.log("name,value", name, value);
-        console.log("cantidad", articulo.cantidad);
+        //console.log("name,value", name, value);
+        //console.log("cantidad", articulo.cantidad);
         const rowsInput = [...rowsData];
         rowsInput[index][name] = value;
-        if(name == "cantidad" && value.length < articulo.cantidad.length){
-            console.log("ingrese");
-            setRowsData(rowsInput);
-        }        
+        console.log("ingrese");
+        setRowsData(rowsInput);
+        var contador=0;
+        rowsData.map((item)=>{
+          contador = contador + parseInt(item.cantidad);
+        });   
+        if(contador < articulo.cantidad) {
+            setBtnGuardar(false);
+            setResta(articulo.cantidad-contador);
+        }
+        
     }
 
     return (
@@ -90,6 +104,9 @@ function ModificarArticulo({articulo,setArticulo}) {
                 </div>
                 <div className="col-sm-4">
                     <Button className='btn-secondary'>Cancelar</Button>
+                    {btnGuardar?
+                      <Button className='btn-primary'>Guardar</Button>:<></>
+                    }
                 </div>
             </div>
         </div>
