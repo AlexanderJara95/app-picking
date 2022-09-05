@@ -123,7 +123,7 @@ class OrdenVenta extends Component {
                                 <td>{itemOrden.fechaInicio}</td>
                                 <td>{itemOrden.fechaCompletado}</td>
                                 <td>{itemOrden.estado}</td>
-                                <td><NavLink to={"/detalleorden/"+ itemOrden.pedidoDeVentas} className="nav_link"><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
+                                <td><NavLink to={"/detalleorden/"+ itemOrden.pedidoDeVentas}><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
                                 <td><Button className="btn-success" onClick={event => this.activarBoton(event)}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                             </tr>
                         )}
