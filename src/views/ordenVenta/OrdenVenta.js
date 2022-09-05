@@ -83,9 +83,8 @@ class OrdenVenta extends Component {
             <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab" >
             <Table className="table-sm border-white" responsive bordered hover striped> 
                 <thead className="thead-dark bg-dark text-white">
-                        <tr className='align-middle' scope="col"
-                         >
-                            <th  scope="col">Id Orden</th>
+                        <tr className='align-middle' scope="col">
+                            <th scope="col">Id Orden</th>
                             <th scope="col">Pedido de Ventas</th>
                             <th scope="col">Id Cliente AX</th>
                             <th scope="col">Nombre Cliente</th>
@@ -124,7 +123,7 @@ class OrdenVenta extends Component {
                                 <td>{itemOrden.fechaInicio}</td>
                                 <td>{itemOrden.fechaCompletado}</td>
                                 <td>{itemOrden.estado}</td>
-                                <td><NavLink to={"/detalleorden/"+ itemOrden.pedidoDeVentas} className="nav"><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
+                                <td><NavLink to={"/detalleorden/"+ itemOrden.pedidoDeVentas} className="nav_link"><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
                                 <td><Button className="btn-success" onClick={event => this.activarBoton(event)}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                             </tr>
                         )}

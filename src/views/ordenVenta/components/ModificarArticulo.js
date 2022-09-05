@@ -71,7 +71,6 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
       setRowsData(rows);
       setBtnGuardar(false);
     }
-
     const handleChange = (index, evnt) => {     
         const { name, value } = evnt.target;
         //console.log("name,value", name, value);
@@ -104,10 +103,10 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
                               <th>Lote</th>
                               <th>Fecha Caducidad</th>
                               <th>Cantidad</th>
-                              <th><button className="btn btn-outline-success" onClick={addTableRows} >+</button></th>
+                              <th>Eliminar</th>
                           </tr>
                       </thead>
-                      <tbody>
+                      <tbody className='text-center'>
                           <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />
                       </tbody>
                   </Table>
@@ -118,7 +117,7 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
                           <Button className='btn-secondary col-sm-12'>Cancelar</Button>
                         </div>
                         <div className='col-6'>
-                          <Button className='btn-primary col-sm-12'>Guardar</Button>
+                          <Button className='btn-success col-sm-12'>Guardar</Button>
                         </div>
                     </div>                    
                 </div>
