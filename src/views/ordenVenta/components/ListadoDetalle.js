@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { listarOrdenDetallePorId } from '../../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
-import { Button, NavLink, ProgressBar, Table } from 'react-bootstrap';
+import { Button, ProgressBar, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
 
 
 const ListadoDetalle = ({ id, progreso, setProgress }) => {
@@ -31,14 +32,18 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
     }
     const seleccionarOrden = (itemOrden) => {
         setOrdenSeleccionada(itemOrden);
-        document.getElementById("li-orden-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"   
+        document.getElementById("li-articulo-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"   
         if (Object.keys(ordenSeleccionada).length !== 0) {
-            document.getElementById("li-orden-" + ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
+            document.getElementById("li-articulo-" + ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
         }
-    }
-    const mostrarEliminar = () => {
+        this.setState({ ordenSeleccionada: itemOrden })
+
+        document.getElementById("li-articulo-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
+
 
     }
+
+
     const cambiarProgreso = (e) => {
         const checked = e.target.checked;
         console.log("checked", checked);
@@ -55,11 +60,9 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
     return (
         <>
             <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab">
-                <Table className="table-sm border-white" responsive bordered hover striped sticky>
+                <Table className="table-sm border-white" responsive bordered hover striped >
                     <thead className="thead-dark bg-dark text-white" >
-
                         <tr className='align-middle text-center' scope="col">
-
                             {/*<th>Id Orden</th>*/}
                             <th scope="col">Id</th>
                             <th scope="col">Pedido Venta</th>
@@ -78,7 +81,8 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                         {datosTabla.map((itemDetalle, index) =>
                             <tr className='align-middle'
                                 scope="row"
-                                key={index}>
+                                key={index}
+>
                                 <td>{itemDetalle.idArticulo}</td>
                                 <td>{itemDetalle.pedidoDeVentas}</td>
                                 <td>{itemDetalle.codigoArticulo}</td>
@@ -94,7 +98,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                         <input className="form-check-input" type="checkbox" id="checkdetalle" onChange={(e) => cambiarProgreso(e)} />
                                     </div>
                                 </td>
-                                <td><NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink></td>
+                                <td><NavLink to={"/detallearticulo/"+itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink></td>
                                 {/*<td><Button onClick={() => this.mostrarEliminar(itemDetalle)}> <FontAwesomeIcon icon={faTimes}/></Button></td> */}
                             </tr>
                         )}
