@@ -4,6 +4,7 @@ import { faCheck, faEdit, faEye, faTimes, faWindowRestore } from '@fortawesome/f
 import { Table, Button} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
+
 class OrdenVenta extends Component {
     constructor(props) {
         super(props)
@@ -17,7 +18,6 @@ class OrdenVenta extends Component {
         }
     }
 
-    
     componentWillReceiveProps(props) {
         console.log(props.detalleOrden)
         this.leerDetalle(props.detalleOrden.idOrden)
@@ -81,11 +81,11 @@ class OrdenVenta extends Component {
         return (
 
             <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab" >
+                <BootstrapTable data={datosTa}></BootstrapTable>
             <Table className="table-sm border-white" responsive bordered hover striped> 
                 <thead className="thead-dark bg-dark text-white">
-                        <tr className='align-middle' scope="col"
-                         >
-                            <th  scope="col">Id Orden</th>
+                        <tr className='align-middle' scope="col">
+                            <th scope="col">Id Orden</th>
                             <th scope="col">Pedido de Ventas</th>
                             <th scope="col">Id Cliente AX</th>
                             <th scope="col">Nombre Cliente</th>
