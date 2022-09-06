@@ -100,7 +100,9 @@ class OrdenVenta extends Component {
             <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab" >
                 <Table className="table-sm border-white" responsive bordered hover striped>
                     <thead className="thead-dark bg-dark text-white">
-                        <tr className='align-middle' scope="col">
+                        <tr className='align-middle' 
+                            scope="col"
+                            style={{textAlign: 'center', fontSize: '14px'}}>
                             <th scope="col">Id Orden</th>
                             <th scope="col">Pedido de Ventas</th>
                             <th scope="col">Id Cliente AX</th>
@@ -121,7 +123,7 @@ class OrdenVenta extends Component {
                                 scope="row"
                                 key={itemOrden.idOrden}
                                 id={"li-orden-" + itemOrden.idOrden}
-                                style={{textAlign: 'center'}}
+                                style={{textAlign: 'center', fontSize: '11px'}}
                                 onClick={() => this.seleccionarOrden(itemOrden)} >
                                 <td>{itemOrden.idOrden}</td>
                                 <td>{itemOrden.pedidoDeVentas}</td>
@@ -129,8 +131,10 @@ class OrdenVenta extends Component {
                                 <td>{itemOrden.nombreCliente}</td>
                                 <td>{itemOrden.referencia}</td>
                                 <td style={{ minWidth: '130px' }}>
-                                    <select className="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
+                                    <select className="form-select form-select-sm" aria-label=".form-select-sm example">
+
                                         <option value='0' onClick={this.seleccionarUsuario}>Seleccione</option>
+                                        
                                         {this.state.listaUsuarios.map((usuario) => (
                                             usuario.nivelUsuario == 3 ? <option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option> : null
                                         ))}
@@ -139,19 +143,19 @@ class OrdenVenta extends Component {
                                 <td >{this.state.listaUsuarios.map((usuario) => (
                                     
                                     usuario.idUsuario == itemOrden.asignadoA ? <>{usuario.nombre}</> : null
+
                                 ))}</td>
 
                                 {/*<td>{itemOrden.asignadoA}</td>*/}
                                 <td>{itemOrden.fechaSubida}</td>
                                 <td>{itemOrden.fechaInicio}</td>
                                 <td>{itemOrden.fechaCompletado}</td>
-                                <td style={{textAlign: 'center'}}>{this.mostrarEstado(itemOrden.estado)}</td>
+                                <td >{this.mostrarEstado(itemOrden.estado)}</td>
                                 <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
-                                <td><Button className="btn-success" onClick={event => this.activarBoton(event)}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
+                                <td><Button className="btn-success" onClick={console.log(this.state.ordenSeleccionada.idOrden)}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                             </tr>
                         )}
                         <tr>
-
                         </tr>
                     </tbody>
                 </Table>
@@ -159,6 +163,20 @@ class OrdenVenta extends Component {
         )
     }
 
+
+    seleccionarOrden(itemOrden) {
+        
+
+        //console.log(itemOrden);
+        //esta logica siguiente es para capturar el item clickeado y luego si se clickea otro, desmarque como "active" el anterior
+        if (this.state.ordenSeleccionada !== '') {
+            document.getElementById("li-orden-" + this.state.ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
+        } else {
+            this.alertaDetalle();
+        }
+        this.setState({ ordenSeleccionada: itemOrden })
+        document.getElementById("li-orden-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
+    }
 
     //(itemOrden.estado == 1) ? {color: 'red'}:{color: 'green'}
 
