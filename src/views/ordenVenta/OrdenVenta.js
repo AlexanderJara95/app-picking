@@ -121,6 +121,7 @@ class OrdenVenta extends Component {
                                 scope="row"
                                 key={itemOrden.idOrden}
                                 id={"li-orden-" + itemOrden.idOrden}
+                                style={{textAlign: 'center'}}
                                 onClick={() => this.seleccionarOrden(itemOrden)} >
                                 <td>{itemOrden.idOrden}</td>
                                 <td>{itemOrden.pedidoDeVentas}</td>
@@ -135,7 +136,8 @@ class OrdenVenta extends Component {
                                         ))}
                                     </select>
                                 </td>
-                                <td>{this.state.listaUsuarios.map((usuario) => (
+                                <td >{this.state.listaUsuarios.map((usuario) => (
+                                    
                                     usuario.idUsuario == itemOrden.asignadoA ? <>{usuario.nombre}</> : null
                                 ))}</td>
 
@@ -143,7 +145,7 @@ class OrdenVenta extends Component {
                                 <td>{itemOrden.fechaSubida}</td>
                                 <td>{itemOrden.fechaInicio}</td>
                                 <td>{itemOrden.fechaCompletado}</td>
-                                <td style={{color: this.mostrarEstado(itemOrden.estado)}}>{itemOrden.estado}</td>
+                                <td style={{textAlign: 'center'}}>{this.mostrarEstado(itemOrden.estado)}</td>
                                 <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
                                 <td><Button className="btn-success" onClick={event => this.activarBoton(event)}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                             </tr>
@@ -177,19 +179,18 @@ class OrdenVenta extends Component {
     mostrarEstado(estado) {
         switch (estado) {
             case 'Por Asignar':
-                return <span>test1</span>,this.setState({ changeColor: "#3acdab" });
+                return <span style={{backgroundColor:"#ffff00",color:'#000000',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Por Asignar</span>
             case 'Asignado':
-                return this.setState({ changeColor: "#ffad46" });
+                return <span style={{backgroundColor:"#00ff00",color:'#000000',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Asignado</span>
             case 'En Proceso':
-                return this.setState({ changeColor: "#2128ff" });
+                return <span style={{backgroundColor:"#00ccff",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>En Proceso</span>
             case 'Atendido':
-                return this.setState({ changeColor: "#2128ff" });
+                return <span style={{backgroundColor:"#ffad46",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'25px',paddingRight:'25px', fontWeight: 'bolder'}}>Atendido</span>
             case 'Finalizado':
-                return this.setState({ changeColor: "#2128ff" });
+                return <span style={{backgroundColor:"#00802b",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Finalizado</span>
             case 'Anulado':
-                return this.setState({ changeColor: "#2128ff" });
-            default:
-                return this.setState({ changeColor: "#FFFFFF" })
+                return <span style={{backgroundColor:"#b30000",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Anulado</span>
+
         }
     }
     mostrarEliminar = (itemOrden => {
