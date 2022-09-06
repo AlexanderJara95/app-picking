@@ -183,13 +183,13 @@ class OrdenVenta extends Component {
             case 'Asignado':
                 return <span style={{backgroundColor:"#00ff00",color:'#000000',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Asignado</span>
             case 'En Proceso':
-                return <span style={{backgroundColor:"#00ccff",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>En Proceso</span>
+                return <span style={{backgroundColor:"#ff3333",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>En Proceso</span>
             case 'Atendido':
-                return <span style={{backgroundColor:"#ffad46",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'25px',paddingRight:'25px', fontWeight: 'bolder'}}>Atendido</span>
+                return <span style={{backgroundColor:"#3366ff",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'25px',paddingRight:'25px', fontWeight: 'bolder'}}>Atendido</span>
             case 'Finalizado':
                 return <span style={{backgroundColor:"#00802b",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Finalizado</span>
             case 'Anulado':
-                return <span style={{backgroundColor:"#b30000",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Anulado</span>
+                return <span style={{backgroundColor:"#8c8c8c",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Anulado</span>
 
         }
     }
