@@ -2,12 +2,19 @@ import React, { Component, useEffect, useState } from 'react'
 import TableRows from "./TableRows";
 import { Button, Table } from 'react-bootstrap';
 import { toastme } from 'toastmejs';
+import store from '../../../redux/Store';
+import { registrarOrdenDetalle,modificarOrdenDetalle } from '../../../redux/ordenVenta/OrdenVentaActions';
+import { StatusCodes } from 'http-status-codes';
 
 
-function ModificarArticulo({articulo,setArticulo,setResta}) {
+function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
 
     const [restaCantidad,setRestaCantidad] = useState(0);
     const [btnGuardar,setBtnGuardar] = useState(true); 
+    const childFunc = React.useRef(null);
+    useEffect(()=>{
+      addTableRows.current = addTableRowsLocal;
+    });
     useEffect(()=>{
       console.log("articulo,",articulo);
       if(Object.keys(articulo).length !== 0){
@@ -26,7 +33,7 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
     },[articulo]);
 
     const [rowsData, setRowsData] = useState([]);
-    const addTableRows = () => {
+    const addTableRowsLocal = () => {
         var contador=0;
         rowsData.map((item)=>{
           contador = contador + parseInt(item.cantidad);
@@ -63,21 +70,26 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
       rowsData.map((item)=>{
         contador = contador + parseInt(item.cantidad);
       });   
-      setResta(articulo.cantidad-(contador - rowsData[index].cantidad));
-      console.log("rowsData - contador",contador);
-      console.log("rowsData - cantidad",rowsData[index].cantidad);
+      var resta =articulo.cantidad-(contador - rowsData[index].cantidad);
+      if( resta == 0){
+        console.log("cantad true", resta);
+        setBtnGuardar(true);
+      }else{
+        console.log("cantad false", resta);
+        setBtnGuardar(false);
+      }
+      setResta(resta);
       const rows = [...rowsData];
       rows.splice(index, 1);         
-      setRowsData(rows);
-      setBtnGuardar(false);
+      setRowsData(rows);      
     }
     const handleChange = (index, evnt) => {     
         const { name, value } = evnt.target;
-        //console.log("name,value", name, value);
+        console.log("name,value", name, value);
         //console.log("cantidad", articulo.cantidad);
         const rowsInput = [...rowsData];
         rowsInput[index][name] = value;
-        console.log("ingrese");
+        console.log("ingrese",rowsInput);
         setRowsData(rowsInput);
         var contador=0;
         rowsData.map((item)=>{
@@ -87,7 +99,51 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
           setBtnGuardar(false);
           setResta(articulo.cantidad-contador);
         }
-        if(contador == articulo.cantidad){setBtnGuardar(true)};
+        if(contador == articulo.cantidad){ console.log("trueeeee");setBtnGuardar(true)};
+        
+    }
+    
+    const guardarArticulos = async(json) =>{
+      //validando que exista detalle de orden
+      console.log("ddd",json);
+      if(json.length > 0){
+          try {
+              json.map(async(item,index)=>{
+                  try {
+                      console.log("ini");
+                      console.log(item.pedidoDeVentas);
+                      const response = await store.dispatch(registrarOrdenDetalle({
+                        pedidoDeVentas: item.pedidoDeVentas,
+                        codigoArticulo: item.codigoArticulo,
+                        descripcion: item.descripcion??'',
+                        numeroLote: item.numeroLote,
+                        ubicacion: item.ubicacion,
+                        idPallet: item.idPallet,
+                        fechaCaducidad: item.fechaCaducidad,
+                        cantidad: item.cantidad
+                      }));
+                      if (response.status === StatusCodes.OK) {
+                        toastme.success(
+                            `Artículo agregado al Detalle`,
+                        );		
+                        window.location.href = "/detalleorden/"+ item.pedidoDeVentas;	
+                      }
+                      
+                  } catch (error) {
+                      console.log(error);
+                  }
+              });
+              
+          } catch (error) {
+              toastme.error(
+                  error
+              );
+          }
+        }else{
+            toastme.error(
+                `No hay Detalle de orden`
+            );
+        }
         
     }
 
@@ -113,12 +169,25 @@ function ModificarArticulo({articulo,setArticulo,setResta}) {
                 </div>
                 <div className="offset-6 col-6">
                     <div className='row'>
-                        <div className='col-6'>
-                          <Button className='btn-secondary col-sm-12'>Cancelar</Button>
-                        </div>
-                        <div className='col-6'>
-                          <Button className='btn-success col-sm-12'>Guardar</Button>
-                        </div>
+                        {
+                          btnGuardar?
+                          <>
+                            <div className='col-6'>
+                              <Button className='btn-secondary col-sm-12'>Cancelar</Button>
+                            </div>
+                            <div className='col-6'>
+                              <Button onClick={()=>guardarArticulos(rowsData)} className='btn-success col-sm-12'>Guardar</Button>
+                            </div>
+                          </>:
+                          <>
+                            <div className='col-6'>
+                            </div>
+                            <div className='col-6'>
+                              <Button className='btn-secondary col-sm-12'>Cancelar</Button>
+                            </div>
+                          </>
+                        }
+                        
                     </div>                    
                 </div>
             </div>

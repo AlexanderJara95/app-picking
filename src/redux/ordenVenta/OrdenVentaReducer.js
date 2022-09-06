@@ -5,7 +5,8 @@ import {
 	REGISTRAR_ORDEN,
 	REGISTRAR_ORDEN_DETALLE,
 	MODIFICAR_ORDEN,
-	LISTAR_ARTICULO_DETALLE
+	LISTAR_ARTICULO_DETALLE,
+	MODIFICAR_ORDEN_DETALLE
 	
 } from './OrdenVentaTypes';
 
@@ -53,6 +54,12 @@ const OrdenVentaReducer = (state = {}, action) => {
 			};
 		}
 		case REGISTRAR_ORDEN_DETALLE: {
+			return {
+				...state,
+				data: action.data,
+			};
+		}
+		case MODIFICAR_ORDEN_DETALLE: {
 			return {
 				...state,
 				data: action.data,
