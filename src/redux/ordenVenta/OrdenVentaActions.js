@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE, LISTAR_ARTICULO_DETALLE} from './OrdenVentaTypes';
+import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE, LISTAR_ARTICULO_DETALLE,MODIFICAR_ORDEN_DETALLE} from './OrdenVentaTypes';
 import { API_BASE_URL } from '../../config/Services';
 
 export const listarOrden = () => async dispatch => {
@@ -46,6 +46,28 @@ export const registrarOrdenDetalle = (paramData) => async dispatch => {
     console.log("Registrado",response.data);
     return dispatch({
         type: REGISTRAR_ORDEN_DETALLE,
+        status: response.status,
+        data: response.data
+    })  
+}  
+
+export const modificarOrdenDetalle = (paramData) => async dispatch => {
+	console.log("Param Actu",paramData);
+	var formData = new FormData();
+    formData.append("idArticulo", paramData.idArticulo);
+	formData.append("pedidoDeVentas", paramData.pedidoDeVentas);
+    formData.append("codigoArticulo", paramData.codigoArticulo);
+    formData.append("descripcion", paramData.descripcion);
+    formData.append("numeroLote", paramData.numeroLote);	
+    formData.append("ubicacion", paramData.ubicacion);
+    formData.append("idPallet", paramData.idPallet);
+	formData.append("fechaCaducidad", paramData.fechaCaducidad);
+    formData.append("cantidad", paramData.cantidad);
+
+	const response = await axios.post(`${API_BASE_URL}/servicioactualizardetalleorden.php`,formData);
+    console.log("Actualizado",response.data);
+    return dispatch({
+        type: MODIFICAR_ORDEN_DETALLE,
         status: response.status,
         data: response.data
     })  
