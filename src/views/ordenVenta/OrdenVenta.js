@@ -39,7 +39,7 @@ class OrdenVenta extends Component {
 
     leerOrdenes() {
 
-        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarorden.php"
+        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarorden.php";
         fetch(rutaServicio)
             .then(
                 res => res.json() //indicamos que el objeto devuelto por dicha solicitud al servicio, sera un Json
@@ -48,6 +48,7 @@ class OrdenVenta extends Component {
                 (result) => {
                     this.setState({
                         listaOrdenes: result
+                        
                     });  //aca se crean las variables globales/ de estado
                 }
             )
@@ -166,6 +167,7 @@ class OrdenVenta extends Component {
     }
 
     asignarOrden = () => {
+
         if (this.state.ordenSeleccionada.idOrden !== null && this.state.usuarioAsignado !== 0) {
             const rutaServicio = "https://megalabs.digitalbroperu.com/servicioasignarorden.php"
             var formData = new FormData();
@@ -177,7 +179,9 @@ class OrdenVenta extends Component {
                 body: formData
             }).then(
                 () => {
+
                     this.leerOrdenes();
+
                 }
             )
         } else {
