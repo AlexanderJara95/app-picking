@@ -67,9 +67,9 @@ const InformeIndex = ()=> {
                             }
                         });
                 }else{
-                    const resp = response2.listaOrden.filter(item => json.pedidoVentas == item.pedidoDeVentas);
-                    console.log("conslaa",resp.length);
-                    if(resp.length){
+                    var resp = response2.listaOrden.filter(item => (json.pedidoVentas == item.pedidoDeVentas && item.estado !== 'Anulado'));
+                    console.log("conslaa",resp);
+                    if(resp.length != 0){
                         setListadeInformes([...listadeInformes,json.pedidoVentas + " ya existe"])
                     }else{
                         const response = await store.dispatch(registrarOrden(json));
