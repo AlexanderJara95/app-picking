@@ -145,7 +145,6 @@ class OrdenVenta extends Component {
                                     usuario.idUsuario == itemOrden.asignadoA ? <>{usuario.nombre}</> : null
 
                                 ))}</td>
-
                                 {/*<td>{itemOrden.asignadoA}</td>*/}
                                 <td>{itemOrden.fechaSubida}</td>
                                 <td>{itemOrden.fechaInicio}</td>

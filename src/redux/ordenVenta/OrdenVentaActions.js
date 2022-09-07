@@ -7,7 +7,7 @@ export const listarOrden = () => async dispatch => {
     return dispatch({
         type: LISTAR_ORDEN,
 		status: response.status,
-        listaOrden: response.data
+        listaOrden: response.data==null?0:response.data
     })
 }
 export const registrarOrden = (paramData) => async dispatch => {
