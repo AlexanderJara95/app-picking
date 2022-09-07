@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Alert } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
 
@@ -27,11 +27,9 @@ class OrdenVenta extends Component {
 
 
     componentDidMount() {
-        this.leerUsuarios();
         this.leerOrdenes();
         this.leerEstado();
-
-
+        this.leerUsuarios();
     }
 
     componentDidUpdate() {
@@ -40,6 +38,7 @@ class OrdenVenta extends Component {
 
 
     leerOrdenes() {
+
         const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarorden.php"
         fetch(rutaServicio)
             .then(
@@ -52,6 +51,8 @@ class OrdenVenta extends Component {
                     });  //aca se crean las variables globales/ de estado
                 }
             )
+
+
     }
 
     leerUsuarios() {
@@ -94,88 +95,99 @@ class OrdenVenta extends Component {
 
 
     dibujarTabla(datosTabla) {
-
-        return (
-
-            <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab" >
-                <Table className="table-sm border-white" responsive bordered hover striped>
-                    <thead className="thead-dark bg-dark text-white">
-                        <tr className='align-middle' 
-                            scope="col"
-                            style={{textAlign: 'center', fontSize: '14px'}}>
-                            <th scope="col">Id Orden</th>
-                            <th scope="col">Pedido de Ventas</th>
-                            <th scope="col">Id Cliente AX</th>
-                            <th scope="col">Nombre Cliente</th>
-                            <th scope="col">Referencia</th>
-                            <th scope="col">Asignar</th>
-                            <th scope="col">Asignado A</th>
-                            <th scope="col">Fecha de Subida</th>
-                            <th scope="col">Fecha de Inicio</th>
-                            <th scope="col">Fecha Terminado</th>
-                            <th scope="col">Estado</th>
-                            <th colSpan={3}>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody >
-                        {datosTabla.map((itemOrden) =>
+        if (datosTabla !== null) {
+            return (
+                <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab" >
+                    <Table className="table-sm border-white" responsive bordered hover striped>
+                        <thead className="thead-dark bg-dark text-white">
                             <tr className='align-middle'
-                                scope="row"
-                                key={itemOrden.idOrden}
-                                id={"li-orden-" + itemOrden.idOrden}
-                                style={{textAlign: 'center', fontSize: '11px'}}
-                                onClick={() => this.seleccionarOrden(itemOrden)} >
-                                <td>{itemOrden.idOrden}</td>
-                                <td>{itemOrden.pedidoDeVentas}</td>
-                                <td>{itemOrden.idClienteAx}</td>
-                                <td>{itemOrden.nombreCliente}</td>
-                                <td>{itemOrden.referencia}</td>
-                                <td style={{ minWidth: '130px' }}>
-                                    <select className="form-select form-select-sm" aria-label=".form-select-sm example">
-                                        <option value='0' onClick={this.seleccionarUsuario}>Seleccione</option>
-                                        {this.state.listaUsuarios.map((usuario) => (
-                                            usuario.nivelUsuario == 3 ? <option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option> : null
-                                        ))}
-                                    </select>
-                                </td>
-                                <td >{this.state.listaUsuarios.map((usuario) => (
-                                    usuario.idUsuario == itemOrden.asignadoA ? <>{usuario.nombre}</> : null
-                                ))}</td>
-                                {/*<td>{itemOrden.asignadoA}</td>*/}
-                                <td>{itemOrden.fechaSubida}</td> 
-                                <td>{itemOrden.fechaInicio}</td>
-                                <td>{itemOrden.fechaCompletado}</td>
-                                <td >{this.mostrarEstado(itemOrden.estado)}</td>
-                                <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
-                                <td><Button className="btn-success" onClick={() => this.asignarOrden()}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
+                                scope="col"
+                                style={{ textAlign: 'center', fontSize: '14px' }}>
+                                <th scope="col">Id Orden</th>
+                                <th scope="col">Pedido de Ventas</th>
+                                <th scope="col">Id Cliente AX</th>
+                                <th scope="col">Nombre Cliente</th>
+                                <th scope="col">Referencia</th>
+                                <th scope="col">Asignar</th>
+                                <th scope="col">Asignado A</th>
+                                <th scope="col">Fecha de Subida</th>
+                                <th scope="col">Fecha de Inicio</th>
+                                <th scope="col">Fecha Terminado</th>
+                                <th scope="col">Estado</th>
+                                <th colSpan={3}>Acciones</th>
                             </tr>
-                        )}
-                        <tr>
-                        </tr>
-                    </tbody>
-                </Table>
-            </div>
-        )
+                        </thead>
+                        <tbody >
+                            {datosTabla.map((itemOrden) =>
+                                <tr className='align-middle'
+                                    scope="row"
+                                    key={itemOrden.idOrden}
+                                    id={"li-orden-" + itemOrden.idOrden}
+                                    style={{ textAlign: 'center', fontSize: '11px' }}
+                                    onClick={() => this.seleccionarOrden(itemOrden)} >
+                                    <td>{itemOrden.idOrden}</td>
+                                    <td>{itemOrden.pedidoDeVentas}</td>
+                                    <td>{itemOrden.idClienteAx}</td>
+                                    <td>{itemOrden.nombreCliente}</td>
+                                    <td>{itemOrden.referencia}</td>
+                                    <td style={{ minWidth: '130px' }}>
+                                        <select className="form-select form-select-sm" aria-label=".form-select-sm example">
+                                            <option value='0' onClick={this.seleccionarUsuario}>Seleccione</option>
+                                            {this.state.listaUsuarios.map((usuario) => (
+                                                usuario.nivelUsuario == 3 ? <option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option> : null
+                                            ))}
+                                        </select>
+                                    </td>
+                                    <td >{this.state.listaUsuarios.map((usuario) => (
+                                        usuario.idUsuario == itemOrden.asignadoA ? <>{usuario.nombre}</> : null
+                                    ))}</td>
+                                    {/*<td>{itemOrden.asignadoA}</td>*/}
+                                    <td>{itemOrden.fechaSubida}</td>
+                                    <td>{itemOrden.fechaInicio}</td>
+                                    <td>{itemOrden.fechaCompletado}</td>
+                                    <td >{this.mostrarEstado(itemOrden.estado)}</td>
+                                    <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
+                                    <td><Button className="btn-success" onClick={() => this.asignarOrden()}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
+                                </tr>
+                            )}
+                            <tr>
+                            </tr>
+                        </tbody>
+                    </Table>
+                </div>
+            )
+        } else {
+            return (
+                <Alert variant="danger" style={{ width: '100%', textAlign: 'center' }}>
+                    <Alert.Heading>Listado de Ordenes actualmente vacio</Alert.Heading>
+                </Alert>
+            )
+        }
     }
 
     asignarOrden = () => {
-        const rutaServicio = "https://megalabs.digitalbroperu.com/servicioasignarorden.php"
-        var formData = new FormData();
-        formData.append("idOrden", this.state.ordenSeleccionada.idOrden); 
-        console.log("pasa orden", this.state.ordenSeleccionada.idOrden);
-        formData.append("asignadoPor", "4");
-        console.log("pasa quien", "4");
-        formData.append("asignadoA", this.state.usuarioAsignado);
-        console.log("pasa a aquien",this.state.usuarioAsignado);
+        if (this.state.ordenSeleccionada.idOrden !== null && this.state.usuarioAsignado !== 0) {
+            const rutaServicio = "https://megalabs.digitalbroperu.com/servicioasignarorden.php"
+            var formData = new FormData();
+            formData.append("idOrden", this.state.ordenSeleccionada.idOrden);
+            formData.append("asignadoPor", window.usuario.idUsuario);
+            formData.append("asignadoA", this.state.usuarioAsignado);
+            fetch(rutaServicio, {
+                method: 'POST',
+                body: formData
+            }).then(
+                () => {
+                    this.leerOrdenes();
+                }
+            )
+        } else {
+            return (
+                <Alert variant="danger" style={{ width: '100%', textAlign: 'center' }}>
+                    <Alert.Heading>Listado de Ordenes actualmente vacio</Alert.Heading>
+                </Alert>
+            )
+        }
 
-        fetch(rutaServicio,{
-            method: 'POST',
-            body: formData
-        }).then(
-            () => {
-                this.leerOrdenes();
-            }
-        )
 
     }
 
@@ -183,7 +195,7 @@ class OrdenVenta extends Component {
 
 
     seleccionarOrden(itemOrden) {
-        
+
 
         //console.log(itemOrden);
         //esta logica siguiente es para capturar el item clickeado y luego si se clickea otro, desmarque como "active" el anterior
@@ -215,17 +227,17 @@ class OrdenVenta extends Component {
     mostrarEstado(estado) {
         switch (estado) {
             case 'Por Asignar':
-                return <span style={{backgroundColor:"#ffff00",color:'#000000',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Por Asignar</span>
+                return <span style={{ backgroundColor: "#ffff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Por Asignar</span>
             case 'Asignado':
-                return <span style={{backgroundColor:"#00ff00",color:'#000000',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Asignado</span>
+                return <span style={{ backgroundColor: "#00ff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Asignado</span>
             case 'En Proceso':
-                return <span style={{backgroundColor:"#ff3333",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>En Proceso</span>
+                return <span style={{ backgroundColor: "#ff3333", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>En Proceso</span>
             case 'Atendido':
-                return <span style={{backgroundColor:"#3366ff",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'25px',paddingRight:'25px', fontWeight: 'bolder'}}>Atendido</span>
+                return <span style={{ backgroundColor: "#3366ff", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '25px', paddingRight: '25px', fontWeight: 'bolder' }}>Atendido</span>
             case 'Finalizado':
-                return <span style={{backgroundColor:"#00802b",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Finalizado</span>
+                return <span style={{ backgroundColor: "#00802b", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Finalizado</span>
             case 'Anulado':
-                return <span style={{backgroundColor:"#8c8c8c",color:'#ffffff',borderRadius:'20px',padding:'5px',paddingLeft:'15px',paddingRight:'15px', fontWeight: 'bolder'}}>Anulado</span>
+                return <span style={{ backgroundColor: "#8c8c8c", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Anulado</span>
 
         }
     }
