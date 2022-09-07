@@ -1,6 +1,6 @@
 import {useEffect,useState} from 'react';
 import HtmlToJson from '../../utils/HtmlToJson';
-import { registrarOrden,registrarOrdenDetalle } from '../../redux/ordenVenta/OrdenVentaActions';
+import { registrarOrden,registrarOrdenDetalle,listarOrden } from '../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
 import { toastme } from 'toastmejs';
@@ -9,7 +9,8 @@ import { Breadcrumb } from "react-bootstrap";
 const InformeIndex = ()=> {
 
     const [listadeInformes,setListadeInformes] = useState('');
-    
+    const [subtitle,setSubtitle] = useState();
+
     useEffect(()=>{
     },[]);
     
@@ -32,35 +33,77 @@ const InformeIndex = ()=> {
         console.log("ddd",json);
         if(json.detalleOrden.length > 0){
             try {
-                const response = await store.dispatch(registrarOrden(json));
-                console.log("user",response);
-                if (response.status === StatusCodes.OK) {
-                    toastme.success(
-                        `Nuevo Informe registrado`,
-                    );		
-                    setListadeInformes([...listadeInformes,json.pedidoVentas])
-                }
-                json.detalleOrden.map(async(item)=>{
-                    try {
-                        const response = await store.dispatch(registrarOrdenDetalle({
-                            pedidoDeVentas: json.pedidoVentas??'',
-                            codigoArticulo: item.codigoArticulo??'',
-                            descripcion: item.descripcion??'',
-                            numeroLote: item.numLote??'',
-                            ubicacion: item.ubicacion??'',
-                            idPallet: item.idPallet??'',
-                            fechaCaducidad: item.fechaCaducidad??'',
-                            cantidad: item.cantidad??'',
-                        }));
+                const response2 = await store.dispatch(listarOrden());
+                console.log("listaOrden",response2.listaOrden);
+                if(response2.listaOrden==0){
+                    const response = await store.dispatch(registrarOrden(json));
+                        console.log("user",response);
                         if (response.status === StatusCodes.OK) {
                             toastme.success(
-                                `Artículo agregado al Detalle`,
+                                `Nuevo Informe registrado`,
                             );		
+                            setSubtitle("Pedidos Ingresados:");
+                            setListadeInformes([...listadeInformes,json.pedidoVentas])
                         }
-                    } catch (error) {
-                        console.log(error);
+                        json.detalleOrden.map(async(item)=>{
+                            try {
+                                const response = await store.dispatch(registrarOrdenDetalle({
+                                    pedidoDeVentas: json.pedidoVentas??'',
+                                    codigoArticulo: item.codigoArticulo??'',
+                                    descripcion: item.descripcion??'',
+                                    numeroLote: item.numLote??'',
+                                    ubicacion: item.ubicacion??'',
+                                    idPallet: item.idPallet??'',
+                                    fechaCaducidad: item.fechaCaducidad??'',
+                                    cantidad: item.cantidad??'',
+                                }));
+                                if (response.status === StatusCodes.OK) {
+                                    toastme.success(
+                                        `Artículo agregado al Detalle`,
+                                    );		
+                                }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        });
+                }else{
+                    const resp = response2.listaOrden.filter(item => json.pedidoVentas == item.pedidoDeVentas);
+                    console.log("conslaa",resp.length);
+                    if(resp.length){
+                        setListadeInformes([...listadeInformes,json.pedidoVentas + " ya existe"])
+                    }else{
+                        const response = await store.dispatch(registrarOrden(json));
+                        console.log("user",response);
+                        if (response.status === StatusCodes.OK) {
+                            toastme.success(
+                                `Nuevo Informe registrado`,
+                            );		
+                            setSubtitle("Pedidos Ingresados:");
+                            setListadeInformes([...listadeInformes,json.pedidoVentas])
+                        }
+                        json.detalleOrden.map(async(item)=>{
+                            try {
+                                const response = await store.dispatch(registrarOrdenDetalle({
+                                    pedidoDeVentas: json.pedidoVentas??'',
+                                    codigoArticulo: item.codigoArticulo??'',
+                                    descripcion: item.descripcion??'',
+                                    numeroLote: item.numLote??'',
+                                    ubicacion: item.ubicacion??'',
+                                    idPallet: item.idPallet??'',
+                                    fechaCaducidad: item.fechaCaducidad??'',
+                                    cantidad: item.cantidad??'',
+                                }));
+                                if (response.status === StatusCodes.OK) {
+                                    toastme.success(
+                                        `Artículo agregado al Detalle`,
+                                    );		
+                                }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        });
                     }
-                });
+                }
                 
             } catch (error) {
                 toastme.error(
@@ -113,14 +156,26 @@ const InformeIndex = ()=> {
                                         <h3><strong>Pedidos Ingresados:</strong></h3>
                                         {
                                             listadeInformes && 
-                                            listadeInformes.map((item,index) =>(
-                                                <h4 key={index}>{item}</h4>                                                      
-                                            ))
+                                            listadeInformes.map((item,index) =>{
+                                                if(item.length>16){
+                                                return(
+                                                    <h4 className='text-danger' key={index}>{item}</h4>  
+                                                )}else{
+                                                    return(
+                                                    <h4 key={index}>{item}</h4> 
+                                                    )
+                                                }
+                                            }                                                     
+                                            )
                                         }                                        
                                    </div>                 
                                </div>
                                : 
-                               null
+                               <div className="card-body">
+                                   <div className="col m-0 font-weight-bold text-danger p-3">
+                                        <h3><strong>{subtitle}</strong></h3>                                      
+                                   </div>                 
+                               </div>
                             }    
                             </div>
                         </div>
