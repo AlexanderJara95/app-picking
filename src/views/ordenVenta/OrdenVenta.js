@@ -116,6 +116,38 @@ class OrdenVenta extends Component {
                                 <th scope="col">Fecha Terminado</th>
                                 <th scope="col">Estado</th>
                                 <th colSpan={3}>Acciones</th>
+                                scope="row"
+                                key={itemOrden.idOrden}
+                                id={"li-orden-" + itemOrden.idOrden}
+                                style={{textAlign: 'center', fontSize: '11px'}}
+                                onClick={() => this.seleccionarOrden(itemOrden)} >
+                                <td>{itemOrden.idOrden}</td>
+                                <td>{itemOrden.pedidoDeVentas}</td>
+                                <td>{itemOrden.idClienteAx}</td>
+                                <td>{itemOrden.nombreCliente}</td>
+                                <td>{itemOrden.referencia}</td>
+                                <td style={{ minWidth: '130px' }}>
+                                    <select className="form-select form-select-sm" aria-label=".form-select-sm example">
+
+                                        <option value='0' onClick={this.seleccionarUsuario}>Seleccione</option>
+                                        
+                                        {this.state.listaUsuarios.map((usuario) => (
+                                            usuario.nivelUsuario == 3 ? <option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option> : null
+                                        ))}
+                                    </select>
+                                </td>
+                                <td >{this.state.listaUsuarios.map((usuario) => (
+                                    
+                                    usuario.idUsuario == itemOrden.asignadoA ? <>{usuario.nombre}</> : null
+
+                                ))}</td>
+                                {/*<td>{itemOrden.asignadoA}</td>*/}
+                                <td>{itemOrden.fechaSubida}</td>
+                                <td>{itemOrden.fechaInicio}</td>
+                                <td>{itemOrden.fechaCompletado}</td>
+                                <td >{this.mostrarEstado(itemOrden.estado)}</td>
+                                <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
+                                <td><Button className="btn-success" onClick={console.log(this.state.ordenSeleccionada.idOrden)}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                             </tr>
                         </thead>
                         <tbody >
