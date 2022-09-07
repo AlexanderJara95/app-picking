@@ -132,27 +132,22 @@ class OrdenVenta extends Component {
                                 <td>{itemOrden.referencia}</td>
                                 <td style={{ minWidth: '130px' }}>
                                     <select className="form-select form-select-sm" aria-label=".form-select-sm example">
-
                                         <option value='0' onClick={this.seleccionarUsuario}>Seleccione</option>
-                                        
                                         {this.state.listaUsuarios.map((usuario) => (
                                             usuario.nivelUsuario == 3 ? <option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option> : null
                                         ))}
                                     </select>
                                 </td>
                                 <td >{this.state.listaUsuarios.map((usuario) => (
-                                    
                                     usuario.idUsuario == itemOrden.asignadoA ? <>{usuario.nombre}</> : null
-
                                 ))}</td>
-
                                 {/*<td>{itemOrden.asignadoA}</td>*/}
-                                <td>{itemOrden.fechaSubida}</td>
+                                <td>{itemOrden.fechaSubida}</td> 
                                 <td>{itemOrden.fechaInicio}</td>
                                 <td>{itemOrden.fechaCompletado}</td>
                                 <td >{this.mostrarEstado(itemOrden.estado)}</td>
                                 <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
-                                <td><Button className="btn-success" onClick={console.log(this.state.ordenSeleccionada.idOrden)}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
+                                <td><Button className="btn-success" onClick={() => this.asignarOrden()}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                             </tr>
                         )}
                         <tr>
@@ -162,6 +157,29 @@ class OrdenVenta extends Component {
             </div>
         )
     }
+
+    asignarOrden = () => {
+        const rutaServicio = "https://megalabs.digitalbroperu.com/servicioasignarorden.php"
+        var formData = new FormData();
+        formData.append("idOrden", this.state.ordenSeleccionada.idOrden); 
+        console.log("pasa orden", this.state.ordenSeleccionada.idOrden);
+        formData.append("asignadoPor", "4");
+        console.log("pasa quien", "4");
+        formData.append("asignadoA", this.state.usuarioAsignado);
+        console.log("pasa a aquien",this.state.usuarioAsignado);
+
+        fetch(rutaServicio,{
+            method: 'POST',
+            body: formData
+        }).then(
+            () => {
+                this.leerOrdenes();
+            }
+        )
+
+    }
+
+
 
 
     seleccionarOrden(itemOrden) {
