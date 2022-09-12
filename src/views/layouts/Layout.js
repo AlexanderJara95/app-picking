@@ -14,6 +14,7 @@ const Layout = () => {
 	return (
 		<>
 			{auth ? <Admin /> : <Auth />}
+
 		</>
 	);
 };
