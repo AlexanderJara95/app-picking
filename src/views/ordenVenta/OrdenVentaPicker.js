@@ -118,7 +118,6 @@ class OrdenVentaPicker extends Component {
                                     <td>{this.mostrarEstado(itemOrden.estado)}</td>
                                     <td>0</td>
                                     <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button className="btn secondary" ><FontAwesomeIcon icon={faEye}/></Button></NavLink></td>
-                                    <td><Button className="btn btn-success" onClick={() => {if(window.confirm('Desea asignar esta orden?')){this.asignarOrden()};}}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                                 </tr>
                             )}
                             <tr>

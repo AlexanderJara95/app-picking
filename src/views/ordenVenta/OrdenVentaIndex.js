@@ -3,6 +3,7 @@ import { Breadcrumb } from "react-bootstrap";
 import HtmlToJson from '../../utils/HtmlToJson';
 import ListadoOrdenes from './components/ListadoOrdenes';
 import OrdenVenta from './OrdenVenta';
+import OrdenVentaPicker from './OrdenVentaPicker';
 
 const OrdenVentaIndex = ()=> {
 
@@ -28,7 +29,18 @@ const OrdenVentaIndex = ()=> {
                     </div>
                 </div>
             </div>
-            <OrdenVenta></OrdenVenta>
+            {(()=>{
+                console.log("window.usuario.nivelUsuario",window.usuario.nivelUsuario);
+                switch(window.usuario.nivelUsuario){
+                    case '1':
+                    return (<OrdenVenta></OrdenVenta>);
+                    case '2':
+                    return (<OrdenVenta></OrdenVenta>);
+                    case '3':
+                    return (<OrdenVentaPicker></OrdenVentaPicker>);
+                };
+            })()}
+            
         </>
     )
 
