@@ -22,6 +22,9 @@ const DetalleOrdenIndex = () =>{
                 <Breadcrumb.Item href="/orden">
                     Órdenes
                 </Breadcrumb.Item>
+                <Breadcrumb.Item href="#">
+                    {param.id}
+                </Breadcrumb.Item>
             </Breadcrumb>
             <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'4em',zIndex:'1000'}}>
                 <div className="row pt-3">

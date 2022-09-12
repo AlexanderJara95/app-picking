@@ -39,7 +39,10 @@ const ArticuloIndex = () =>{
                     Órdenes
                 </Breadcrumb.Item>
                 <Breadcrumb.Item href={"/detalleorden/"+articulo.pedidoDeVentas}>
-                    Detalle
+                    {articulo.pedidoDeVentas}
+                </Breadcrumb.Item>
+                <Breadcrumb.Item href="#">
+                    {articulo.descripcion}
                 </Breadcrumb.Item>
             </Breadcrumb>
             <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'4em'}}>
