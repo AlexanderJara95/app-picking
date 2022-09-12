@@ -37,15 +37,28 @@ const RouterView = () => (
 		<Route path='/detalleorden/:id' element={<PrivateOutlet />}>
 			<Route path='' element={<DetalleOrdenIndex/>} />
 		</Route>
-		<Route path='/detallearticulo/:id' element={<PrivateOutlet />}>
-			<Route path='' element={<ArticuloIndex/>} />
-		</Route>
-		<Route path='/usuario' element={<PrivateOutlet />}>
-			<Route path='' element={<UsuarioIndex />} />
-		</Route>
-		<Route path='/importar' element={<PrivateOutlet />}>
-			<Route path='' element={<InformeIndex />} />
-		</Route>
+		
+		{(window.usuario.nivelUsuario!=2)?
+			<Route path='/detallearticulo/:id' element={<PrivateOutlet />}>
+				<Route path='' element={<ArticuloIndex/>} />
+			</Route>:<Route path='/' element={<PrivateOutlet />}>
+			<Route path='' element={<HomeIndex />} />
+			</Route>
+		}
+		{(window.usuario.nivelUsuario==1)?
+			<Route path='/usuario' element={<PrivateOutlet />}>
+				<Route path='' element={<UsuarioIndex />} />
+			</Route>:<Route path='/' element={<PrivateOutlet />}>
+			<Route path='' element={<HomeIndex />} />
+			</Route>
+		}
+		{(window.usuario.nivelUsuario!=3)?
+			<Route path='/importar' element={<PrivateOutlet />}>
+				<Route path='' element={<InformeIndex />} />
+			</Route>:<Route path='/' element={<PrivateOutlet />}>
+			<Route path='' element={<HomeIndex />} />
+			</Route>
+		}
     </Routes>
 );
 
