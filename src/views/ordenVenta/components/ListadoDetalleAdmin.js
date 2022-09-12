@@ -8,7 +8,7 @@ import { faCirclePlus, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons
 import { NavLink } from 'react-router-dom';
 
 
-const ListadoDetalle = ({ id, progreso, setProgress }) => {
+const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
 
     const [datosTabla, setDatosTabla] = useState([]);
     const [ordenSeleccionada, setOrdenSeleccionada] = useState({});
@@ -94,10 +94,10 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                 <td >
                                     <div className="form-check">
                                         {/*<input className="form-check-input" type="checkbox" value="1" id="checkdetalle" onChange={()=>this.contarProgreso()}/> */}
-                                        <input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e)} />
+                                        <input className="form-check-input" type="checkbox" id="checkdetalle" onChange={(e) => cambiarProgreso(e)}  disabled/>
                                     </div>
                                 </td>
-                                <td><NavLink to={"/detallearticulo/"+itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink></td>
+                                <td><NavLink to={"/detallearticulo/"+itemDetalle.idArticulo} className="nav"><Button  disabled><FontAwesomeIcon icon={faEdit} /></Button></NavLink></td>
                                 {/*<td><Button onClick={() => this.mostrarEliminar(itemDetalle)}> <FontAwesomeIcon icon={faTimes}/></Button></td> */}
                             </tr>
                         )}
@@ -107,4 +107,4 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
         </>
     )
 }
-export default ListadoDetalle;
+export default ListadoDetalleAdmin;
