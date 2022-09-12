@@ -5,7 +5,7 @@ import { Table, Button, Alert } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
 
-class OrdenVenta extends Component {
+class OrdenVentaPicker extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -96,8 +96,6 @@ class OrdenVenta extends Component {
                                 <th scope="col">Id Cliente AX</th>
                                 <th scope="col">Nombre Cliente</th>
                                 <th scope="col">Referencia</th>
-                                <th scope="col">Asignar</th>
-                                <th scope="col">Asignado A</th>
                                 <th scope="col">Fecha de Subida</th>
                                 <th scope="col">Fecha de Inicio</th>
                                 <th scope="col">Fecha Terminado</th>
@@ -114,24 +112,6 @@ class OrdenVenta extends Component {
                                     <td>{itemOrden.idClienteAx}</td>
                                     <td>{itemOrden.nombreCliente}</td>
                                     <td>{itemOrden.referencia}</td>
-                                    <td style={{ minWidth: '130px' }}>
-                                        <select className="form-select form-select-sm" aria-label=".form-select-sm example">
-                                            <option value='0' onClick={this.seleccionarUsuario}>Seleccione</option>
-                                            {this.state.listaUsuarios.map((usuario) => {
-                                                if (usuario.nivelUsuario == 3) {
-                                                    if (usuario.idUsuario == itemOrden.asignadoA) {
-                                                        return (<option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option>);
-                                                    } else {
-                                                        return (<option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option>);
-                                                    }
-                                                }
-                                            }
-                                            )}
-                                        </select>
-                                    </td>
-                                    <td >{this.state.listaUsuarios.map((usuario) => (
-                                        usuario.idUsuario == itemOrden.asignadoA ? <span key={usuario.idUsuario}>{usuario.nombre}</span> : null
-                                    ))}</td>
                                     <td>{itemOrden.fechaSubida}</td>
                                     <td>{itemOrden.fechaInicio}</td>
                                     <td>{itemOrden.fechaCompletado}</td>
@@ -249,4 +229,4 @@ class OrdenVenta extends Component {
     }
 
 }
-export default OrdenVenta;
+export default OrdenVentaPicker;
