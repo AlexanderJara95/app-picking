@@ -20,12 +20,6 @@ class OrdenVenta extends Component {
         }
     }
 
-    componentWillReceiveProps(props) {
-        console.log(props.detalleOrden)
-        this.leerDetalle(props.detalleOrden.idOrden)
-    }
-
-
     componentDidMount() {
         this.leerOrdenes();
         this.leerEstado();
@@ -36,9 +30,7 @@ class OrdenVenta extends Component {
         // this.leerOrdenes();
     }
 
-
     leerOrdenes() {
-
         const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarorden.php";
         fetch(rutaServicio)
             .then(
@@ -48,12 +40,10 @@ class OrdenVenta extends Component {
                 (result) => {
                     this.setState({
                         listaOrdenes: result
-                        
+
                     });  //aca se crean las variables globales/ de estado
                 }
             )
-
-
     }
 
     leerUsuarios() {
@@ -80,8 +70,6 @@ class OrdenVenta extends Component {
                 })
     }
 
-
-
     /*ES PARA OBTENER EL ID DEL USUARIO CLICKEADO EN LA LISTA DE SELECCION PARA ASIGNAR LA ORDEN */
     seleccionarUsuario = event => {
         console.log(event.currentTarget.value);
@@ -92,7 +80,6 @@ class OrdenVenta extends Component {
     activarBoton = (event, key) => {
         console.log(event.target, key);
     }
-
 
 
     dibujarTabla(datosTabla) {
@@ -115,6 +102,7 @@ class OrdenVenta extends Component {
                                 <th scope="col">Fecha de Inicio</th>
                                 <th scope="col">Fecha Terminado</th>
                                 <th scope="col">Estado</th>
+                                <th scope="col">% Avance</th>
                                 <th colSpan={3}>Acciones</th>
                             </tr>
                         </thead>
@@ -125,7 +113,7 @@ class OrdenVenta extends Component {
                                     key={itemOrden.idOrden}
                                     id={"li-orden-" + itemOrden.idOrden}
                                     style={{ textAlign: 'center', fontSize: '11px' }}
-                                    onClick={() => this.seleccionarOrden(itemOrden)} >
+                                    onClick={() => this.seleccionarOrden(itemOrden)}>
                                     <td>{itemOrden.idOrden}</td>
                                     <td>{itemOrden.pedidoDeVentas}</td>
                                     <td>{itemOrden.idClienteAx}</td>
@@ -134,21 +122,28 @@ class OrdenVenta extends Component {
                                     <td style={{ minWidth: '130px' }}>
                                         <select className="form-select form-select-sm" aria-label=".form-select-sm example">
                                             <option value='0' onClick={this.seleccionarUsuario}>Seleccione</option>
-                                            {this.state.listaUsuarios.map((usuario) => (
-                                                usuario.nivelUsuario == 3 ? <option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option> : null
-                                            ))}
+                                            {this.state.listaUsuarios.map((usuario) => {
+                                                if (usuario.nivelUsuario == 3) {
+                                                    if (usuario.idUsuario == itemOrden.asignadoA) {
+                                                        return (<option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option>);
+                                                    } else {
+                                                        return (<option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option>);
+                                                    }
+                                                }
+                                            }
+                                            )}
                                         </select>
                                     </td>
                                     <td >{this.state.listaUsuarios.map((usuario) => (
-                                        usuario.idUsuario == itemOrden.asignadoA ? <>{usuario.nombre}</> : null
+                                        usuario.idUsuario == itemOrden.asignadoA ? <span key={usuario.idUsuario}>{usuario.nombre}</span> : null
                                     ))}</td>
-                                    {/*<td>{itemOrden.asignadoA}</td>*/}
                                     <td>{itemOrden.fechaSubida}</td>
                                     <td>{itemOrden.fechaInicio}</td>
                                     <td>{itemOrden.fechaCompletado}</td>
-                                    <td >{this.mostrarEstado(itemOrden.estado)}</td>
-                                    <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button><FontAwesomeIcon icon={faEye} /></Button></NavLink></td>
-                                    <td><Button className="btn-success" onClick={() => this.asignarOrden()}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
+                                    <td>{this.mostrarEstado(itemOrden.estado)}</td>
+                                    <td>0</td>
+                                    <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button className="btn secondary" ><FontAwesomeIcon icon={faEye}/></Button></NavLink></td>
+                                    <td><Button className="btn btn-success" onClick={() => {if(window.confirm('Desea asignar esta orden?')){this.asignarOrden()};}}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                                 </tr>
                             )}
                             <tr>
@@ -166,22 +161,22 @@ class OrdenVenta extends Component {
         }
     }
 
-    asignarOrden = () => {
 
+    asignarOrden = () => {
         if (this.state.ordenSeleccionada.idOrden !== null && this.state.usuarioAsignado !== 0) {
             const rutaServicio = "https://megalabs.digitalbroperu.com/servicioasignarorden.php"
             var formData = new FormData();
             formData.append("idOrden", this.state.ordenSeleccionada.idOrden);
             formData.append("asignadoPor", window.usuario.idUsuario);
             formData.append("asignadoA", this.state.usuarioAsignado);
+            console.log("orden pre-servicio:", this.state.ordenSeleccionada.idOrden);
+            console.log("usuario pre-servicio:", this.state.usuarioAsignado);
             fetch(rutaServicio, {
                 method: 'POST',
                 body: formData
             }).then(
                 () => {
-
                     this.leerOrdenes();
-
                 }
             )
         } else {
@@ -191,22 +186,15 @@ class OrdenVenta extends Component {
                 </Alert>
             )
         }
-
-
+        this.setState({ usuarioAsignado: 0 });
+        this.setState({ ordenSeleccionada: [] });
     }
 
-
-
-
     seleccionarOrden(itemOrden) {
-
-
-        //console.log(itemOrden);
         //esta logica siguiente es para capturar el item clickeado y luego si se clickea otro, desmarque como "active" el anterior
         if (this.state.ordenSeleccionada !== '') {
+            //document.getElementById("li-orden-" + this.state.ordenSeleccionada.idOrden).classList.remove("btn disabled"); //esto hace que se marque el elemento cliqueado como "activo"
             document.getElementById("li-orden-" + this.state.ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
-        } else {
-            this.alertaDetalle();
         }
         this.setState({ ordenSeleccionada: itemOrden })
         document.getElementById("li-orden-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
@@ -225,9 +213,6 @@ class OrdenVenta extends Component {
                 return {color: 'yellow'};
         }*/
 
-
-
-
     mostrarEstado(estado) {
         switch (estado) {
             case 'Por Asignar':
@@ -242,7 +227,6 @@ class OrdenVenta extends Component {
                 return <span style={{ backgroundColor: "#00802b", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Finalizado</span>
             case 'Anulado':
                 return <span style={{ backgroundColor: "#8c8c8c", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Anulado</span>
-
         }
     }
     mostrarEliminar = (itemOrden => {
@@ -256,33 +240,8 @@ class OrdenVenta extends Component {
         }
     })
 
-    alertaDetalle() {
-        return (
-            <div className="alert alert-danger" role="alert">
-                This is a danger alert—check it out!
-            </div>
-        )
-
-    }
-
-    seleccionarOrden(itemOrden) {
-        //console.log(itemOrden);
-        //esta logica siguiente es para capturar el item clickeado y luego si se clickea otro, desmarque como "active" el anterior
-        if (this.state.ordenSeleccionada !== '') {
-            document.getElementById("li-orden-" + this.state.ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
-        } else {
-            this.alertaDetalle();
-        }
-        this.setState({ ordenSeleccionada: itemOrden })
-        document.getElementById("li-orden-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
-    }
-
-
-
-    /*<DetalleOrden detalleOrden={this.state.ordenSeleccionada} />*/
     render() {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
-
         return (
             <section id="orden" className="padded">
                 <div className="container-fluid">
