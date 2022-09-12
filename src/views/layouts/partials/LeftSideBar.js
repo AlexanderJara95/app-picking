@@ -2,12 +2,9 @@ import iconoTexto from '../../../img/icono-texto.png';
 import iconoLogotipo from '../../../img/icono-logo.png';
 import { removerAutorizacion } from '../../../config/LocalStorageService';
 import { Outlet,NavLink } from 'react-router-dom';
-import { useEffect } from 'react';
 const LeftSideBar = () => {    
   //NavLink => carga de componentes tipo Ajax    
-  useEffect(()=>{
-    console.log("window.usuario.nivelUsuario",window.usuario.nivelUsuario);
-  },[]);
+ 
   switch(window.usuario.nivelUsuario){
     case '1': 
       return(
