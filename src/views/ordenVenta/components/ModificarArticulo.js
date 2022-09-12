@@ -127,6 +127,7 @@ function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
                             `Artículo agregado al Detalle`,
                         );		
                         window.location.href = "/detalleorden/"+ item.pedidoDeVentas;	
+                        
                       }
                       
                   } catch (error) {
