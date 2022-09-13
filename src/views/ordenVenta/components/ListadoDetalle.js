@@ -91,7 +91,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                 <td>{itemDetalle.idPallet}</td>
                                 <td>{itemDetalle.fechaCaducidad}</td>
                                 <td>{itemDetalle.cantidad}</td>
-                                <td >
+                                <td>
                                     <div className="form-check">
                                         {/*<input className="form-check-input" type="checkbox" value="1" id="checkdetalle" onChange={()=>this.contarProgreso()}/> */}
                                         <input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e)} />
