@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE, LISTAR_ARTICULO_DETALLE,MODIFICAR_ORDEN_DETALLE} from './OrdenVentaTypes';
+import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE, LISTAR_ARTICULO_DETALLE,MODIFICAR_ORDEN_DETALLE,REGISTRAR_DETALLE_ARTICULO} from './OrdenVentaTypes';
 import { API_BASE_URL } from '../../config/Services';
 
 export const listarOrden = () => async dispatch => {
@@ -96,6 +96,26 @@ export const listarArticuloPorId = (id) => async dispatch => {
     })
 }
 
+export const registrarDetalleArticulo = (paramData) => async dispatch => {
+	console.log("Parammmm",paramData);
+	var formData = new FormData();
+	formData.append("pedidoDeVentas", paramData.pedidoDeVentas);
+    formData.append("codigoArticulo", paramData.codigoArticulo);
+    formData.append("descripcion", paramData.descripcion);
+    formData.append("numeroLote", paramData.numeroLote);	
+    formData.append("ubicacion", paramData.ubicacion);
+    formData.append("idPallet", paramData.idPallet);
+	formData.append("fechaCaducidad", paramData.fechaCaducidad);
+    formData.append("cantidad", paramData.cantidad);
+
+	const response = await axios.post(`${API_BASE_URL}/servicioregistrardetallearticulo.php`,formData);
+    console.log("Registrado",response.data);
+    return dispatch({
+        type: REGISTRAR_DETALLE_ARTICULO,
+        status: response.status,
+        data: response.data
+    })  
+}  
 
 /*
 var formData = new FormData();
