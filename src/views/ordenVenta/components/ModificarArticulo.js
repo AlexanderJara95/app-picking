@@ -3,7 +3,7 @@ import TableRows from "./TableRows";
 import { Button, Table } from 'react-bootstrap';
 import { toastme } from 'toastmejs';
 import store from '../../../redux/Store';
-import { registrarOrdenDetalle,modificarOrdenDetalle } from '../../../redux/ordenVenta/OrdenVentaActions';
+import { registrarOrdenDetalle,modificarOrdenDetalle, registrarDetalleArticulo } from '../../../redux/ordenVenta/OrdenVentaActions';
 import { StatusCodes } from 'http-status-codes';
 
 
@@ -112,7 +112,7 @@ function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
                   try {
                       console.log("ini");
                       console.log(item.pedidoDeVentas);
-                      const response = await store.dispatch(registrarOrdenDetalle({
+                      const response = await store.dispatch(registrarDetalleArticulo({
                         pedidoDeVentas: item.pedidoDeVentas,
                         codigoArticulo: item.codigoArticulo,
                         descripcion: item.descripcion??'',

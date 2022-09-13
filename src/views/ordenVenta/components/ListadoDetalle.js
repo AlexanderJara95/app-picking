@@ -59,6 +59,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
 
     return (
         <>
+
             <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab">
                 <Table className="table-sm border-white" responsive bordered hover striped >
                     <thead className="thead-dark bg-dark text-white" >
@@ -80,31 +81,53 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                     </thead>
                     <tbody>
                         {datosTabla.map((itemDetalle, index) =>
-                            <tr className='align-middle'
-                                scope="row"
-                                key={index}>
-                                <td>{itemDetalle.idArticulo}</td>
-                                <td>{itemDetalle.pedidoDeVentas}</td>
-                                <td>{itemDetalle.codigoArticulo}</td>
-                                <td>{itemDetalle.descripcion}</td>
-                                <td>{itemDetalle.numeroLote}</td>
-                                <td>{itemDetalle.ubicacion}</td>
-                                <td>{itemDetalle.idPallet}</td>
-                                <td>{itemDetalle.fechaCaducidad}</td>
-                                <td>{itemDetalle.cantidad}</td>
-
-                                <td>
-                                    <div className="form-check">
-                                        {/*<input className="form-check-input" type="checkbox" value="1" id="checkdetalle" onChange={()=>this.contarProgreso()}/> */}
-                                        <input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e)} />
-                                    </div>
-                                </td>
-                                <td><NavLink to={"/detallearticulo/"+itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink></td>
-                                {/*<td><Button onClick={() => this.mostrarEliminar(itemDetalle)}> <FontAwesomeIcon icon={faTimes}/></Button></td> */}
-                                
-                                
+                            <tr className='align-middle' scope="row" key={index}>
+                                {itemDetalle.rama == 1
+                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.idArticulo}</td>
+                                    : <td></td>
+                                }
+                                {itemDetalle.rama == 1
+                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.pedidoDeVentas}</td>
+                                    : <td></td>
+                                }
+                                {itemDetalle.rama == 1
+                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.codigoArticulo}</td>
+                                    : <td></td>
+                                }
+                                {itemDetalle.rama == 1
+                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.descripcion}</td>
+                                    : <td></td>
+                                }
+                                {itemDetalle.rama == 1
+                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.numeroLote}</td>
+                                    : <td>{itemDetalle.numeroLote}</td>
+                                }
+                                {itemDetalle.rama == 1
+                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.ubicacion}</td>
+                                    : <td>{itemDetalle.ubicacion}</td>
+                                }
+                                {itemDetalle.rama == 1
+                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.idPallet}</td>
+                                    : <td>{itemDetalle.idPallet}</td>
+                                }
+                                {itemDetalle.rama == 1
+                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.fechaCaducidad}</td>
+                                    : <td>{itemDetalle.fechaCaducidad}</td>
+                                }
+                                {itemDetalle.rama == 1
+                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.cantidad}</td>
+                                    : <td>{itemDetalle.cantidad}</td>
+                                }
+                                <td>{itemDetalle.rama == 1
+                                    ? <div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e)} /></div>
+                                    : <div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} checked disabled /></div>
+                                }</td>
+                                <td>{itemDetalle.rama == 1
+                                    ? <NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
+                                    : <Button disabled ><FontAwesomeIcon icon={faEdit} /></Button>
+                                }</td>
                                 <td>{itemDetalle.rama}</td>
-                            
+                                {/*<td>{itemDetalle.listo}</td>*/}
                             </tr>
                         )}
                     </tbody>
