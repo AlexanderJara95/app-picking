@@ -111,7 +111,13 @@ function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
               json.map(async(item,index)=>{
                   try {
                       console.log("ini");
-                      console.log(item.pedidoDeVentas);
+                      console.log(item.pedidoDeVentas);                      
+                      const response2 = await store.dispatch(modificarOrdenDetalle({
+                        idArticulo: articulo.idArticulo
+                      }));
+                      if (response2.status === StatusCodes.OK) {
+                        console.log("Estado padre actualizado");		                        
+                      }
                       const response = await store.dispatch(registrarDetalleArticulo({
                         pedidoDeVentas: item.pedidoDeVentas,
                         codigoArticulo: item.codigoArticulo,
@@ -129,6 +135,7 @@ function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
                         window.location.href = "/detalleorden/"+ item.pedidoDeVentas;	
                         
                       }
+                      
                       
                   } catch (error) {
                       console.log(error);

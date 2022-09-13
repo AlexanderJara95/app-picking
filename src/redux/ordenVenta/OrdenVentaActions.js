@@ -55,15 +55,8 @@ export const modificarOrdenDetalle = (paramData) => async dispatch => {
 	console.log("Param Actu",paramData);
 	var formData = new FormData();
     formData.append("idArticulo", paramData.idArticulo);
-	formData.append("pedidoDeVentas", paramData.pedidoDeVentas);
-    formData.append("codigoArticulo", paramData.codigoArticulo);
-    formData.append("descripcion", paramData.descripcion);
-    formData.append("numeroLote", paramData.numeroLote);	
-    formData.append("ubicacion", paramData.ubicacion);
-    formData.append("idPallet", paramData.idPallet);
-	formData.append("fechaCaducidad", paramData.fechaCaducidad);
-    formData.append("cantidad", paramData.cantidad);
-
+	formData.append("listo", '1');
+    
 	const response = await axios.post(`${API_BASE_URL}/servicioactualizardetalleorden.php`,formData);
     console.log("Actualizado",response.data);
     return dispatch({
