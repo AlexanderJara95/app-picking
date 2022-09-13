@@ -48,13 +48,20 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
         const checked = e.target.checked;
         console.log("checked", checked);
         if (checked) {
-            console.log("datosTabla.length", datosTabla.length);
+            console.log("datosTabla.length", datosTabla.filter(item=>item.rama==1).length);
             console.log("progreso", progreso);
-            setProgress(progreso + 100 / datosTabla.length);
+            setProgress(progreso + 100 / datosTabla.filter(item=>item.rama==1).length);
         }
         else {
-            setProgress(progreso - 100 / datosTabla.length);
+            setProgress(progreso - 100 / datosTabla.filter(item=>item.rama==1).length);
         }
+    }
+
+    const contadorfilashijo=(index)=>{
+        const newItems = datosTabla.splice(0,index);
+        console.log('newsitem',newItems);
+        
+        return 3;
     }
 
     return (
@@ -85,19 +92,19 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                             <tr className='align-middle' scope="row" key={index}>
                                 {itemDetalle.rama == 1
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.idArticulo}</td>
-                                    : <td></td>
+                                    : <td colSpan={4}></td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.pedidoDeVentas}</td>
-                                    : <td></td>
+                                    : null
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.codigoArticulo}</td>
-                                    : <td></td>
+                                    : null
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.descripcion}</td>
-                                    : <td></td>
+                                    : null
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.numeroLote}</td>
@@ -119,14 +126,14 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.cantidad}</td>
                                     : <td>{itemDetalle.cantidad}</td>
                                 }
-                                <td>{itemDetalle.rama == 1
-                                    ? <div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e)} /></div>
-                                    : <div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} checked disabled /></div>
-                                }</td>
-                                <td>{itemDetalle.rama == 1
-                                    ? <NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
-                                    : <Button disabled ><FontAwesomeIcon icon={faEdit} /></Button>
-                                }</td>
+                                {itemDetalle.rama == 1
+                                    ? <td><div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e)} /></div></td>
+                                    : <td colSpan={2}></td>
+                                }
+                                {itemDetalle.rama == 1
+                                    ? <td><NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink></td>
+                                    : null
+                                }
                                 <td>{itemDetalle.rama}</td>
                                 <td>{itemDetalle.listo}</td>
                             </tr>
