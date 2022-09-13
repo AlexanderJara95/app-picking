@@ -100,8 +100,8 @@ class OrdenVenta extends Component {
                                 <th scope="col">Asignado A</th>
                                 <th scope="col">Fecha de Subida</th>
                                 <th scope="col">Fecha de Inicio</th>
-                                <th scope="col">Fecha Terminado</th>
-                                <th scope="col">Estado</th>
+                                <th scope="col" width="40px">Fecha Terminado</th>
+                                <th scope="col" width="100px">Estado</th>
                                 <th scope="col">% Avance</th>
                                 <th colSpan={3}>Acciones</th>
                             </tr>
@@ -131,7 +131,7 @@ class OrdenVenta extends Component {
                                         </select>
                                         :<>Orden Anulada</>}
                                     </td>
-                                    <td  title="Admin que asigno la orden" >{this.state.listaUsuarios.map((usuario) => (
+                                    <td    style={{ textAlign: 'center', fontSize: '20px' }}>{this.state.listaUsuarios.map((usuario) => (
                                         usuario.idUsuario == itemOrden.asignadoA ? <span key={usuario.idUsuario}>{usuario.nombre}</span> : null
                                     ))}</td>
                                     <td  title="Persona encargada del picking" >{itemOrden.fechaSubida}</td>
@@ -149,9 +149,11 @@ class OrdenVenta extends Component {
                                         <Button  className="btn btn-danger"  title="Anular Orden" onClick={() => this.anularOrden(itemOrden)}><FontAwesomeIcon icon={faTimes}/></Button>
                                         :<Button  className="btn btn-danger"  title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes}/></Button>}</td>
 
-
                                         {/* estuctura para condicion:
                                         {condicion a evaluar ? que pasa si es true : que pasa si es false} */}
+
+
+                                        
                                 </tr>
                             )}
                             <tr>

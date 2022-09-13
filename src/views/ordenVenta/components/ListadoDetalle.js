@@ -75,6 +75,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                             <th scope="col">Cantidad</th>
                             <th scope="col">Listo</th>
                             <th scope="col">Editar</th>
+                            <th>rama</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,6 +92,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                 <td>{itemDetalle.idPallet}</td>
                                 <td>{itemDetalle.fechaCaducidad}</td>
                                 <td>{itemDetalle.cantidad}</td>
+
                                 <td>
                                     <div className="form-check">
                                         {/*<input className="form-check-input" type="checkbox" value="1" id="checkdetalle" onChange={()=>this.contarProgreso()}/> */}
@@ -99,6 +101,10 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                 </td>
                                 <td><NavLink to={"/detallearticulo/"+itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink></td>
                                 {/*<td><Button onClick={() => this.mostrarEliminar(itemDetalle)}> <FontAwesomeIcon icon={faTimes}/></Button></td> */}
+                                
+                                
+                                <td>{itemDetalle.rama}</td>
+                            
                             </tr>
                         )}
                     </tbody>
