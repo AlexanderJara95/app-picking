@@ -114,8 +114,9 @@ class OrdenVenta extends Component {
                                     <td>{itemOrden.idClienteAx}</td>
                                     <td>{itemOrden.nombreCliente}</td>
                                     <td>{itemOrden.referencia}</td>
-                                    <td style={{ minWidth: '130px' }}>
-                                        <select className="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <td title="Personal disponible para asignar la orden"  style={{ minWidth: '130px' }}>
+                                        {itemOrden.estado !== 'Anulado'?
+                                        <select className="form-select form-select-sm" aria-label=".form-select-sm example" >
                                             <option value='0' onClick={this.seleccionarUsuario}>Seleccione</option>
                                             {this.state.listaUsuarios.map((usuario) => {
                                                 if (usuario.nivelUsuario == 3) {
@@ -128,17 +129,29 @@ class OrdenVenta extends Component {
                                             }
                                             )}
                                         </select>
+                                        :<>Orden Anulada</>}
                                     </td>
-                                    <td >{this.state.listaUsuarios.map((usuario) => (
+                                    <td  title="Admin que asigno la orden" >{this.state.listaUsuarios.map((usuario) => (
                                         usuario.idUsuario == itemOrden.asignadoA ? <span key={usuario.idUsuario}>{usuario.nombre}</span> : null
                                     ))}</td>
-                                    <td>{itemOrden.fechaSubida}</td>
-                                    <td>{itemOrden.fechaInicio}</td>
-                                    <td>{itemOrden.fechaCompletado}</td>
-                                    <td>{this.mostrarEstado(itemOrden.estado)}</td>
-                                    <td>0</td>
-                                    <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button className="btn secondary" ><FontAwesomeIcon icon={faEye}/></Button></NavLink></td>
-                                    <td><Button className="btn btn-success" onClick={() => {if(window.confirm('Desea asignar esta orden?')){this.asignarOrden()};}}><FontAwesomeIcon icon={faCheck} /></Button></td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
+                                    <td  title="Persona encargada del picking" >{itemOrden.fechaSubida}</td>
+                                    <td  title="Fecha de asignacion" >{itemOrden.fechaInicio}</td>
+                                    <td  title="Fecha de culminada" >{itemOrden.fechaCompletado}</td>
+                                    <td  title="Estado de la orden" >{this.mostrarEstado(itemOrden.estado)}</td>
+                                    <td  title="Porcentaje de avance de la orden" >0</td>
+                                    <td>{itemOrden.estado !== 'Anulado'? 
+                                        <NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button className="btn secondary"  title="Ver detalle de orden"><FontAwesomeIcon icon={faEye}/></Button></NavLink>
+                                        :<Button className="btn secondary"  title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye}/></Button>}</td>
+                                    <td>{itemOrden.estado !== 'Anulado'? 
+                                        <Button  className="btn btn-success"  title="Asignar orden" onClick={() => {if(window.confirm('Desea asignar esta orden?')){this.asignarOrden()};}}><FontAwesomeIcon icon={faCheck} /></Button>
+                                        :<Button  className="btn btn-success"  title="Asignar orden" disabled><FontAwesomeIcon icon={faCheck} /></Button>}</td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
+                                    <td>{itemOrden.estado !== 'Anulado'? 
+                                        <Button  className="btn btn-danger"  title="Anular Orden" onClick={() => this.anularOrden(itemOrden)}><FontAwesomeIcon icon={faTimes}/></Button>
+                                        :<Button  className="btn btn-danger"  title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes}/></Button>}</td>
+
+
+                                        {/* estuctura para condicion:
+                                        {condicion a evaluar ? que pasa si es true : que pasa si es false} */}
                                 </tr>
                             )}
                             <tr>
@@ -234,6 +247,19 @@ class OrdenVenta extends Component {
                 .then(() => { this.leerOrdenes(); })
         }
     })
+
+    
+    anularOrden = (itemOrden => {
+        var respuesta = window.confirm("¿Está seguro que desea anular la Orden " + itemOrden.pedidoDeVentas + "?")
+        if (respuesta === true) {
+            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioanularorden.php"
+            var formData = new FormData();
+            formData.append("idOrden", itemOrden.idOrden);
+            fetch(rutaServicio, { method: 'POST', body: formData })
+                .then(() => { this.leerOrdenes(); })
+        }
+    })
+
 
     render() {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
