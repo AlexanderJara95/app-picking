@@ -77,6 +77,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                             <th scope="col">Listo</th>
                             <th scope="col">Editar</th>
                             <th>rama</th>
+                            <th>listo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,7 +128,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                     : <Button disabled ><FontAwesomeIcon icon={faEdit} /></Button>
                                 }</td>
                                 <td>{itemDetalle.rama}</td>
-                                {/*<td>{itemDetalle.listo}</td>*/}
+                                <td>{itemDetalle.listo}</td>
                             </tr>
                         )}
                     </tbody>

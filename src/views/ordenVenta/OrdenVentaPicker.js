@@ -107,18 +107,18 @@ class OrdenVentaPicker extends Component {
                         <tbody >
                             {datosTabla.map((itemOrden) =>
                                 <tr className='align-middle' scope="row" key={itemOrden.idOrden} id={"li-orden-" + itemOrden.idOrden} style={{ textAlign: 'center', fontSize: '11px' }} onClick={() => this.seleccionarOrden(itemOrden)}>
-                                    <td>{itemOrden.idOrden}</td>
-                                    <td>{itemOrden.pedidoDeVentas}</td>
-                                    <td>{itemOrden.idClienteAx}</td>
-                                    <td>{itemOrden.nombreCliente}</td>
-                                    <td>{itemOrden.referencia}</td>
-                                    <td>{itemOrden.fechaSubida}</td>
-                                    <td>{itemOrden.fechaInicio}</td>
-                                    <td>{itemOrden.fechaCompletado}</td>
-                                    <td>{this.mostrarEstado(itemOrden.estado)}</td>
-                                    <td>0</td>
-                                    <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button className="btn secondary" ><FontAwesomeIcon icon={faEye}/></Button></NavLink></td>
-                                </tr>
+                                <td>{itemOrden.idOrden}</td>
+                                <td>{itemOrden.pedidoDeVentas}</td>
+                                <td>{itemOrden.idClienteAx}</td>
+                                <td>{itemOrden.nombreCliente}</td>
+                                <td>{itemOrden.referencia}</td>
+                                <td>{itemOrden.fechaSubida}</td>
+                                <td>{itemOrden.fechaInicio}</td>
+                                <td>{itemOrden.fechaCompletado}</td>
+                                <td>{this.mostrarEstado(itemOrden.estado)}</td>
+                                <td>0</td>
+                                <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button className="btn secondary" ><FontAwesomeIcon icon={faEye}/></Button></NavLink></td>
+                            </tr>
                             )}
                             <tr>
                             </tr>
