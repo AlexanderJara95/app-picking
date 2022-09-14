@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom';
 function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
 
     const [restaCantidad,setRestaCantidad] = useState(0);
-    const [btnGuardar,setBtnGuardar] = useState(true); 
+    const [btnGuardar,setBtnGuardar] = useState(false); 
     const childFunc = React.useRef(null);
     useEffect(()=>{
       addTableRows.current = addTableRowsLocal;
@@ -100,7 +100,8 @@ function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
           setBtnGuardar(false);
           setResta(articulo.cantidad-contador);
         }
-        if(contador == articulo.cantidad){ console.log("trueeeee");setBtnGuardar(true)};
+        if(contador > articulo.cantidad) setBtnGuardar(false);
+        if(contador == articulo.cantidad && rowsData.length > 1){ console.log("trueeeee");setBtnGuardar(true)};
         
     }
     

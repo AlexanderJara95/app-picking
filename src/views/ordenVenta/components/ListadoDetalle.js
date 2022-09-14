@@ -124,8 +124,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                             <th scope="col">Id de Pallet</th>
                             <th scope="col">Fecha de Caducidad</th>
                             <th scope="col">Cantidad</th>
-                            <th scope="col" colSpan={2}>Listo</th>
-                            <th scope="col">Editar</th>
+                            <th scope="col" colSpan={2}>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -168,7 +167,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                     : <td>{itemDetalle.cantidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td colSpan={2}>
+                                    ? <td>
                                         {itemDetalle.listo == 1?null
                                         :<div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e,itemDetalle.idArticulo)} /></div>
                                         }
@@ -191,11 +190,9 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
             <div className="offset-6 col-6">
                 <div className='row'>
                     { progresoLocal==100?
-                        <>
-                            <div className='offset-6 col-6'>
-                                <NavLink to={"/orden"} className="nav"><Button className='btn-primary col-sm-12'>Orden Finalizada</Button></NavLink>
-                            </div>
-                        </>
+                        <div className='offset-6 col-6'>
+                            <NavLink to={"/orden"} className="nav"><Button className='btn-primary col-sm-12'>Orden Finalizada</Button></NavLink>
+                        </div>
                         :<>
                             <div className='col-6'>
                                 <NavLink to={"/orden"} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>

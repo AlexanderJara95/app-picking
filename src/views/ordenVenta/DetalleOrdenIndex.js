@@ -3,6 +3,7 @@ import { ProgressBar } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb } from "react-bootstrap";
 import ListadoDetalle from "./components/ListadoDetalle";
+import ListadoDetalleAdmin from "./components/ListadoDetalleAdmin";
 
 const DetalleOrdenIndex = () =>{
     const param = useParams();
@@ -38,7 +39,7 @@ const DetalleOrdenIndex = () =>{
                     </div>
                 </div>                
             </div>
-            <ListadoDetalle id={param.id} setProgress={setProgress} progreso={progress}></ListadoDetalle>
+            {window.usuario.nivelUsuario==1||window.usuario.nivelUsuario==3?<ListadoDetalle id={param.id} setProgress={setProgress} progreso={progress}></ListadoDetalle>:<ListadoDetalleAdmin id={param.id} setProgress={setProgress} progreso={progress}></ListadoDetalleAdmin>}
         </>
     );
 }
