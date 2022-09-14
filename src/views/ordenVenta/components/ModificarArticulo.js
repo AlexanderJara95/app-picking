@@ -5,6 +5,7 @@ import { toastme } from 'toastmejs';
 import store from '../../../redux/Store';
 import { registrarOrdenDetalle,modificarOrdenDetalle, registrarDetalleArticulo } from '../../../redux/ordenVenta/OrdenVentaActions';
 import { StatusCodes } from 'http-status-codes';
+import { NavLink } from 'react-router-dom';
 
 
 function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
@@ -181,7 +182,7 @@ function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
                           btnGuardar?
                           <>
                             <div className='col-6'>
-                              <Button className='btn-secondary col-sm-12'>Cancelar</Button>
+                              <NavLink to={"/detalleorden/"+ articulo.pedidoDeVentas} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
                             </div>
                             <div className='col-6'>
                               <Button onClick={()=>guardarArticulos(rowsData)} className='btn-success col-sm-12'>Guardar</Button>
@@ -191,7 +192,7 @@ function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
                             <div className='col-6'>
                             </div>
                             <div className='col-6'>
-                              <Button className='btn-secondary col-sm-12'>Cancelar</Button>
+                              <NavLink to={"/detalleorden/"+ articulo.pedidoDeVentas} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
                             </div>
                           </>
                         }
