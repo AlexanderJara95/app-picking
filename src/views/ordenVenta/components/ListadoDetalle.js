@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
-import { listarOrdenDetallePorId } from '../../../redux/ordenVenta/OrdenVentaActions';
+import { listarOrdenDetallePorId, modificarOrdenDetalle } from '../../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
 import { Button, ProgressBar, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCirclePlus, faDeleteLeft, faEdit, faTimes, faX } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
-
+import { toastme } from 'toastmejs';
 
 const ListadoDetalle = ({ id, progreso, setProgress }) => {
 
     const [datosTabla, setDatosTabla] = useState([]);
     const [ordenSeleccionada, setOrdenSeleccionada] = useState({});
+    const [rowDataArticulos, setRowDataArticulos] = useState([]);
+    const [progresoLocal, setProgresoLocal] = useState();
 
     useEffect(() => {
         console.log("muestra", id);
@@ -21,9 +23,10 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
     const listaOrdernesServicio = async (id) => {
         try {
             const response = await store.dispatch(listarOrdenDetallePorId(id));
-            console.log("listaOrden", response.detalleOrden);
-
+            const progressDb=(100/response.detalleOrden.filter(item=>item.rama==1).length)*response.detalleOrden.filter(item=>item.listo==1).length;
             if (response.status === StatusCodes.OK) {
+                if(progressDb==100)setProgresoLocal(progressDb);
+                setProgress(progressDb==0?0:progressDb);
                 setDatosTabla(response.detalleOrden);
             }
         } catch (error) {
@@ -43,17 +46,21 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
 
     }
 
-
-    const cambiarProgreso = (e) => {
+    const cambiarProgreso = (e,idArticulo) => {
         const checked = e.target.checked;
-        console.log("checked", checked);
+        console.log("checked", idArticulo);
         if (checked) {
             console.log("datosTabla.length", datosTabla.filter(item=>item.rama==1).length);
             console.log("progreso", progreso);
             setProgress(progreso + 100 / datosTabla.filter(item=>item.rama==1).length);
+            setRowDataArticulos((prev)=>[...prev,idArticulo]);
         }
         else {
-            setProgress(progreso - 100 / datosTabla.filter(item=>item.rama==1).length);
+            setProgress(progreso - 100 / datosTabla.filter(item=>item.rama==1).length);      
+            const index=rowDataArticulos.indexOf(idArticulo);
+            const rows = [...rowDataArticulos];
+            rows.splice(index, 1);         
+            setRowDataArticulos(rows);             
         }
     }
 
@@ -63,9 +70,45 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
         
         return 3;
     }
+    const guardarArticulos = async(json) =>{
+        console.log("json",json);
+        //validando que exista detalle de orden
+        //console.log("ddd",json);
+        if(json.length > 0){
+            try {
+                json.map(async(item)=>{
+                    try {
+                        console.log(item.pedidoDeVentas);                      
+                        const response = await store.dispatch(modificarOrdenDetalle({
+                          idArticulo: item
+                        }));    
+                        if(response.status === StatusCodes.OK) {
+                            toastme.success(
+                                `Artículo Guardado`,
+                            );	
+                        }
+                        setProgresoLocal(progreso);
+                        listaOrdernesServicio(id);
+                        	  
+                    } catch (error) {
+                        console.log(error);
+                    }
+                });                
+            } catch (error) {
+                toastme.error(
+                    error
+                );
+            }
+          }else{
+              toastme.error(
+                  `No hay Detalle de orden`
+              );
+          }
+          
+      }
 
     return (
-        <>
+        <section>
 
             <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab">
                 <Table className="table-sm border-white" responsive bordered hover striped >
@@ -81,10 +124,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                             <th scope="col">Id de Pallet</th>
                             <th scope="col">Fecha de Caducidad</th>
                             <th scope="col">Cantidad</th>
-                            <th scope="col">Listo</th>
-                            <th scope="col">Editar</th>
-                            <th>rama</th>
-                            <th>listo</th>
+                            <th scope="col" colSpan={2}>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,7 +151,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                     : <td>{itemDetalle.numeroLote}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.ubicacion}</td>
+                                    ? <td  style={{fontWeight:'bold'}}></td>
                                     : <td>{itemDetalle.ubicacion}</td>
                                 }
                                 {itemDetalle.rama == 1
@@ -127,21 +167,45 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                     : <td>{itemDetalle.cantidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td><div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e)} /></div></td>
+                                    ? <td>
+                                        {itemDetalle.listo == 1?null
+                                        :<div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e,itemDetalle.idArticulo)} /></div>
+                                        }
+                                      </td>
                                     : <td colSpan={2}></td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td><NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink></td>
-                                    : <td></td>
+                                    ? <td>
+                                        {itemDetalle.listo == 0?<NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
+                                        :<NavLink to={"#"} className="nav"><Button className='btn-success'><FontAwesomeIcon icon={faCheck} /></Button></NavLink>
+                                        }
+                                      </td>
+                                    : null
                                 }
-                                <td>{itemDetalle.rama}</td>
-                                <td>{itemDetalle.listo}</td>
                             </tr>
                         )}
                     </tbody>
                 </Table>
             </div>
-        </>
+            <div className="offset-6 col-6">
+                <div className='row'>
+                    { progresoLocal==100?
+                        <div className='offset-6 col-6'>
+                            <NavLink to={"/orden"} className="nav"><Button className='btn-primary col-sm-12'>Orden Finalizada</Button></NavLink>
+                        </div>
+                        :<>
+                            <div className='col-6'>
+                                <NavLink to={"/orden"} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
+                            </div>
+                            <div className='col-6'>
+                                <Button className='btn-success col-sm-12' onClick={()=>guardarArticulos(rowDataArticulos)}>Guardar</Button>
+                            </div>
+                        </>
+                    }
+                    
+                </div>  
+            </div>
+        </section>
     )
 }
 export default ListadoDetalle;
