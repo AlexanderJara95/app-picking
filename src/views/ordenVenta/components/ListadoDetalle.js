@@ -111,7 +111,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab">
                 <Table className="table-sm border-white" responsive bordered hover striped >
                     <thead className="thead-dark bg-dark text-white" >
-                        <tr className='align-middle text-center' scope="col">
+                        <tr className='align-middle text-center' scope="col" >
                             {/*<th>Id Orden</th>*/}
                             <th scope="col">Id</th>
                             <th scope="col">Pedido Venta</th>

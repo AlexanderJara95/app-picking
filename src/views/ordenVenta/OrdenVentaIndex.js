@@ -21,11 +21,10 @@ const OrdenVentaIndex = ()=> {
                     Órdenes
                 </Breadcrumb.Item>
             </Breadcrumb>
-            <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'4em',zIndex:'1000'}}>
-                <div className="row pt-3">
-                    <div className="col m-0 font-weight-bold text-primary pb-3">
-                        <h1><strong>Órdenes</strong></h1>
-                        <h3>Listado de Informes de Picking</h3>
+            <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'1em',zIndex:'1000'}}>
+                <div className="row pt-2">
+                    <div className="col m-0 font-weight-bold text-primary pb-2">
+                        <h3>Órdenes - Listado de Informes de Picking</h3>
                     </div>
                 </div>
             </div>

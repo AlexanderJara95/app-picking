@@ -91,16 +91,16 @@ class OrdenVenta extends Component {
                         <thead className="thead-dark bg-dark text-white">
                             <tr className='align-middle'
                                 scope="col"
-                                style={{ textAlign: 'center', fontSize: '14px' }}>
-                                <th scope="col">Id Orden</th>
+                                style={{ textAlign: 'center', fontSize: '12px' }}>
+                                {/*<th scope="col">Id Orden</th>*/}
                                 <th scope="col">Pedido de Ventas</th>
                                 <th scope="col">Id Cliente AX</th>
                                 <th scope="col">Nombre Cliente</th>
                                 <th scope="col">Referencia</th>
                                 <th scope="col">Asignar</th>
                                 <th scope="col">Asignado A</th>
-                                <th scope="col">Fecha de Subida</th>
-                                <th scope="col">Fecha de Inicio</th>
+                               {/* <th scope="col">Fecha de Subida</th>
+                                <th scope="col">Fecha de Inicio</th> */}
                                 <th scope="col" width="40px">Fecha Terminado</th>
                                 <th scope="col" width="100px">Estado</th>
                                 <th scope="col">% Avance</th>
@@ -109,15 +109,15 @@ class OrdenVenta extends Component {
                         </thead>
                         <tbody >
                             {datosTabla.map((itemOrden) =>
-                                <tr className='align-middle' scope="row" key={itemOrden.idOrden} id={"li-orden-" + itemOrden.idOrden} style={{ textAlign: 'center', fontSize: '11px' }} onClick={() => this.seleccionarOrden(itemOrden)}>
-                                    <td>{itemOrden.idOrden}</td>
-                                    <td>{itemOrden.pedidoDeVentas}</td>
+                                <tr className='align-middle' scope="row" key={itemOrden.idOrden} id={"li-orden-" + itemOrden.idOrden} style={{ textAlign: 'center', fontSize: '12px' }} onClick={() => this.seleccionarOrden(itemOrden)}>
+                                    {/*<td>{itemOrden.idOrden}</td>*/}
+                                    <td style={{ textAlign: 'center', fontSize: '10px' }}>{itemOrden.pedidoDeVentas}</td>
                                     <td>{itemOrden.idClienteAx}</td>
-                                    <td>{itemOrden.nombreCliente}</td>
-                                    <td>{itemOrden.referencia}</td>
-                                    <td title="Personal disponible para asignar la orden"  style={{ minWidth: '130px' }}>
+                                    <td style={{ textTransform: 'lowercase'}}>{itemOrden.nombreCliente}</td>
+                                    <td style={{ textTransform: 'lowercase'}}>{itemOrden.referencia}</td>
+                                    <td title="Personal disponible para asignar la orden" >
                                         {itemOrden.estado !== 'Anulado'?
-                                        <select className="form-select form-select-sm" aria-label=".form-select-sm example" >
+                                        <select className="form-select form-select-sm" aria-label=".form-select-sm example" style={{ width: '100px' , fontSize: "10px"}}>
                                             <option value='0' onClick={this.seleccionarUsuario}>Seleccione</option>
                                             {this.state.listaUsuarios.map((usuario) => {
                                                 if (usuario.nivelUsuario == 3) {
@@ -136,13 +136,13 @@ class OrdenVenta extends Component {
                                         usuario.idUsuario == itemOrden.asignadoA ? <span key={usuario.idUsuario}>{usuario.nombre}</span> : null
                                     ))}</td>
                                     <td  title="Persona encargada del picking" >{itemOrden.fechaSubida}</td>
-                                    <td  title="Fecha de asignacion" >{itemOrden.fechaInicio}</td>
-                                    <td  title="Fecha de culminada" >{itemOrden.fechaCompletado}</td>
-                                    <td  title="Estado de la orden" >{this.mostrarEstado(itemOrden.estado)}</td>
+                                    {/*<td  title="Fecha de asignacion" >{itemOrden.fechaInicio}</td>
+                                    <td  title="Fecha de culminada" >{itemOrden.fechaCompletado}</td> */}
+                                    <td  title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
                                     <td  title="Porcentaje de avance de la orden" >0</td>
                                     <td>{itemOrden.estado !== 'Anulado'? 
                                         <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
-                                            <Button className="btn secondary"  title="Ver detalle de orden" onClick={this.setState({codigoOrden: itemOrden.idOrden})}><FontAwesomeIcon icon={faEye}/></Button></NavLink>
+                                            <Button className="btn secondary"  title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye}/></Button></NavLink>
                                         :<Button className="btn secondary"  title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye}/></Button>}</td>
                                     <td>{itemOrden.estado !== 'Anulado'? 
                                         <Button  className="btn btn-success"  title="Asignar orden" onClick={() => {if(window.confirm('Desea asignar esta orden?')){this.asignarOrden()};}}><FontAwesomeIcon icon={faCheck} /></Button>
