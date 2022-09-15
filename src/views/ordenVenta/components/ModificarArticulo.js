@@ -5,12 +5,13 @@ import { toastme } from 'toastmejs';
 import store from '../../../redux/Store';
 import { registrarOrdenDetalle,modificarOrdenDetalle, registrarDetalleArticulo } from '../../../redux/ordenVenta/OrdenVentaActions';
 import { StatusCodes } from 'http-status-codes';
+import { NavLink } from 'react-router-dom';
 
 
 function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
 
     const [restaCantidad,setRestaCantidad] = useState(0);
-    const [btnGuardar,setBtnGuardar] = useState(true); 
+    const [btnGuardar,setBtnGuardar] = useState(false); 
     const childFunc = React.useRef(null);
     useEffect(()=>{
       addTableRows.current = addTableRowsLocal;
@@ -99,7 +100,8 @@ function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
           setBtnGuardar(false);
           setResta(articulo.cantidad-contador);
         }
-        if(contador == articulo.cantidad){ console.log("trueeeee");setBtnGuardar(true)};
+        if(contador > articulo.cantidad) setBtnGuardar(false);
+        if(contador == articulo.cantidad && rowsData.length > 1){ console.log("trueeeee");setBtnGuardar(true)};
         
     }
     
@@ -181,7 +183,7 @@ function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
                           btnGuardar?
                           <>
                             <div className='col-6'>
-                              <Button className='btn-secondary col-sm-12'>Cancelar</Button>
+                              <NavLink to={"/detalleorden/"+ articulo.pedidoDeVentas} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
                             </div>
                             <div className='col-6'>
                               <Button onClick={()=>guardarArticulos(rowsData)} className='btn-success col-sm-12'>Guardar</Button>
@@ -191,7 +193,7 @@ function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
                             <div className='col-6'>
                             </div>
                             <div className='col-6'>
-                              <Button className='btn-secondary col-sm-12'>Cancelar</Button>
+                              <NavLink to={"/detalleorden/"+ articulo.pedidoDeVentas} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
                             </div>
                           </>
                         }
