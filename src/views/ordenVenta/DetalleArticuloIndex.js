@@ -7,7 +7,7 @@ import ListadoDetalle from "./components/ListadoDetalle";
 const DetalleArticuloIndex = () =>{
     const param = useParams();
     useEffect(()=>{
-        console.log("ListadoArticulo", param.id);
+        console.log("ListadoArticulo", (param.id).split("-")[1]);
     },[]);
     return(
         <>
@@ -32,7 +32,7 @@ const DetalleArticuloIndex = () =>{
                     </div>
                 </div>                
             </div>
-            <ListadoArticulo id={param.id}></ListadoArticulo>
+            <ListadoArticulo id={(param.id).split("-")[1]}></ListadoArticulo>
         </>
     );
 }

@@ -117,7 +117,7 @@ class OrdenVentaPicker extends Component {
                                 <td>{itemOrden.fechaCompletado}</td>
                                 <td>{this.mostrarEstado(itemOrden.estado)}</td>
                                 <td>0</td>
-                                <td><NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button className="btn secondary" ><FontAwesomeIcon icon={faEye}/></Button></NavLink></td>
+                                <td><NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}><Button className="btn secondary" ><FontAwesomeIcon icon={faEye}/></Button></NavLink></td>
                             </tr>
                             )}
                             <tr>

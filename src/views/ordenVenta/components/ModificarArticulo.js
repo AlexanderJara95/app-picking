@@ -7,7 +7,7 @@ import { registrarOrdenDetalle,modificarOrdenDetalle, registrarDetalleArticulo }
 import { StatusCodes } from 'http-status-codes';
 
 
-function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
+function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
 
     const [restaCantidad,setRestaCantidad] = useState(0);
     const [btnGuardar,setBtnGuardar] = useState(true); 
@@ -132,7 +132,7 @@ function ModificarArticulo({articulo,setArticulo,setResta,addTableRows}) {
                         toastme.success(
                             `Artículo agregado al Detalle`,
                         );		
-                        window.location.href = "/detalleorden/"+ item.pedidoDeVentas;	
+                        window.location.href = "/detalleorden/"+cod+'-'+item.pedidoDeVentas;	
                         
                       }
                       
