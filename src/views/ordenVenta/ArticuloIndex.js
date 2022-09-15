@@ -13,8 +13,8 @@ const ArticuloIndex = () =>{
     const addTableRows = useRef(null);
 
     useEffect(()=>{
-        if(param.id)busquedaArticulo(param.id);  
-    },[param.id]);
+        if((param.id).split("-")[1])busquedaArticulo((param.id).split("-")[1]);  
+    },[(param.id).split("-")[1]]);
       
     const busquedaArticulo= async(id)=>{
         try {
@@ -60,7 +60,7 @@ const ArticuloIndex = () =>{
                     </div>
                 </div>                
             </div>
-            <ModificarArticulo articulo={articulo} setArticulo={setArticulo} setResta={setResta} addTableRows={addTableRows}></ModificarArticulo>
+            <ModificarArticulo articulo={articulo} cod={(param.id).split("-")[1]} setArticulo={setArticulo} setResta={setResta} addTableRows={addTableRows}></ModificarArticulo>
         </>
     );
 }
