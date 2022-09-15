@@ -8,7 +8,7 @@ import { faCheck, faCirclePlus, faDeleteLeft, faEdit, faTimes, faX } from '@fort
 import { NavLink } from 'react-router-dom';
 import { toastme } from 'toastmejs';
 
-const ListadoDetalle = ({ id, progreso, setProgress }) => {
+const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
 
     const [datosTabla, setDatosTabla] = useState([]);
     const [ordenSeleccionada, setOrdenSeleccionada] = useState({});
@@ -67,7 +67,6 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
     const contadorfilashijo = (index) => {
         const newItems = datosTabla.splice(0, index);
         console.log('newsitem', newItems);
-
         return 3;
     }
     const guardarArticulos = async (json) => {
@@ -87,13 +86,14 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                 `Artículo Guardado`,
                             );
                         }
-                        setProgresoLocal(progreso);
-                        listaOrdernesServicio(id);
 
                     } catch (error) {
                         console.log(error);
                     }
                 });
+
+                setProgresoLocal(progreso);
+                listaOrdernesServicio(id);
             } catch (error) {
                 toastme.error(
                     error
@@ -104,9 +104,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                 `No hay Cambios en la orden`
             );
         }
-
     }
-
     return (
         <section>
 

@@ -3,13 +3,13 @@ import { ProgressBar } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb } from "react-bootstrap";
 import ListadoDetalle from "./components/ListadoDetalle";
+import ListadoDetalleAdmin from "./components/ListadoDetalleAdmin";
 
 const DetalleOrdenIndex = () =>{
     const param = useParams();
     const [progress,setProgress] = useState(0);
-    useEffect(()=>{
-        console.log("listadoDestalle", param.id);
-    },[]);
+
+   
     useEffect(()=>{
         console.log("act");
     },[progress]);
@@ -23,7 +23,7 @@ const DetalleOrdenIndex = () =>{
                     Órdenes
                 </Breadcrumb.Item>
                 <Breadcrumb.Item href="#">
-                    {param.id}
+                    {(param.id).split("-")[1]}
                 </Breadcrumb.Item>
             </Breadcrumb>
             <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'4em',zIndex:'1000'}}>
@@ -38,7 +38,8 @@ const DetalleOrdenIndex = () =>{
                     </div>
                 </div>                
             </div>
-            <ListadoDetalle id={param.id} setProgress={setProgress} progreso={progress}></ListadoDetalle>
+            
+            {window.usuario.nivelUsuario==1||window.usuario.nivelUsuario==3?<ListadoDetalle id={(param.id).split("-")[1]} cod={(param.id).split("-")[0]} setProgress={setProgress} progreso={progress}></ListadoDetalle>:<ListadoDetalleAdmin id={(param.id).split("-")[1]} setProgress={setProgress} progreso={progress}></ListadoDetalleAdmin>}
         </>
     );
 }

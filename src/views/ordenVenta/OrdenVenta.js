@@ -16,7 +16,8 @@ class OrdenVenta extends Component {
             usuarioAsignado: 0,
             confirmarAsignar: '',
             checkAsignar: false,
-            changeColor: ''
+            changeColor: '',
+            codigoOrden: ''
         }
     }
 
@@ -140,7 +141,8 @@ class OrdenVenta extends Component {
                                     <td  title="Estado de la orden" >{this.mostrarEstado(itemOrden.estado)}</td>
                                     <td  title="Porcentaje de avance de la orden" >0</td>
                                     <td>{itemOrden.estado !== 'Anulado'? 
-                                        <NavLink to={"/detalleorden/" + itemOrden.pedidoDeVentas}><Button className="btn secondary"  title="Ver detalle de orden"><FontAwesomeIcon icon={faEye}/></Button></NavLink>
+                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
+                                            <Button className="btn secondary"  title="Ver detalle de orden" onClick={this.setState({codigoOrden: itemOrden.idOrden})}><FontAwesomeIcon icon={faEye}/></Button></NavLink>
                                         :<Button className="btn secondary"  title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye}/></Button>}</td>
                                     <td>{itemOrden.estado !== 'Anulado'? 
                                         <Button  className="btn btn-success"  title="Asignar orden" onClick={() => {if(window.confirm('Desea asignar esta orden?')){this.asignarOrden()};}}><FontAwesomeIcon icon={faCheck} /></Button>
