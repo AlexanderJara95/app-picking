@@ -23,10 +23,10 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
     const listaOrdernesServicio = async (id) => {
         try {
             const response = await store.dispatch(listarOrdenDetallePorId(id));
-            const progressDb=(100/response.detalleOrden.filter(item=>item.rama==1).length)*response.detalleOrden.filter(item=>item.listo==1).length;
+            const progressDb = (100 / response.detalleOrden.filter(item => item.rama == 1).length) * response.detalleOrden.filter(item => item.listo == 1).length;
             if (response.status === StatusCodes.OK) {
-                if(progressDb==100)setProgresoLocal(progressDb);
-                setProgress(progressDb==0?0:progressDb);
+                if (progressDb == 100) setProgresoLocal(progressDb);
+                setProgress(progressDb == 0 ? 0 : progressDb);
                 setDatosTabla(response.detalleOrden);
             }
         } catch (error) {
@@ -46,66 +46,66 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
 
     }
 
-    const cambiarProgreso = (e,idArticulo) => {
+    const cambiarProgreso = (e, idArticulo) => {
         const checked = e.target.checked;
         console.log("checked", idArticulo);
         if (checked) {
-            console.log("datosTabla.length", datosTabla.filter(item=>item.rama==1).length);
+            console.log("datosTabla.length", datosTabla.filter(item => item.rama == 1).length);
             console.log("progreso", progreso);
-            setProgress(progreso + 100 / datosTabla.filter(item=>item.rama==1).length);
-            setRowDataArticulos((prev)=>[...prev,idArticulo]);
+            setProgress(progreso + 100 / datosTabla.filter(item => item.rama == 1).length);
+            setRowDataArticulos((prev) => [...prev, idArticulo]);
         }
         else {
-            setProgress(progreso - 100 / datosTabla.filter(item=>item.rama==1).length);      
-            const index=rowDataArticulos.indexOf(idArticulo);
+            setProgress(progreso - 100 / datosTabla.filter(item => item.rama == 1).length);
+            const index = rowDataArticulos.indexOf(idArticulo);
             const rows = [...rowDataArticulos];
-            rows.splice(index, 1);         
-            setRowDataArticulos(rows);             
+            rows.splice(index, 1);
+            setRowDataArticulos(rows);
         }
     }
 
-    const contadorfilashijo=(index)=>{
-        const newItems = datosTabla.splice(0,index);
-        console.log('newsitem',newItems);
-        
+    const contadorfilashijo = (index) => {
+        const newItems = datosTabla.splice(0, index);
+        console.log('newsitem', newItems);
+
         return 3;
     }
-    const guardarArticulos = async(json) =>{
-        console.log("json",json);
+    const guardarArticulos = async (json) => {
+        console.log("json", json);
         //validando que exista detalle de orden
         //console.log("ddd",json);
-        if(json.length > 0){
+        if (json.length > 0) {
             try {
-                json.map(async(item)=>{
+                json.map(async (item) => {
                     try {
-                        console.log(item.pedidoDeVentas);                      
+                        console.log(item.pedidoDeVentas);
                         const response = await store.dispatch(modificarOrdenDetalle({
-                          idArticulo: item
-                        }));    
-                        if(response.status === StatusCodes.OK) {
+                            idArticulo: item
+                        }));
+                        if (response.status === StatusCodes.OK) {
                             toastme.success(
                                 `Artículo Guardado`,
-                            );	
+                            );
                         }
                         setProgresoLocal(progreso);
                         listaOrdernesServicio(id);
-                        	  
+
                     } catch (error) {
                         console.log(error);
                     }
-                });                
+                });
             } catch (error) {
                 toastme.error(
                     error
                 );
             }
-          }else{
-              toastme.error(
-                  `No hay Detalle de orden`
-              );
-          }
-          
-      }
+        } else {
+            toastme.error(
+                `No hay Cambios en la orden`
+            );
+        }
+
+    }
 
     return (
         <section>
@@ -124,62 +124,72 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                             <th scope="col">Id de Pallet</th>
                             <th scope="col">Fecha de Caducidad</th>
                             <th scope="col">Cantidad</th>
-                            <th scope="col" colSpan={2}>Estado</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Opciones</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         {datosTabla.map((itemDetalle, index) =>
                             <tr className='align-middle' scope="row" key={index}>
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.idArticulo}</td>
+                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.idArticulo}</td>
                                     : <td colSpan={4}></td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.pedidoDeVentas}</td>
+                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.pedidoDeVentas}</td>
                                     : null
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.codigoArticulo}</td>
+                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.codigoArticulo}</td>
                                     : null
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.descripcion}</td>
+                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.descripcion}</td>
                                     : null
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.numeroLote}</td>
+                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.numeroLote}</td>
                                     : <td>{itemDetalle.numeroLote}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}></td>
+                                    ? <td style={{ fontWeight: 'bold' }}></td>
                                     : <td>{itemDetalle.ubicacion}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.idPallet}</td>
+                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.idPallet}</td>
                                     : <td>{itemDetalle.idPallet}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.fechaCaducidad}</td>
+                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.fechaCaducidad}</td>
                                     : <td>{itemDetalle.fechaCaducidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.cantidad}</td>
+                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.cantidad}</td>
                                     : <td>{itemDetalle.cantidad}</td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td>
-                                        {itemDetalle.listo == 1?null
-                                        :<div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e,itemDetalle.idArticulo)} /></div>
+                                        {itemDetalle.listo == 1
+                                            ? <div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} disabled checked /></div>
+                                            : <div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e, itemDetalle.idArticulo)} /></div>
                                         }
-                                      </td>
-                                    : <td colSpan={2}></td>
+                                    </td>
+                                    : <td></td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td>
-                                        {itemDetalle.listo == 0?<NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
-                                        :<NavLink to={"#"} className="nav"><Button className='btn-success'><FontAwesomeIcon icon={faCheck} /></Button></NavLink>
+                                        {itemDetalle.listo == 0
+                                            ? <NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
+                                            : <NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} onClick={() => {
+                                                if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) { console.log("ELIMINAR HIJOS Y EDITAR NUEVAMENTE") };
+                                            }} className="nav">
+                                                <Button>
+                                                    <FontAwesomeIcon icon={faEdit} />
+                                                </Button>
+                                            </NavLink>
                                         }
-                                      </td>
+                                    </td>
                                     : null
                                 }
                             </tr>
@@ -189,21 +199,21 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
             </div>
             <div className="offset-6 col-6">
                 <div className='row'>
-                    { progresoLocal==100?
+                    {progresoLocal == 100 ?
                         <div className='offset-6 col-6'>
-                            <NavLink to={"/orden"} className="nav"><Button className='btn-primary col-sm-12'>Orden Finalizada</Button></NavLink>
+                            <NavLink to={"/orden"} className="nav"><Button className='btn-primary col-sm-12'>Finalizar Orden</Button></NavLink>
                         </div>
-                        :<>
+                        : <>
                             <div className='col-6'>
                                 <NavLink to={"/orden"} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
                             </div>
                             <div className='col-6'>
-                                <Button className='btn-success col-sm-12' onClick={()=>guardarArticulos(rowDataArticulos)}>Guardar</Button>
+                                <Button className='btn-success col-sm-12' onClick={() => guardarArticulos(rowDataArticulos)}>Guardar</Button>
                             </div>
                         </>
                     }
-                    
-                </div>  
+
+                </div>
             </div>
         </section>
     )
