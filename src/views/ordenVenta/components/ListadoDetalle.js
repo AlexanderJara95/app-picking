@@ -132,7 +132,7 @@ const ListadoDetalle = ({ id, progreso, setProgress }) => {
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td><NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink></td>
-                                    : null
+                                    : <td></td>
                                 }
                                 <td>{itemDetalle.rama}</td>
                                 <td>{itemDetalle.listo}</td>
