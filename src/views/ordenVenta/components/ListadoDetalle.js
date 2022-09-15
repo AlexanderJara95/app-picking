@@ -178,8 +178,8 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                 {itemDetalle.rama == 1
                                     ? <td>
                                         {itemDetalle.listo == 0
-                                            ? <NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
-                                            : <NavLink to={"/detallearticulo/" + itemDetalle.idArticulo} onClick={() => {
+                                            ? <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
+                                            : <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} onClick={() => {
                                                 if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) { console.log("ELIMINAR HIJOS Y EDITAR NUEVAMENTE") };
                                             }} className="nav">
                                                 <Button>
