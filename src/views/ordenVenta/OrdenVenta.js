@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import { Table, Button, Alert } from 'react-bootstrap';
@@ -19,6 +19,7 @@ class OrdenVenta extends Component {
             changeColor: '',
             codigoOrden: ''
         }
+        this.accordionContent = [];
     }
 
     componentDidMount() {
@@ -109,7 +110,7 @@ class OrdenVenta extends Component {
                         </thead>
                         <tbody >
                             {datosTabla.map((itemOrden) =>
-                                <tr className='align-middle' scope="row" key={itemOrden.idOrden} id={"li-orden-" + itemOrden.idOrden} style={{ textAlign: 'center', fontSize: '12px' }} onClick={() => this.seleccionarOrden(itemOrden)}>
+                                <tr className='align-middle' scope="row" key={itemOrden.idOrden} ref={ref => (this.accordionContent[itemOrden.idOrden] = ref)} id={"li-orden-" + itemOrden.idOrden} style={{ textAlign: 'center', fontSize: '12px' }} onClick={() => this.seleccionarOrden(itemOrden,itemOrden.idOrden)}>
                                     {/*<td>{itemOrden.idOrden}</td>*/}
                                     <td style={{ textAlign: 'center', fontSize: '10px' }}>{itemOrden.pedidoDeVentas}</td>
                                     <td>{itemOrden.idClienteAx}</td>
@@ -205,11 +206,12 @@ class OrdenVenta extends Component {
         //esta logica siguiente es para capturar el item clickeado y luego si se clickea otro, desmarque como "active" el anterior
         if (this.state.ordenSeleccionada !== '') {
             //document.getElementById("li-orden-" + this.state.ordenSeleccionada.idOrden).classList.remove("btn disabled"); //esto hace que se marque el elemento cliqueado como "activo"
-            document.getElementById("li-orden-" + this.state.ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
-            
+            //document.getElementById("li-orden-" + this.state.ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
+            this.accordionContent[this.state.ordenSeleccionada.idOrden].classList.remove("active");
         }
         this.setState({ ordenSeleccionada: itemOrden })
-        document.getElementById("li-orden-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
+        //document.getElementById("li-orden-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
+        this.accordionContent[itemOrden.idOrden].classList.add("active");
     }
 
     //(itemOrden.estado == 1) ? {color: 'red'}:{color: 'green'}
