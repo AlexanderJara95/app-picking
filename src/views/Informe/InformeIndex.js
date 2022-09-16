@@ -18,11 +18,17 @@ const InformeIndex = ()=> {
         e.preventDefault();
         if (e.target.files) {
             let selected = e.target.files[0];
+            console.log("jsonFile:",selected);
             let reader = new FileReader();
                 reader.addEventListener("loadend", () => {
                     //document.getElementById("demoShowA").innerHTML = reader.result;
-                    var json = HtmlToJson(reader.result);
-                    registrarOrdenPicking(json);
+                    if(selected.type=="text/html"){
+                        var json = HtmlToJson(reader.result);
+                        registrarOrdenPicking(json);
+                    }else{
+                        registrarOrdenPicking(JSON.parse(reader.result));
+                    }
+                    
                 });
             reader.readAsText(selected);            
         }
@@ -141,9 +147,9 @@ const InformeIndex = ()=> {
                             <div className="card-header py-5">
                                 <div className="row container justify-content-center">
                                     <form>
-                                        <label htmlFor="upload">(Solo de tipo htm)</label>
+                                        <label htmlFor="upload">(Solo de tipo htm y Json)</label>
                                         <div className='col-8'>                                            
-                                            <input type="file" onChange={readUploadFile} accept=".htm,.html"/>
+                                            <input type="file" onChange={readUploadFile} accept=".htm,.html,.json"/>
                                             <ul id="listing"></ul>
                                         </div>
                                     </form>

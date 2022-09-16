@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import { Table, Button, Alert } from 'react-bootstrap';
@@ -16,8 +16,10 @@ class OrdenVentaPicker extends Component {
             usuarioAsignado: 0,
             confirmarAsignar: '',
             checkAsignar: false,
-            changeColor: ''
+            changeColor: '',
+            codigoOrden: ''
         }
+        this.accordionContent = [];
     }
 
     componentDidMount() {
@@ -72,7 +74,6 @@ class OrdenVentaPicker extends Component {
 
     /*ES PARA OBTENER EL ID DEL USUARIO CLICKEADO EN LA LISTA DE SELECCION PARA ASIGNAR LA ORDEN */
     seleccionarUsuario = event => {
-        console.log(event.currentTarget.value);
         this.setState({ usuarioAsignado: event.currentTarget.value });
     }
 
@@ -90,35 +91,42 @@ class OrdenVentaPicker extends Component {
                         <thead className="thead-dark bg-dark text-white">
                             <tr className='align-middle'
                                 scope="col"
-                                style={{ textAlign: 'center', fontSize: '14px' }}>
-                                <th scope="col">Id Orden</th>
+                                style={{ textAlign: 'center', fontSize: '12px' }}>
+                                {/*<th scope="col">Id Orden</th>*/}
                                 <th scope="col">Pedido de Ventas</th>
                                 <th scope="col">Id Cliente AX</th>
                                 <th scope="col">Nombre Cliente</th>
                                 <th scope="col">Referencia</th>
-                                <th scope="col">Fecha de Subida</th>
-                                <th scope="col">Fecha de Inicio</th>
-                                <th scope="col">Fecha Terminado</th>
-                                <th scope="col">Estado</th>
+                               {/* <th scope="col">Fecha de Subida</th>
+                                <th scope="col">Fecha de Inicio</th> */}
+                                <th scope="col" width="40px">Fecha Terminado</th>
+                                <th scope="col" width="100px">Estado</th>
                                 <th scope="col">% Avance</th>
-                                <th colSpan={3}>Acciones</th>
+                                <th >Acciones</th>
                             </tr>
                         </thead>
                         <tbody >
                             {datosTabla.map((itemOrden) =>
-                                <tr className='align-middle' scope="row" key={itemOrden.idOrden} id={"li-orden-" + itemOrden.idOrden} style={{ textAlign: 'center', fontSize: '11px' }} onClick={() => this.seleccionarOrden(itemOrden)}>
-                                <td>{itemOrden.idOrden}</td>
-                                <td>{itemOrden.pedidoDeVentas}</td>
-                                <td>{itemOrden.idClienteAx}</td>
-                                <td>{itemOrden.nombreCliente}</td>
-                                <td>{itemOrden.referencia}</td>
-                                <td>{itemOrden.fechaSubida}</td>
-                                <td>{itemOrden.fechaInicio}</td>
-                                <td>{itemOrden.fechaCompletado}</td>
-                                <td>{this.mostrarEstado(itemOrden.estado)}</td>
-                                <td>0</td>
-                                <td><NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}><Button className="btn secondary" ><FontAwesomeIcon icon={faEye}/></Button></NavLink></td>
-                            </tr>
+                                <tr className='align-middle' scope="row" key={itemOrden.idOrden} ref={ref => (this.accordionContent[itemOrden.idOrden] = ref)} id={"li-orden-" + itemOrden.idOrden} style={{ textAlign: 'center', fontSize: '12px' }} onClick={() => this.seleccionarOrden(itemOrden,itemOrden.idOrden)}>
+                                    {/*<td>{itemOrden.idOrden}</td>*/}
+                                    <td style={{ textAlign: 'center', fontSize: '10px' }}>{itemOrden.pedidoDeVentas}</td>
+                                    <td>{itemOrden.idClienteAx}</td>
+                                    <td style={{ textTransform: 'lowercase'}}>{itemOrden.nombreCliente}</td>
+                                    <td style={{ textTransform: 'lowercase'}}>{itemOrden.referencia}</td>
+                                    <td  title="Persona encargada del picking" >{itemOrden.fechaSubida}</td>
+                                    {/*<td  title="Fecha de asignacion" >{itemOrden.fechaInicio}</td>
+                                    <td  title="Fecha de culminada" >{itemOrden.fechaCompletado}</td> */}
+                                    <td  title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
+                                    <td  title="Porcentaje de avance de la orden" >0</td>
+                                    <td>{itemOrden.estado !== 'Anulado'? 
+                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
+                                            <Button className="btn secondary"  title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye}/></Button></NavLink>
+                                        :<Button className="btn secondary"  title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye}/></Button>}</td>
+
+                                        {/* estuctura para condicion:
+                                        {condicion a evaluar ? que pasa si es true : que pasa si es false} */}
+                                        
+                                </tr>
                             )}
                             <tr>
                             </tr>
@@ -135,8 +143,9 @@ class OrdenVentaPicker extends Component {
         }
     }
 
-    asignarOrden = () => {
+    asignarOrden = (idOrden) => {
         if (this.state.ordenSeleccionada.idOrden !== null && this.state.usuarioAsignado !== 0) {
+            console.log("HUUUU");
             const rutaServicio = "https://megalabs.digitalbroperu.com/servicioasignarorden.php"
             var formData = new FormData();
             formData.append("idOrden", this.state.ordenSeleccionada.idOrden);
@@ -167,11 +176,12 @@ class OrdenVentaPicker extends Component {
         //esta logica siguiente es para capturar el item clickeado y luego si se clickea otro, desmarque como "active" el anterior
         if (this.state.ordenSeleccionada !== '') {
             //document.getElementById("li-orden-" + this.state.ordenSeleccionada.idOrden).classList.remove("btn disabled"); //esto hace que se marque el elemento cliqueado como "activo"
-            document.getElementById("li-orden-" + this.state.ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
-            
+            //document.getElementById("li-orden-" + this.state.ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
+            this.accordionContent[this.state.ordenSeleccionada.idOrden].classList.remove("active");
         }
         this.setState({ ordenSeleccionada: itemOrden })
-        document.getElementById("li-orden-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
+        //document.getElementById("li-orden-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
+        this.accordionContent[itemOrden.idOrden].classList.add("active");
     }
 
     //(itemOrden.estado == 1) ? {color: 'red'}:{color: 'green'}
@@ -213,6 +223,19 @@ class OrdenVentaPicker extends Component {
                 .then(() => { this.leerOrdenes(); })
         }
     })
+
+    
+    anularOrden = (itemOrden => {
+        var respuesta = window.confirm("¿Está seguro que desea anular la Orden " + itemOrden.pedidoDeVentas + "?")
+        if (respuesta === true) {
+            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioanularorden.php"
+            var formData = new FormData();
+            formData.append("idOrden", itemOrden.idOrden);
+            fetch(rutaServicio, { method: 'POST', body: formData })
+                .then(() => { this.leerOrdenes(); })
+        }
+    })
+
 
     render() {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
