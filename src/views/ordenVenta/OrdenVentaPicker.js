@@ -33,9 +33,13 @@ class OrdenVentaPicker extends Component {
     }
 
     leerOrdenes() {
-        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarorden.php";
-        fetch(rutaServicio)
-            .then(
+        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarordenpicker.php";
+        var formData = new FormData();
+            formData.append("idUsuario", window.usuario.idUsuario);
+            fetch(rutaServicio, {
+                method: 'POST',
+                body: formData
+            }).then(
                 res => res.json() //indicamos que el objeto devuelto por dicha solicitud al servicio, sera un Json
             )
             .then(
