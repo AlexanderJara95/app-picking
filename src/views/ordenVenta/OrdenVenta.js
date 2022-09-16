@@ -74,7 +74,6 @@ class OrdenVenta extends Component {
 
     /*ES PARA OBTENER EL ID DEL USUARIO CLICKEADO EN LA LISTA DE SELECCION PARA ASIGNAR LA ORDEN */
     seleccionarUsuario = event => {
-        console.log(event.currentTarget.value);
         this.setState({ usuarioAsignado: event.currentTarget.value });
     }
 
@@ -118,14 +117,14 @@ class OrdenVenta extends Component {
                                     <td style={{ textTransform: 'lowercase'}}>{itemOrden.referencia}</td>
                                     <td title="Personal disponible para asignar la orden" >
                                         {itemOrden.estado !== 'Anulado'?
-                                        <select className="form-select form-select-sm" aria-label=".form-select-sm example" style={{ width: '100px' , fontSize: "10px"}}>
-                                            <option value='0' onClick={this.seleccionarUsuario}>Seleccione</option>
+                                        <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={this.seleccionarUsuario} style={{ width: '100px' , fontSize: "10px"}}>
+                                            <option value='0'>Seleccione</option>
                                             {this.state.listaUsuarios.map((usuario) => {
                                                 if (usuario.nivelUsuario == 3) {
                                                     if (usuario.idUsuario == itemOrden.asignadoA) {
-                                                        return (<option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option>);
+                                                        return (<option key={usuario.idUsuario} value={usuario.idUsuario}>{usuario.nombre}</option>);
                                                     } else {
-                                                        return (<option key={usuario.idUsuario} value={usuario.idUsuario} onClick={this.seleccionarUsuario} >{usuario.nombre}</option>);
+                                                        return (<option key={usuario.idUsuario} value={usuario.idUsuario}>{usuario.nombre}</option>);
                                                     }
                                                 }
                                             }
@@ -146,7 +145,7 @@ class OrdenVenta extends Component {
                                             <Button className="btn secondary"  title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye}/></Button></NavLink>
                                         :<Button className="btn secondary"  title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye}/></Button>}</td>
                                     <td>{itemOrden.estado !== 'Anulado'? 
-                                        <Button  className="btn btn-success"  title="Asignar orden" onClick={() => {if(window.confirm('Desea asignar esta orden?')){this.asignarOrden()};}}><FontAwesomeIcon icon={faCheck} /></Button>
+                                        <Button  className="btn btn-success"  title="Asignar orden" onClick={() => this.asignarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>
                                         :<Button  className="btn btn-success"  title="Asignar orden" disabled><FontAwesomeIcon icon={faCheck} /></Button>}</td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                                     <td>{itemOrden.estado !== 'Anulado'? 
                                         <Button  className="btn btn-danger"  title="Anular Orden" onClick={() => this.anularOrden(itemOrden)}><FontAwesomeIcon icon={faTimes}/></Button>
@@ -174,8 +173,9 @@ class OrdenVenta extends Component {
         }
     }
 
-    asignarOrden = () => {
+    asignarOrden = (idOrden) => {
         if (this.state.ordenSeleccionada.idOrden !== null && this.state.usuarioAsignado !== 0) {
+            console.log("HUUUU");
             const rutaServicio = "https://megalabs.digitalbroperu.com/servicioasignarorden.php"
             var formData = new FormData();
             formData.append("idOrden", this.state.ordenSeleccionada.idOrden);
