@@ -132,14 +132,14 @@ class OrdenVenta extends Component {
                                         </select>
                                         :<>Orden Anulada</>}
                                     </td>
-                                    <td    style={{ textAlign: 'center', fontSize: '20px' }}>{this.state.listaUsuarios.map((usuario) => (
+                                    <td  style={{ textAlign: 'center', fontSize: '20px' }}>{this.state.listaUsuarios.map((usuario) => (
                                         usuario.idUsuario == itemOrden.asignadoA ? <span key={usuario.idUsuario}>{usuario.nombre}</span> : null
                                     ))}</td>
                                     <td  title="Persona encargada del picking" >{itemOrden.fechaSubida}</td>
                                     {/*<td  title="Fecha de asignacion" >{itemOrden.fechaInicio}</td>
                                     <td  title="Fecha de culminada" >{itemOrden.fechaCompletado}</td> */}
                                     <td  title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
-                                    <td  title="Porcentaje de avance de la orden" >0</td>
+                                    <td  title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                     <td>{itemOrden.estado !== 'Anulado'? 
                                         <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
                                             <Button className="btn secondary"  title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye}/></Button></NavLink>
@@ -150,12 +150,8 @@ class OrdenVenta extends Component {
                                     <td>{itemOrden.estado !== 'Anulado'? 
                                         <Button  className="btn btn-danger"  title="Anular Orden" onClick={() => this.anularOrden(itemOrden)}><FontAwesomeIcon icon={faTimes}/></Button>
                                         :<Button  className="btn btn-danger"  title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes}/></Button>}</td>
-
                                         {/* estuctura para condicion:
                                         {condicion a evaluar ? que pasa si es true : que pasa si es false} */}
-
-
-                                        
                                 </tr>
                             )}
                             <tr>
@@ -249,11 +245,9 @@ class OrdenVenta extends Component {
             const rutaServicio = "http://megalabs.digitalbroperu.com/servicioeliminarorden.php"
             var formData = new FormData();
             formData.append("idOrden", itemOrden.idOrden);
-            fetch(rutaServicio, { method: 'POST', body: formData })
-                .then(() => { this.leerOrdenes(); })
+            fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
         }
     })
-
     
     anularOrden = (itemOrden => {
         var respuesta = window.confirm("¿Está seguro que desea anular la Orden " + itemOrden.pedidoDeVentas + "?")
@@ -261,11 +255,9 @@ class OrdenVenta extends Component {
             const rutaServicio = "http://megalabs.digitalbroperu.com/servicioanularorden.php"
             var formData = new FormData();
             formData.append("idOrden", itemOrden.idOrden);
-            fetch(rutaServicio, { method: 'POST', body: formData })
-                .then(() => { this.leerOrdenes(); })
+            fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
         }
     })
-
 
     render() {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
@@ -279,6 +271,5 @@ class OrdenVenta extends Component {
             </section>
         );
     }
-
 }
 export default OrdenVenta;
