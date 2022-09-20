@@ -111,17 +111,17 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab">
                 <Table className="table-sm border-white" responsive bordered hover striped >
                     <thead className="thead-dark bg-dark text-white" >
-                        <tr className='align-middle text-center' scope="col" >
+                        <tr className='align-middle' scope="col" style={{ textAlign: 'center', fontSize: '12px' }}>
                             {/*<th>Id Orden</th>*/}
-                            <th scope="col">Id</th>
-                            <th scope="col">Pedido Venta</th>
-                            <th scope="col">Codigo Articulo</th>
-                            <th scope="col">Descripcion</th>
-                            <th scope="col">N° Lote</th>
-                            <th scope="col">Ubicacion</th>
-                            <th scope="col">Id de Pallet</th>
-                            <th scope="col">Fecha de Caducidad</th>
-                            <th scope="col">Cantidad</th>
+                            {/*<th scope="col">Id</th> */}
+                            {/*<th scope="col" width="50px">Pedido Venta</th>*/}
+                            <th scope="col" width="50px">Codigo Articulo</th>
+                            <th scope="col" style={{width:'400px'}}>Descripcion</th>
+                            <th scope="col" width="50px">N° Lote</th>
+                            <th scope="col" width="50px">Ubicacion</th>
+                            <th scope="col" width="50px">Id de Pallet</th>
+                            <th scope="col"  style={{ textAlign: 'center',width:'100px' }}>Fecha de Caducidad</th>
+                            <th scope="col"  style={{ textAlign: 'center',width:'50px' }}>Cantidad</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Opciones</th>
 
@@ -130,44 +130,44 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                     <tbody>
                         {datosTabla.map((itemDetalle, index) =>
                             <tr className='align-middle' scope="row" key={index}>
-                                {itemDetalle.rama == 1
+                                {/* {itemDetalle.rama == 1
                                     ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.idArticulo}</td>
                                     : <td colSpan={4}></td>
-                                }
-                                {itemDetalle.rama == 1
+                                } */}
+                                {/*{itemDetalle.rama == 1
                                     ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.pedidoDeVentas}</td>
                                     : null
-                                }
+                                } */}
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.codigoArticulo}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.codigoArticulo}</td>
                                     : null
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.descripcion}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.descripcion}</td>
                                     : null
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.numeroLote}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.numeroLote}</td>
                                     : <td>{itemDetalle.numeroLote}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold' }}></td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}></td>
                                     : <td>{itemDetalle.ubicacion}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.idPallet}</td>
-                                    : <td>{itemDetalle.idPallet}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px'  }}>{itemDetalle.idPallet}</td>
+                                    : <td style={{ fontWeight: 'bold', fontSize: '12px'  }}>{itemDetalle.idPallet}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.fechaCaducidad}</td>
-                                    : <td>{itemDetalle.fechaCaducidad}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px'   }}>{itemDetalle.fechaCaducidad}</td>
+                                    : <td style={{ fontSize: '12px'   }}>{itemDetalle.fechaCaducidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.cantidad}</td>
+                                    ? <td style={{ textAlign: 'center',width:'50px', fontWeight: 'bold' }}>{itemDetalle.cantidad}</td>
                                     : <td>{itemDetalle.cantidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td>
+                                    ? <td style={{ width:'50px'}}>
                                         {itemDetalle.listo == 1
                                             ? <div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} disabled checked /></div>
                                             : <div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e, itemDetalle.idArticulo)} /></div>
@@ -176,7 +176,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                     : <td></td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td>
+                                    ? <td style={{ textAlign: 'center',width:'100px', fontWeight: 'bold' }}>
                                         {itemDetalle.listo == 0
                                             ? <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
                                             : <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} onClick={() => {
