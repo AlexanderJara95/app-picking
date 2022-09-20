@@ -27,7 +27,7 @@ const DetalleArticuloIndex = () =>{
             <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'4em'}}>
                 <div className="row pt-3">
                     <div className="col m-0 font-weight-bold text-primary pb-3">
-                        <h1><strong>Detalle de Articulo</strong></h1>
+                        <h3><strong>Detalle de Articulo</strong></h3>
                         <h3>Listado de artículo</h3>
                     </div>
                 </div>                
