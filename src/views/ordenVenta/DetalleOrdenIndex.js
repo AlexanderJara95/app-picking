@@ -29,11 +29,10 @@ const DetalleOrdenIndex = () =>{
             <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'4em',zIndex:'1000'}}>
                 <div className="row pt-3">
                     <div className="col m-0 font-weight-bold text-primary pb-3">
-                        <h1><strong>Detalle de Orden</strong></h1>
-                        <h3>Listado de artículos</h3>
+                        <h5><strong>Listado de artículos de #{(param.id).split("-")[1]}</strong></h5>
                     </div>
                     <div className="col text-primary">
-                        <h2><strong>Procentaje de avance</strong></h2>
+                        <h4><strong>Procentaje de avance</strong></h4>
                         <ProgressBar variant='success' animated now={progress} label={progress.toFixed(2)}></ProgressBar>
                     </div>
                 </div>                
