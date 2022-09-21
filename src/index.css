@@ -33,6 +33,7 @@
 ::before,
 ::after {
     box-sizing: border-box
+    
 }
 .rounded-pill{
     background-color: rgb(54, 153, 120) !important;
@@ -178,7 +179,9 @@ a {
 @media screen and (min-width: 768px) {
     .section-body{
         margin: calc(var(--header-height) + 1rem) 0 0 0;
-        padding-left: calc(var(--nav-width) + 2rem)
+        padding-left: calc(var(--nav-width) + 2rem);
+        padding-bottom: 10%;   /* PARA EMPUJAR EL CONTENIDO GENERAL HACIA ARRIBA ALEJADO DEL BORDE INFERIOR */
+        
     }
 
     .header {

@@ -86,12 +86,10 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                 `Artículo Guardado`,
                             );
                         }
-
                     } catch (error) {
                         console.log(error);
                     }
                 });
-
                 setProgresoLocal(progreso);
                 listaOrdernesServicio(id);
             } catch (error) {
@@ -105,6 +103,16 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             );
         }
     }
+
+
+    const eliminarDetalleArticuloHijo = (itemDetalle => {
+            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioeliminardetallehijos.php"
+            var formData = new FormData();
+            formData.append("codigoHijo", itemDetalle.idArticulo+itemDetalle.codigoArticulo);
+            fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
+            
+    })
+    
     return (
         <section>
 
@@ -140,31 +148,31 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                 } */}
                                 {itemDetalle.rama == 1
                                     ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.codigoArticulo}</td>
-                                    : null
+                                    : <td></td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.descripcion}</td>
-                                    : null
+                                    : <td></td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.numeroLote}</td>
                                     : <td>{itemDetalle.numeroLote}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}></td>
-                                    : <td>{itemDetalle.ubicacion}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.ubicacion}</td>
+                                    : <td style={{ fontSize: '12px'  }}>{itemDetalle.ubicacion}</td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td style={{ fontWeight: 'bold', fontSize: '12px'  }}>{itemDetalle.idPallet}</td>
-                                    : <td style={{ fontWeight: 'bold', fontSize: '12px'  }}>{itemDetalle.idPallet}</td>
+                                    : <td style={{ fontSize: '12px'  }}>{itemDetalle.idPallet}</td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td style={{ fontWeight: 'bold', fontSize: '12px'   }}>{itemDetalle.fechaCaducidad}</td>
                                     : <td style={{ fontSize: '12px'   }}>{itemDetalle.fechaCaducidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ textAlign: 'center',width:'50px', fontWeight: 'bold' }}>{itemDetalle.cantidad}</td>
-                                    : <td>{itemDetalle.cantidad}</td>
+                                    ? <td style={{ textAlign: 'center',width:'50px', fontWeight: 'bold',fontSize: '15px'  }}>{itemDetalle.cantidad}</td>
+                                    : <td style={{ textAlign: 'center',width:'50px'}}>{itemDetalle.cantidad}</td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td style={{ width:'50px'}}>
@@ -179,13 +187,22 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                     ? <td style={{ textAlign: 'center',width:'100px', fontWeight: 'bold' }}>
                                         {itemDetalle.listo == 0
                                             ? <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
-                                            : <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} onClick={() => {
-                                                if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) { console.log("ELIMINAR HIJOS Y EDITAR NUEVAMENTE") };
+                                            : <Button onClick={() => {
+                                                if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) 
+                                                {eliminarDetalleArticuloHijo(itemDetalle) };
+                                            }}> ELIMINAR </Button>
+                                            
+                                            
+                                            /*
+                                            <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} onClick={() => {
+                                                if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) 
+                                                { eliminarDetalleArticuloHijo(itemDetalle) };
                                             }} className="nav">
                                                 <Button>
                                                     <FontAwesomeIcon icon={faEdit} />
                                                 </Button>
                                             </NavLink>
+                                        */
                                         }
                                     </td>
                                     : null
