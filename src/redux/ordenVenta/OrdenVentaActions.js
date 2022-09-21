@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE, LISTAR_ARTICULO_DETALLE,MODIFICAR_ORDEN_DETALLE,REGISTRAR_DETALLE_ARTICULO} from './OrdenVentaTypes';
+import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE, 
+    LISTAR_ARTICULO_DETALLE, MODIFICAR_ORDEN_DETALLE,REGISTRAR_DETALLE_ARTICULO, ELIMINAR_DETALLE_HIJOS} from './OrdenVentaTypes';
 import { API_BASE_URL } from '../../config/Services';
 
 export const listarOrden = () => async dispatch => {
@@ -7,7 +8,7 @@ export const listarOrden = () => async dispatch => {
     return dispatch({
         type: LISTAR_ORDEN,
 		status: response.status,
-        listaOrden: response.data==null?0:response.data
+        listaOrden: response.data==null ? 0:response.data
     })
 }
 export const registrarOrden = (paramData) => async dispatch => {
@@ -100,6 +101,8 @@ export const registrarDetalleArticulo = (paramData) => async dispatch => {
     formData.append("idPallet", paramData.idPallet);
 	formData.append("fechaCaducidad", paramData.fechaCaducidad);
     formData.append("cantidad", paramData.cantidad);
+    formData.append("codigoHijo", paramData.codigoHijo);
+
 
 	const response = await axios.post(`${API_BASE_URL}/servicioregistrardetallearticulo.php`,formData);
     console.log("Registrado",response.data);
@@ -110,6 +113,20 @@ export const registrarDetalleArticulo = (paramData) => async dispatch => {
     })  
 }  
 
+
+export const eliminarDetalleHijos = (codigoHijo) => async dispatch => {
+	console.log("Parammmm",codigoHijo);
+	var formData = new FormData();
+	formData.append("codigoHijo", codigoHijo);
+
+	const response = await axios.post(`${API_BASE_URL}/servicioeliminardetallehijos.php`,formData);
+    console.log("Eliminados",response.data);
+    return dispatch({
+        type: ELIMINAR_DETALLE_HIJOS,
+        status: response.status,
+        data: response.data
+    })  
+}  
 /*
 var formData = new FormData();
 	formData.append("username", paramData.username);

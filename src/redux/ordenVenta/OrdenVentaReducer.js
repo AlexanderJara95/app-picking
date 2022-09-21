@@ -72,10 +72,20 @@ const OrdenVentaReducer = (state = {}, action) => {
 				data: action.data,
 			};
 		}
+		case ELIMINAR_DETALLE_HIJOS: {
+			return {
+				...state,
+				data: action.data,
+			};
+		}
 		default: {
 			return state;
 		}
 	}
+
+
+
+	
 };
 
 export default OrdenVentaReducer;
