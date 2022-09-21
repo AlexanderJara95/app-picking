@@ -107,18 +107,18 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
     
     const guardarArticulos = async(json) =>{
       //validando que exista detalle de orden
-      console.log("ddd",json);
+      //console.log("ddd",json);
       if(json.length > 0){
           try {
               json.map(async(item,index)=>{
                   try {
-                      console.log("ini");
-                      console.log(item.pedidoDeVentas);                      
+                      //console.log("ini");
+                      //console.log(item.pedidoDeVentas);                      
                       const response2 = await store.dispatch(modificarOrdenDetalle({
                         idArticulo: articulo.idArticulo
                       }));
                       if (response2.status === StatusCodes.OK) {
-                        console.log("Estado padre actualizado");		                        
+                        //console.log("Estado padre actualizado");		                        
                       }
                       const response = await store.dispatch(registrarDetalleArticulo({
                         pedidoDeVentas: item.pedidoDeVentas,
@@ -128,8 +128,10 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
                         ubicacion: item.ubicacion,
                         idPallet: item.idPallet,
                         fechaCaducidad: item.fechaCaducidad,
-                        cantidad: item.cantidad
+                        cantidad: item.cantidad,
+                        codigoHijo: cod+item.codigoArticulo
                       }));
+                      console.log("Codigo Hijo ACA: ",cod+item.codigoArticulo)
                       if (response.status === StatusCodes.OK) {
                         toastme.success(
                             `Artículo agregado al Detalle`,
