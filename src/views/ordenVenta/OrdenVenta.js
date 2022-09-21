@@ -93,14 +93,14 @@ class OrdenVenta extends Component {
                                 scope="col"
                                 style={{ textAlign: 'center', fontSize: '12px' }}>
                                 {/*<th scope="col">Id Orden</th>*/}
-                                <th scope="col">Pedido de Ventas</th>
-                                <th scope="col">Id Cliente AX</th>
+                                <th scope="col">#PV</th>
+                                <th scope="col">Id Cliente</th>
                                 <th scope="col">Nombre Cliente</th>
                                 <th scope="col">Referencia</th>
                                 <th scope="col">Asignar</th>
                                 <th scope="col">Asignado A</th>
                                {/* <th scope="col">Fecha de Subida</th>
-                                <th scope="col">Fecha de Inicio</th> */}
+                                <th scope="col">Fecha de Inicio</th> */} 
                                 <th scope="col" width="40px">Fecha Terminado</th>
                                 <th scope="col" width="100px">Estado</th>
                                 <th scope="col">% Avance</th>
@@ -113,8 +113,8 @@ class OrdenVenta extends Component {
                                     {/*<td>{itemOrden.idOrden}</td>*/}
                                     <td style={{ textAlign: 'center', fontSize: '10px' }}>{itemOrden.pedidoDeVentas}</td>
                                     <td>{itemOrden.idClienteAx}</td>
-                                    <td style={{ textTransform: 'lowercase'}}>{itemOrden.nombreCliente}</td>
-                                    <td style={{ textTransform: 'lowercase'}}>{itemOrden.referencia}</td>
+                                    <td style={{ textTransform: 'lowercase', textAlign: 'left'}}>{itemOrden.nombreCliente}</td>
+                                    <td style={{ textTransform: 'lowercase', textAlign: 'left'}}>{itemOrden.referencia}</td>
                                     <td title="Personal disponible para asignar la orden" >
                                         {itemOrden.estado !== 'Anulado'?
                                         <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={this.seleccionarUsuario} style={{ width: '100px' , fontSize: "10px"}}>
