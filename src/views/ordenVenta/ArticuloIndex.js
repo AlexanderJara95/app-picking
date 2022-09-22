@@ -31,7 +31,7 @@ const ArticuloIndex = () =>{
 
     return(
         <>
-            <Breadcrumb>
+           {/* <Breadcrumb>
                 <Breadcrumb.Item href="/">
                     Dashboard
                 </Breadcrumb.Item>
@@ -45,11 +45,11 @@ const ArticuloIndex = () =>{
                     {articulo.descripcion}
                 </Breadcrumb.Item>
             </Breadcrumb>
+            */} 
             <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'4em'}}>
                 <div className="row py-3">
                     <div className="col-8 m-0 font-weight-bold text-primary pb-3">
-                        <h1><strong>Modificación de Artículos</strong></h1>
-                        <h3>{articulo.descripcion}</h3>
+                        <h5>{articulo.descripcion}</h5>
                     </div>
                     <div className="col-2 text-center m-0 font-weight-bold text-primary">
                         <h1><strong>Total: </strong>{articulo.cantidad}</h1>

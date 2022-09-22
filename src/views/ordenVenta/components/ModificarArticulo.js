@@ -114,12 +114,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
                   try {
                       //console.log("ini");
                       //console.log(item.pedidoDeVentas);                      
-                      const response2 = await store.dispatch(modificarOrdenDetalle({
-                        idArticulo: articulo.idArticulo
-                      }));
-                      if (response2.status === StatusCodes.OK) {
-                        //console.log("Estado padre actualizado");		                        
-                      }
+
                       const response = await store.dispatch(registrarDetalleArticulo({
                         pedidoDeVentas: item.pedidoDeVentas,
                         codigoArticulo: item.codigoArticulo,
@@ -136,10 +131,16 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
                         toastme.success(
                             `Artículo agregado al Detalle`,
                         );		
-                        window.location.href = "/detalleorden/"+cod+'-'+item.pedidoDeVentas;	
+                        //window.location.href = "/detalleorden/"+cod+'-'+item.pedidoDeVentas;	
                         
                       }
-                      
+                      const response2 = await store.dispatch(modificarOrdenDetalle({
+                        idArticulo: articulo.idArticulo,
+                        listo: 1
+                      }));
+                      if (response2.status === StatusCodes.OK) {
+                        //console.log("Estado padre actualizado");		                        
+                      }
                       
                   } catch (error) {
                       console.log(error);
