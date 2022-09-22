@@ -76,10 +76,12 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
         if (json.length > 0) {
             try {
                 json.map(async (item) => {
+                    console.log("ESTE ES EL ITEM ", item)
                     try {
                         console.log(item.pedidoDeVentas);
                         const response = await store.dispatch(modificarOrdenDetalle({
-                            idArticulo: item
+                            idArticulo: item,
+                            listo: 0
                         }));
                         if (response.status === StatusCodes.OK) {
                             toastme.success(
@@ -109,9 +111,12 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             const rutaServicio = "http://megalabs.digitalbroperu.com/servicioeliminardetallehijos.php"
             var formData = new FormData();
             formData.append("codigoHijo", itemDetalle.idArticulo+itemDetalle.codigoArticulo);
-            fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
+            console.log(itemDetalle.idArticulo+itemDetalle.codigoArticulo);
+            fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { listaOrdernesServicio(id); });
             
     })
+
+    
     
     return (
         <section>
@@ -155,12 +160,12 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                     : <td></td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.numeroLote}</td>
-                                    : <td>{itemDetalle.numeroLote}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '13px' }}>{itemDetalle.numeroLote}</td>
+                                    : <td style={{ fontSize: '11px' }}>{itemDetalle.numeroLote}</td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.ubicacion}</td>
-                                    : <td style={{ fontSize: '12px'  }}>{itemDetalle.ubicacion}</td>
+                                    : <td style={{ fontSize: '11px'  }}>{itemDetalle.ubicacion}</td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td style={{ fontWeight: 'bold', fontSize: '12px'  }}>{itemDetalle.idPallet}</td>
@@ -189,7 +194,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                             ? <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
                                             : <Button onClick={() => {
                                                 if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) 
-                                                {eliminarDetalleArticuloHijo(itemDetalle) };
+                                                {eliminarDetalleArticuloHijo(itemDetalle)};
                                             }}> ELIMINAR </Button>
                                             
                                             

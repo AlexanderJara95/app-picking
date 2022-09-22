@@ -56,7 +56,7 @@ export const modificarOrdenDetalle = (paramData) => async dispatch => {
 	console.log("Param Actu",paramData);
 	var formData = new FormData();
     formData.append("idArticulo", paramData.idArticulo);
-	formData.append("listo", '1');
+	formData.append("listo", paramData.listo);
     
 	const response = await axios.post(`${API_BASE_URL}/servicioactualizardetalleorden.php`,formData);
     console.log("Actualizado",response.data);

@@ -69,7 +69,20 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
         console.log('newsitem',newItems);
         
         return 3;
+    };
+
+    const leerUsuarios = () => {
+        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarusuarios.php"
+        fetch(rutaServicio)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        listaUsuarios: result
+                    });
+                })
     }
+    
     const guardarArticulos = async(json) =>{
         console.log("json",json);
         //validando que exista detalle de orden
@@ -107,6 +120,8 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
           
       }
 
+
+
     return (
         <section>
 
@@ -115,29 +130,29 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                     <thead className="thead-dark bg-dark text-white" >
                         <tr className='align-middle text-center' scope="col">
                             {/*<th>Id Orden</th>*/}
-                            <th scope="col">Id</th>
-                            <th scope="col">Pedido Venta</th>
-                            <th scope="col">Codigo Articulo</th>
-                            <th scope="col">Descripcion</th>
-                            <th scope="col">N° Lote</th>
-                            <th scope="col">Ubicacion</th>
-                            <th scope="col">Id de Pallet</th>
-                            <th scope="col">Fecha de Caducidad</th>
-                            <th scope="col">Cantidad</th>
+                            {/*<th scope="col">Id</th>*/}
+                            {/*<th scope="col">Pedido Venta</th>*/}
+                            <th scope="col" width="50px">Codigo Articulo</th>
+                            <th scope="col" style={{width:'400px'}}>Descripcion</th>
+                            <th scope="col" width="50px">N° Lote</th>
+                            <th scope="col" width="50px">Ubicacion</th>
+                            <th scope="col" width="50px">Id de Pallet</th>
+                            <th scope="col"  style={{ textAlign: 'center',width:'100px' }}>Fecha de Caducidad</th>
+                            <th scope="col"  style={{ textAlign: 'center',width:'50px' }}>Cantidad</th>
                             <th scope="col">Estado</th>
                         </tr>
                     </thead>
                     <tbody>
                         {datosTabla.map((itemDetalle, index) =>
                             <tr className='align-middle' scope="row" key={index}>
-                                {itemDetalle.rama == 1
+                                {/*{itemDetalle.rama == 1
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.idArticulo}</td>
                                     : <td colSpan={4}></td>
-                                }
-                                {itemDetalle.rama == 1
+                                }*/}
+                                {/*{itemDetalle.rama == 1
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.pedidoDeVentas}</td>
                                     : null
-                                }
+                                }*/}
                                 {itemDetalle.rama == 1
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.codigoArticulo}</td>
                                     : null
@@ -167,7 +182,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                                     : <td>{itemDetalle.cantidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td>
+                                    ? <td style={{fontWeight:'bold', width: '100px'}} >
                                         {itemDetalle.listo == 0?<NavLink to={"#"} className="nav"><Button className='btn-warning'><FontAwesomeIcon icon={faExclamation} /></Button></NavLink>
                                         :<NavLink to={"#"} className="nav"><Button className='btn-success'><FontAwesomeIcon icon={faCheck} /></Button></NavLink>
                                         }
