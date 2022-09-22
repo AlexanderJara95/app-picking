@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { listarOrdenDetallePorId, modificarOrdenDetalle } from '../../../redux/ordenVenta/OrdenVentaActions';
+import { eliminarDetalleHijos, listarOrdenDetallePorId, modificarOrdenDetalle } from '../../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
 import { Button, ProgressBar, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCirclePlus, faDeleteLeft, faEdit, faTimes, faX } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCirclePlus, faDeleteLeft, faEdit, faTimes, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import { toastme } from 'toastmejs';
 
@@ -74,14 +74,11 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
         //validando que exista detalle de orden
         //console.log("ddd",json);
         if (json.length > 0) {
-            try {
                 json.map(async (item) => {
-                    console.log("ESTE ES EL ITEM ", item)
                     try {
-                        console.log(item.pedidoDeVentas);
                         const response = await store.dispatch(modificarOrdenDetalle({
                             idArticulo: item,
-                            listo: 0
+                            listo: 1
                         }));
                         if (response.status === StatusCodes.OK) {
                             toastme.success(
@@ -94,30 +91,35 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                 });
                 setProgresoLocal(progreso);
                 listaOrdernesServicio(id);
-            } catch (error) {
-                toastme.error(
-                    error
-                );
-            }
+            
         } else {
             toastme.error(
                 `No hay Cambios en la orden`
             );
         }
     }
-
-
-    const eliminarDetalleArticuloHijo = (itemDetalle => {
-            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioeliminardetallehijos.php"
-            var formData = new FormData();
-            formData.append("codigoHijo", itemDetalle.idArticulo+itemDetalle.codigoArticulo);
-            console.log(itemDetalle.idArticulo+itemDetalle.codigoArticulo);
-            fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { listaOrdernesServicio(id); });
-            
-    })
-
     
-    
+    const eliminarDetalleArticuloHijo = async(itemDetalle) => {   
+        try {
+            const response = await store.dispatch(eliminarDetalleHijos({
+                codigoHijo: itemDetalle.idArticulo+itemDetalle.codigoArticulo,
+            }));
+            console.log("eliminación: ",response);
+            const response2 = await store.dispatch(modificarOrdenDetalle({
+                idArticulo: itemDetalle.idArticulo,
+                listo: 0
+            }));
+            window.location.href="/detallearticulo/" + cod+"-"+itemDetalle.idArticulo;
+        }catch(error){
+            console.log(error);
+        }
+        //limpiarImputs();
+        //listaOrdernesServicio(id); 
+    }
+    const limpiarImputs = () =>{
+        
+    }
+        
     return (
         <section>
 
@@ -137,7 +139,6 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                             <th scope="col"  style={{ textAlign: 'center',width:'50px' }}>Cantidad</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Opciones</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -191,23 +192,21 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                 {itemDetalle.rama == 1
                                     ? <td style={{ textAlign: 'center',width:'100px', fontWeight: 'bold' }}>
                                         {itemDetalle.listo == 0
-                                            ? <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} className="nav"><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
-                                            : <Button onClick={() => {
+                                            ? <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo}><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
+                                            : <Button className='btn-warning' onClick={() => {
                                                 if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) 
                                                 {eliminarDetalleArticuloHijo(itemDetalle)};
-                                            }}> ELIMINAR </Button>
-                                            
-                                            
+                                            }}> <FontAwesomeIcon icon={faTrash}/> </Button>                  
                                             /*
-                                            <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} onClick={() => {
-                                                if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) 
-                                                { eliminarDetalleArticuloHijo(itemDetalle) };
-                                            }} className="nav">
-                                                <Button>
-                                                    <FontAwesomeIcon icon={faEdit} />
-                                                </Button>
-                                            </NavLink>
-                                        */
+                                                <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} onClick={() => {
+                                                    if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) 
+                                                    { eliminarDetalleArticuloHijo(itemDetalle) };
+                                                }} className="nav">
+                                                    <Button>
+                                                        <FontAwesomeIcon icon={faEdit} />
+                                                    </Button>
+                                                </NavLink>
+                                            */
                                         }
                                     </td>
                                     : null

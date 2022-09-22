@@ -114,11 +114,10 @@ export const registrarDetalleArticulo = (paramData) => async dispatch => {
 }  
 
 
-export const eliminarDetalleHijos = (codigoHijo) => async dispatch => {
-	console.log("Parammmm",codigoHijo);
+export const eliminarDetalleHijos = (paramData) => async dispatch => {
+	console.log("Parammmm",paramData);
 	var formData = new FormData();
-	formData.append("codigoHijo", codigoHijo);
-
+	formData.append("codigoHijo", paramData.codigoHijo);
 	const response = await axios.post(`${API_BASE_URL}/servicioeliminardetallehijos.php`,formData);
     console.log("Eliminados",response.data);
     return dispatch({

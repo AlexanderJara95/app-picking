@@ -30,7 +30,7 @@ const DetalleOrdenIndex = () =>{
             <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'4em',zIndex:'1000'}}>
                 <div className="row pt-3">
                     <div className="col m-0 font-weight-bold text-primary pb-3">
-                        <h5><strong>Detalle de orden #{(param.id).split("-")[1]}</strong></h5>
+                        <h5><strong>Detalle de orden <br></br>N° {(param.id).split("-")[1]}</strong></h5>
                     </div>
                     <div className="col text-primary">
                         <h4><strong>Procentaje de avance</strong></h4>
