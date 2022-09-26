@@ -16,8 +16,10 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
     const [progresoLocal, setProgresoLocal] = useState();
 
     useEffect(() => {
-        console.log("muestra", id);
-        listaOrdernesServicio(id);
+        setTimeout(()=>{
+            console.log("muestra", id);
+            listaOrdernesServicio(id);
+        },500);
     }, []);
 
     const listaOrdernesServicio = async (id) => {
@@ -89,7 +91,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                         console.log(error);
                     }
                 });
-                setProgresoLocal(progreso);
+                //setProgresoLocal(progreso);
                 listaOrdernesServicio(id);
             
         } else {

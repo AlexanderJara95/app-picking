@@ -38,7 +38,6 @@ const DetalleOrdenIndex = () =>{
                     </div>
                 </div>                
             </div>
-            
             {window.usuario.nivelUsuario==1||window.usuario.nivelUsuario==3?<ListadoDetalle id={(param.id).split("-")[1]} cod={(param.id).split("-")[0]} setProgress={setProgress} progreso={progress}></ListadoDetalle>:<ListadoDetalleAdmin id={(param.id).split("-")[1]} setProgress={setProgress} progreso={progress}></ListadoDetalleAdmin>}
         </>
     );
