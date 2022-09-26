@@ -52,8 +52,8 @@ const ArticuloIndex = () =>{
                         <h5>{articulo.descripcion}</h5>
                     </div>
                     <div className="col-2 text-center m-0 font-weight-bold text-primary">
-                        <h1><strong>Total: </strong>{articulo.cantidad}</h1>
-                        <h4 style={{backgroundColor:"#ffc107",color:"#fff",borderRadius:"15px"}}>Faltan: {resta}</h4>
+                        <h5><strong>Total: </strong>{articulo.cantidad}</h5>
+                        <h5 style={{backgroundColor:"#ffc107",color:"#fff",borderRadius:"10px"}}>Faltan: {resta}</h5>
                     </div>
                     <div className="col-2" style={{textAlign: "center",alignSelf:"center"}}>
                         <Button onClick={()=>addTableRows.current()} className="btn-primary">Agregar +</Button>
