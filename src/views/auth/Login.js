@@ -62,7 +62,6 @@ const Login = () => {
                     required
                     autoFocus
                 />
-
                 <FormControl
                     type='password'
                     name='password'
@@ -71,9 +70,7 @@ const Login = () => {
                     placeholder='Contraseña'
                     required
                 />
-
                 {/* <Form.Check type="checkbox" name='recuerdame' label="Recuerdame" /> */}
-
                 <Button
                     variant='primary'
                     onClick={iniciarSesion}
@@ -86,7 +83,7 @@ const Login = () => {
                 {/* <NavLink to="/sendresetlink" className="text-center">
                 <FontAwesomeIcon icon="fa-solid fa-lock" className='me-1' />
                 ¿Olvidaste tu contraseña?
-            </NavLink> */}
+                </NavLink> */}
                 <a href='#' className='text-center'>
                     <i className='me-1 bx bxs-lock-alt'></i>
                     ¿Olvidaste tu contraseña?
