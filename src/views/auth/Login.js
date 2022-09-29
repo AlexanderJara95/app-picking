@@ -52,7 +52,7 @@ const Login = () => {
 
 	return (
         <div className='row d-flex justify-content-center'>
-            <Form className='col-4 d-grid gap-5'>
+            <Form className='col-10 col-sm-6 col-md-4 col-xl-4 d-grid gap-5'>
                 <FormControl
                     type='input'
                     name='username'

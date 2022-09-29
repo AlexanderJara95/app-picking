@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { eliminarDetalleHijos, listarOrdenDetallePorId, modificarOrdenDetalle } from '../../../redux/ordenVenta/OrdenVentaActions';
+import { eliminarDetalleHijos, listarOrdenDetallePorId, modificarAvanceOrden, modificarOrdenDetalle } from '../../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
 import { Button, ProgressBar, Table } from 'react-bootstrap';
@@ -82,6 +82,12 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                             idArticulo: item,
                             listo: 1
                         }));
+                        const estadoAvance = progreso<100&&progreso>0?3:4;
+                        const response2 = await store.dispatch(modificarAvanceOrden({
+                            idOrden:cod,
+                            estado:estadoAvance,
+                            avance:progreso
+                        }));
                         if (response.status === StatusCodes.OK) {
                             toastme.success(
                                 `Artículo Guardado`,
@@ -92,7 +98,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                     }
                 });
                 //setProgresoLocal(progreso);
-                listaOrdernesServicio(id);
+                limpiarImputs();
             
         } else {
             toastme.error(
@@ -111,7 +117,17 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                 idArticulo: itemDetalle.idArticulo,
                 listo: 0
             }));
-            window.location.href="/detallearticulo/" + cod+"-"+itemDetalle.idArticulo;
+            
+            const nuevoProgreso=progreso - 100 / datosTabla.filter(item => item.rama == 1).length;
+            console.log("nuevoProgreso",nuevoProgreso);
+            const estadoAvance = nuevoProgreso<100&&nuevoProgreso>0?3:2;
+            const response3 = await store.dispatch(modificarAvanceOrden({
+                idOrden:cod,
+                estado:estadoAvance,
+                avance:nuevoProgreso
+            }));
+            limpiarImputs();
+            
         }catch(error){
             console.log(error);
         }
@@ -119,7 +135,12 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
         //listaOrdernesServicio(id); 
     }
     const limpiarImputs = () =>{
-        
+        setTimeout(()=>{
+            setOrdenSeleccionada({});
+            setRowDataArticulos([])
+            setProgresoLocal();
+            listaOrdernesServicio(id);
+        },500);
     }
         
     return (
@@ -225,12 +246,21 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                             <NavLink to={"/orden"} className="nav"><Button className='btn-primary col-sm-12'>Finalizar Orden</Button></NavLink>
                         </div>
                         : <>
-                            <div className='col-6'>
-                                <NavLink to={"/orden"} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
-                            </div>
-                            <div className='col-6'>
-                                <Button className='btn-success col-sm-12' onClick={() => guardarArticulos(rowDataArticulos)}>Guardar</Button>
-                            </div>
+                            {rowDataArticulos.length>0?
+                                <>
+                                    <div className='col-6'>
+                                        <NavLink to={"/orden"} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
+                                    </div>
+                                    <div className='col-6'>
+                                        <Button className='btn-success col-sm-12' onClick={() => guardarArticulos(rowDataArticulos)}>Guardar</Button>
+                                    </div>
+                                </>
+                            :<>
+                                <div className='offset-6 col-6'>
+                                    <NavLink to={"/orden"} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
+                                </div>
+                            </>}
+                            
                         </>
                     }
 

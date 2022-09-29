@@ -117,23 +117,28 @@ class OrdenVenta extends Component {
                                     <td style={{ textTransform: 'lowercase', textAlign: 'left' }}>{itemOrden.referencia}</td>
                                     <td title="Personal disponible para asignar la orden" >
                                         {itemOrden.estado !== 'Anulado' ?
-                                            <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={this.seleccionarUsuario} style={{ width: '100px', fontSize: "10px" }}>
-                                                <option value='0'>Seleccione</option>
-                                                {this.state.listaUsuarios.map((usuario) => {
-                                                    if (usuario.nivelUsuario == 3) {
-                                                        if (usuario.idUsuario == itemOrden.asignadoA) {
-                                                            return (<option key={usuario.idUsuario} value={usuario.idUsuario}>{usuario.nombre}</option>);
-                                                        } else {
-                                                            return (<option key={usuario.idUsuario} value={usuario.idUsuario}>{usuario.nombre}</option>);
+                                            <>
+                                                {itemOrden.estado=='Asignado'?
+                                                    <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={this.seleccionarUsuario} style={{ width: '100px', fontSize: "10px" }}>
+                                                        <option value='0'>Seleccione</option>
+                                                        {this.state.listaUsuarios.map((usuario) => {
+                                                            if (usuario.nivelUsuario == 3) {
+                                                                if (usuario.idUsuario == itemOrden.asignadoA) {
+                                                                    return (<option key={usuario.idUsuario} value={usuario.idUsuario}>{usuario.nombre}</option>);
+                                                                } else {
+                                                                    return (<option key={usuario.idUsuario} value={usuario.idUsuario}>{usuario.nombre}</option>);
+                                                                }
+                                                            }
                                                         }
-                                                    }
+                                                        )}
+                                                    </select>: <>Asignado</>
                                                 }
-                                                )}
-                                            </select>
-                                            : <>Orden Anulada</>}
+                                            </>
+                                            : <span> Orden Anulada</span>
+                                        }
                                     </td>
-                                    <td style={{ textAlign: 'center', fontSize: '20px' }}>{this.state.listaUsuarios.map((usuario) => (
-                                        usuario.idUsuario == itemOrden.asignadoA ? <span key={usuario.idUsuario}>{usuario.nombre}</span> : null
+                                    <td style={{ textAlign: 'center',}}>{this.state.listaUsuarios.map((usuario) => (
+                                        usuario.idUsuario == itemOrden.asignadoA ? <span style={{backgroundColor: "#00ff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder'}} key={usuario.idUsuario}>{usuario.nombre}</span> : null
                                     ))}</td>
                                     <td title="Persona encargada del picking" >{itemOrden.fechaSubida}</td>
                                     {/*<td  title="Fecha de asignacion" >{itemOrden.fechaInicio}</td>
@@ -144,7 +149,7 @@ class OrdenVenta extends Component {
                                         <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
                                             <Button className="btn secondary" title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye} /></Button></NavLink>
                                         : <Button className="btn secondary" title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye} /></Button>}</td>
-                                    <td>{itemOrden.estado !== 'Anulado' ?
+                                    <td>{itemOrden.estado !== 'Anulado'?
                                         <Button className="btn btn-success" title="Asignar orden" onClick={() => this.asignarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>
                                         : <Button className="btn btn-success" title="Asignar orden" disabled><FontAwesomeIcon icon={faCheck} /></Button>}</td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
                                     <td>{itemOrden.estado !== 'Anulado' ?

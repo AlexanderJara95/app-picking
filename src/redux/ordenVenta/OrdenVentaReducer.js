@@ -7,8 +7,8 @@ import {
 	MODIFICAR_ORDEN,
 	LISTAR_ARTICULO_DETALLE,
 	MODIFICAR_ORDEN_DETALLE,
-	REGISTRAR_DETALLE_ARTICULO
-	
+	REGISTRAR_DETALLE_ARTICULO,
+	MODIFICAR_AVANCE_ORDEN	
 } from './OrdenVentaTypes';
 
 const OrdenVentaReducer = (state = {}, action) => {
@@ -67,6 +67,12 @@ const OrdenVentaReducer = (state = {}, action) => {
 			};
 		}
 		case MODIFICAR_ORDEN_DETALLE: {
+			return {
+				...state,
+				data: action.data,
+			};
+		}
+		case MODIFICAR_AVANCE_ORDEN: {
 			return {
 				...state,
 				data: action.data,
