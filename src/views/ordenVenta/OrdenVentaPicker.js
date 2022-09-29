@@ -121,7 +121,7 @@ class OrdenVentaPicker extends Component {
                                     {/*<td  title="Fecha de asignacion" >{itemOrden.fechaInicio}</td>
                                     <td  title="Fecha de culminada" >{itemOrden.fechaCompletado}</td> */}
                                     <td  title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
-                                    <td  title="Porcentaje de avance de la orden" >0</td>
+                                    <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                     <td>{itemOrden.estado !== 'Anulado'? 
                                         <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
                                             <Button className="btn secondary"  title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye}/></Button></NavLink>
@@ -227,7 +227,6 @@ class OrdenVentaPicker extends Component {
                 .then(() => { this.leerOrdenes(); })
         }
     })
-
     
     anularOrden = (itemOrden => {
         var respuesta = window.confirm("¿Está seguro que desea anular la Orden " + itemOrden.pedidoDeVentas + "?")
@@ -239,7 +238,6 @@ class OrdenVentaPicker extends Component {
                 .then(() => { this.leerOrdenes(); })
         }
     })
-
 
     render() {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
