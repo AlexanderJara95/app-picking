@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE, 
+import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE,MODIFICAR_AVANCE_ORDEN, 
     LISTAR_ARTICULO_DETALLE, MODIFICAR_ORDEN_DETALLE,REGISTRAR_DETALLE_ARTICULO, ELIMINAR_DETALLE_HIJOS} from './OrdenVentaTypes';
 import { API_BASE_URL } from '../../config/Services';
 
@@ -66,6 +66,21 @@ export const modificarOrdenDetalle = (paramData) => async dispatch => {
         data: response.data
     })  
 }  
+export const modificarAvanceOrden = (paramData) => async dispatch => {
+	console.log("Param Actu",paramData);
+	var formData = new FormData();
+    formData.append("idOrden", paramData.idOrden);
+	formData.append("estado", paramData.estado);
+	formData.append("avance", paramData.avance);
+    
+	const response = await axios.post(`${API_BASE_URL}/servicioactualizaravanceorden.php`,formData);
+    console.log("Actualizado",response.data);
+    return dispatch({
+        type: MODIFICAR_AVANCE_ORDEN,
+        status: response.status,
+        data: response.data
+    })  
+}  
 export const listarOrdenDetallePorId = (id) => async dispatch => {
 	var formData = new FormData();
     formData.append("pedidoDeVentas", id);
@@ -126,6 +141,7 @@ export const eliminarDetalleHijos = (paramData) => async dispatch => {
         data: response.data
     })  
 }  
+
 /*
 var formData = new FormData();
 	formData.append("username", paramData.username);
