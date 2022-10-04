@@ -2,6 +2,7 @@ import axios from 'axios';
 import { LISTAR_ORDEN,LISTAR_ORDEN_DETALLE,REGISTRAR_ORDEN,REGISTRAR_ORDEN_DETALLE,MODIFICAR_AVANCE_ORDEN, 
     LISTAR_ARTICULO_DETALLE, MODIFICAR_ORDEN_DETALLE,REGISTRAR_DETALLE_ARTICULO, ELIMINAR_DETALLE_HIJOS} from './OrdenVentaTypes';
 import { API_BASE_URL } from '../../config/Services';
+import moment from 'moment';
 
 export const listarOrden = () => async dispatch => {
     const response = await axios.get(`${API_BASE_URL}/serviciolistarorden.php`);
@@ -17,11 +18,12 @@ export const registrarOrden = (paramData) => async dispatch => {
     var day = dateObj.getDate();
     var year = dateObj.getFullYear();
 	var formData = new FormData();
+    var date = moment().format('YYYY-MM-DD h:mm:ss');
     formData.append("idClienteAx", paramData.codCliente);
     formData.append("nombreCliente", paramData.nomCliente);
     formData.append("referencia", paramData.referenciaCliente);
     formData.append("pedidoDeVentas", paramData.pedidoVentas);
-    formData.append("fechaSubida", year+'-'+month+'-'+ day);
+    formData.append("fechaSubida", date);
 	formData.append("estado", 1);
 	const response = await axios.post(`${API_BASE_URL}/servicioregistrarorden.php`,formData);
     console.log("Registrado",response.data);
