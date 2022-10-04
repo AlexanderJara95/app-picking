@@ -9,7 +9,7 @@ const SwitchValue = (valorSwitch) =>{
     }
 
     useEffect(()=>{
-        console.log("value",valorSwitch.valorSwitch);
+        //console.log("value",valorSwitch.valorSwitch);
         if(valorSwitch.valorSwitch==='Sí'){
             setToggle(true);
         }else{

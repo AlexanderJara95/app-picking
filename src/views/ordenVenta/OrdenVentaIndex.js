@@ -30,7 +30,7 @@ const OrdenVentaIndex = ()=> {
                 </div>
             </div>
             {(()=>{
-                console.log("window.usuario.nivelUsuario",window.usuario.nivelUsuario);
+                //console.log("window.usuario.nivelUsuario",window.usuario.nivelUsuario);
                 switch(window.usuario.nivelUsuario){
                     case '1':
                     return (<OrdenVenta></OrdenVenta>);

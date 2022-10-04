@@ -5,7 +5,7 @@ import SwitchValue from './SwitchValue';
 const TableIndex = ({datosTabla}) =>{
 
   useEffect(()=>{
-    if(datosTabla) console.log("datosTabla",datosTabla);
+    if(datosTabla); //console.log("datosTabla",datosTabla);
   },[]);
 
   return (

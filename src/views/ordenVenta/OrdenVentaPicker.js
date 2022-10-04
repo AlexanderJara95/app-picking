@@ -83,10 +83,11 @@ class OrdenVentaPicker extends Component {
     }
 
     /*sin uso aun*/
+    /*
     activarBoton = (event, key) => {
         console.log(event.target, key);
     }
-
+    */
 
     dibujarTabla(datosTabla) {
         if (datosTabla !== null) {
@@ -150,14 +151,14 @@ class OrdenVentaPicker extends Component {
 
     asignarOrden = (idOrden) => {
         if (this.state.ordenSeleccionada.idOrden !== null && this.state.usuarioAsignado !== 0) {
-            console.log("HUUUU");
+            //console.log("HUUUU");
             const rutaServicio = "https://megalabs.digitalbroperu.com/servicioasignarorden.php"
             var formData = new FormData();
             formData.append("idOrden", this.state.ordenSeleccionada.idOrden);
             formData.append("asignadoPor", window.usuario.idUsuario);
             formData.append("asignadoA", this.state.usuarioAsignado);
-            console.log("orden pre-servicio:", this.state.ordenSeleccionada.idOrden);
-            console.log("usuario pre-servicio:", this.state.usuarioAsignado);
+            //console.log("orden pre-servicio:", this.state.ordenSeleccionada.idOrden);
+            //console.log("usuario pre-servicio:", this.state.usuarioAsignado);
             fetch(rutaServicio, {
                 method: 'POST',
                 body: formData
@@ -241,12 +242,12 @@ class OrdenVentaPicker extends Component {
     })
 
     actualizarEstadoApertura = (itemOrden => {
-        console.log(itemOrden);
+        //console.log(itemOrden);
         if (itemOrden.abierto != '1'){
             const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizaestadoapertura.php"
             var formData = new FormData();
             var date = moment().format('YYYY-MM-DD h:mm:ss');
-            console.log(date);
+            //console.log(date);
             formData.append("idOrden", itemOrden.idOrden);
             formData.append("abierto", '1');
             formData.append("fechaInicio", date);

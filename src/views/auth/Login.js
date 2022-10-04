@@ -46,7 +46,7 @@ const Login = () => {
 			hidePreloader();
 		} catch (error) {
 			hidePreloader();
-			console.log(error);
+			//console.log(error);
 		}
 	};
 

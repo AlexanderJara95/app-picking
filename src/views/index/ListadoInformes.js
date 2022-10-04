@@ -11,7 +11,7 @@ const ListadoInformes = () =>{
             res => res.json(), //indicamos que el objeto devuelto por dicha solicitud al servicio, sera un Json
         ) .then(
             (result) => {
-                console.log("result",result);
+                //console.log("result",result);
                 setReturnInformes(result);
                 //aca se crean las variables globales/ de estado
             }

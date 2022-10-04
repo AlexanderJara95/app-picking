@@ -18,7 +18,7 @@ const InformeIndex = ()=> {
         e.preventDefault();
         if (e.target.files) {
             let selected = e.target.files[0];
-            console.log("jsonFile:",selected);
+            //console.log("jsonFile:",selected);
             let reader = new FileReader();
                 reader.addEventListener("loadend", () => {
                     //document.getElementById("demoShowA").innerHTML = reader.result;
@@ -36,14 +36,14 @@ const InformeIndex = ()=> {
 
     const registrarOrdenPicking = async(json) =>{
         //validando que exista detalle de orden
-        console.log("ddd",json);
+        //console.log("ddd",json);
         if(json.detalleOrden.length > 0){
             try {
                 const response2 = await store.dispatch(listarOrden());
-                console.log("listaOrden",response2.listaOrden);
+                //console.log("listaOrden",response2.listaOrden);
                 if(response2.listaOrden==0){
                     const response = await store.dispatch(registrarOrden(json));
-                        console.log("user",response);
+                        //console.log("user",response);
                         if (response.status === StatusCodes.OK) {
                             toastme.success(
                                 `Nuevo Informe registrado`,
@@ -74,12 +74,12 @@ const InformeIndex = ()=> {
                         });
                 }else{
                     var resp = response2.listaOrden.filter(item => (json.pedidoVentas == item.pedidoDeVentas && item.estado !== 'Anulado'));
-                    console.log("conslaa",resp);
+                    //console.log("conslaa",resp);
                     if(resp.length != 0){
                         setListadeInformes([...listadeInformes,json.pedidoVentas + " ya existe"])
                     }else{
                         const response = await store.dispatch(registrarOrden(json));
-                        console.log("user",response);
+                       //console.log("user",response);
                         if (response.status === StatusCodes.OK) {
                             toastme.success(
                                 `Nuevo Informe registrado`,
@@ -105,7 +105,7 @@ const InformeIndex = ()=> {
                                     );		
                                 }
                             } catch (error) {
-                                console.log(error);
+                                //console.log(error);
                             }
                         });
                     }

@@ -11,7 +11,7 @@ const DetalleOrdenIndex = () =>{
 
    
     useEffect(()=>{
-        console.log("act");
+        //console.log("act");
     },[progress]);
     return(
         <>        

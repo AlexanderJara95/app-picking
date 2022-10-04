@@ -12,7 +12,7 @@ export const solicitarAcceso = paramData => async dispatch => {
 		`${API_BASE_URL}/serviciologinusuario.php`,formData
 	);
 	
-    console.log("patchchch:",response);
+    //console.log("patchchch:",response);
 	return dispatch({
 		type: AUTH_LOGIN,
 		status: response.status,

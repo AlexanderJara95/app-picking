@@ -79,10 +79,11 @@ class OrdenVenta extends Component {
     }
 
     /*sin uso aun*/
+    /*
     activarBoton = (event, key) => {
         console.log(event.target, key);
     }
-
+    */
 
     dibujarTabla(datosTabla) {
         if (datosTabla !== null) {
@@ -177,14 +178,14 @@ class OrdenVenta extends Component {
 
     asignarOrden = (idOrden) => {
         if (this.state.ordenSeleccionada.idOrden !== null && this.state.usuarioAsignado !== 0) {
-            console.log("HUUUU");
+            //console.log("HUUUU");
             const rutaServicio = "https://megalabs.digitalbroperu.com/servicioasignarorden.php"
             var formData = new FormData();
             formData.append("idOrden", this.state.ordenSeleccionada.idOrden);
             formData.append("asignadoPor", window.usuario.idUsuario);
             formData.append("asignadoA", this.state.usuarioAsignado);
-            console.log("orden pre-servicio:", this.state.ordenSeleccionada.idOrden);
-            console.log("usuario pre-servicio:", this.state.usuarioAsignado);
+            //console.log("orden pre-servicio:", this.state.ordenSeleccionada.idOrden);
+            //console.log("usuario pre-servicio:", this.state.usuarioAsignado);
             fetch(rutaServicio, {
                 method: 'POST',
                 body: formData

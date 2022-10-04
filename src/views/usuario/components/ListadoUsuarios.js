@@ -23,7 +23,7 @@ const ListadoUsuarios = () =>{
                 setDatosTabla(response.usuarios);
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     }
     const seleccionarOrden=(itemOrden)=>{
@@ -33,9 +33,7 @@ const ListadoUsuarios = () =>{
             document.getElementById("li-orden-" + ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
         }            
     }
-    const mostrarEliminar=()=>{
-        
-    }
+
 
     return(
         <div className="table-responsive table-bordered" id="tabla" role="tabpanel" aria-labelledby="home-tab" >
