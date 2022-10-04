@@ -3,12 +3,12 @@ import TableRows from "./TableRows";
 import { Button, Table } from 'react-bootstrap';
 import { toastme } from 'toastmejs';
 import store from '../../../redux/Store';
-import { registrarOrdenDetalle,modificarOrdenDetalle, registrarDetalleArticulo } from '../../../redux/ordenVenta/OrdenVentaActions';
+import { registrarOrdenDetalle,modificarOrdenDetalle, registrarDetalleArticulo, modificarAvanceOrden } from '../../../redux/ordenVenta/OrdenVentaActions';
 import { StatusCodes } from 'http-status-codes';
 import { NavLink } from 'react-router-dom';
 
 
-function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
+function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progreso}) {
 
     const [restaCantidad,setRestaCantidad] = useState(0);
     const [btnGuardar,setBtnGuardar] = useState(false); 
@@ -17,7 +17,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
       addTableRows.current = addTableRowsLocal;
     });
     useEffect(()=>{
-      //console.log("articulo,",articulo);
+      console.log("articulo,",articulo);
       if(Object.keys(articulo).length !== 0){
         setRowsData([...rowsData, {
             idArticulo: articulo.idArticulo,
@@ -57,7 +57,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
           }
           setRowsData([...rowsData, rowsInput]);
           setResta(0);
-          //console.log("lengui: ",rowsData.length);
+          console.log("lengui: ",rowsData.length);
           if(rowsData.length>0)setBtnGuardar(true);
         }else{
           toastme.info(
@@ -74,10 +74,10 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
       });   
       var resta =articulo.cantidad-(contador - rowsData[index].cantidad);
       if( resta == 0){
-        //console.log("cantad true", resta);
+        console.log("cantad true", resta);
         setBtnGuardar(true);
       }else{
-        //console.log("cantad false", resta);
+        console.log("cantad false", resta);
         setBtnGuardar(false);
       }
       setResta(resta);
@@ -87,11 +87,11 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
     }
     const handleChange = (index, evnt) => {     
         const { name, value } = evnt.target;
-        //console.log("name,value", name, value);
+        console.log("name,value", name, value);
         //console.log("cantidad", articulo.cantidad);
         const rowsInput = [...rowsData];
         rowsInput[index][name] = value;
-        //console.log("ingrese",rowsInput);
+        console.log("ingrese",rowsInput);
         setRowsData(rowsInput);
         var contador=0;
         rowsData.map((item)=>{
@@ -126,7 +126,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
                         cantidad: item.cantidad,
                         codigoHijo: cod+item.codigoArticulo
                       }));
-                      //console.log("Codigo Hijo ACA: ",cod+item.codigoArticulo)
+                      console.log("Codigo Hijo ACA: ",cod+item.codigoArticulo)
                       if (response.status === StatusCodes.OK) {
                         toastme.success(
                             `Artículo agregado al Detalle`,
@@ -138,12 +138,18 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows}) {
                         idArticulo: articulo.idArticulo,
                         listo: 1
                       }));
+                      const estadoAvance = progreso<100&&progreso>0?3:4;
+                      const response3 = await store.dispatch(modificarAvanceOrden({
+                            idOrden:cod,
+                            estado:estadoAvance,
+                            avance:progreso
+                      }));
                       if (response2.status === StatusCodes.OK) {
                         //console.log("Estado padre actualizado");		                        
                       }
                       
                   } catch (error) {
-                      //console.log(error);
+                      console.log(error);
                   }
               });
               
