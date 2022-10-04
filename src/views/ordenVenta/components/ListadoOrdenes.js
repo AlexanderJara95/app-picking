@@ -10,7 +10,7 @@ const ListadoOrdenes = () =>{
     const [datosTabla,setDatosTabla] = useState([]);
     const [ordenSeleccionada,setOrdenSeleccionada] = useState({});
     useEffect(()=>{
-        console.log("muestra");
+        //console.log("muestra");
         listaOrdernesServicio();
         
     },[]);
@@ -18,13 +18,13 @@ const ListadoOrdenes = () =>{
     const listaOrdernesServicio= async()=>{
         try {
             const response = await store.dispatch(listarOrden());
-            console.log("listaOrden",response.listaOrden);
+            //console.log("listaOrden",response.listaOrden);
 
             if (response.status === StatusCodes.OK) {	
                 setDatosTabla(response.listaOrden);
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     }
     const seleccionarOrden=(itemOrden)=>{

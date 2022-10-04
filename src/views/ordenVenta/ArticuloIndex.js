@@ -19,13 +19,13 @@ const ArticuloIndex = () =>{
     const busquedaArticulo= async(id)=>{
         try {
             const response = await store.dispatch(listarArticuloPorId(id));
-            console.log("articuloinfo",response.detalleArticulo);
+            //console.log("articuloinfo",response.detalleArticulo);
   
             if (response.status === StatusCodes.OK) {	
                 setArticulo(response.detalleArticulo);
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     }
 

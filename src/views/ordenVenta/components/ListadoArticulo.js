@@ -13,20 +13,20 @@ const ListadoArticulo = ({id}) =>{
     const [articuloSeleccionado,setArticuloSeleccionado] = useState({});
 
     useEffect(()=>{
-        console.log("muestra",id);
+        //console.log("muestra",id);
         listaArticuloServicio(id);
     },[]);
 
     const listaArticuloServicio= async(id)=>{
         try {
             const response = await store.dispatch(listarArticuloPorId(id));
-            console.log("listaArticulo",response.detalleArticulo);
+            //console.log("listaArticulo",response.detalleArticulo);
 
             if (response.status === StatusCodes.OK) {	
                 setDatosTabla(response.detalleArticulo);
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     }
     const seleccionarArtiuclo=(itemDetalle)=>{

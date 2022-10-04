@@ -71,7 +71,7 @@ const ContainerIndex = ()=> {
         // Retrieve the text property of the element (cross-browser support)
         const arrayObtenido = (temporalDivElement.textContent || temporalDivElement.innerText || '').split("\n").filter(x => x!=='');
         const venta_sin_con_fecha = (arrayObtenido[36].slice(0,3)==="PV_")?arrayObtenido[36]:arrayObtenido[37];
-        console.log(venta_sin_con_fecha);
+        ////console.log(venta_sin_con_fecha);
         const ordenPicking={
             envio:arrayObtenido[21],
             referenciaCliente:arrayObtenido[25],
@@ -93,7 +93,7 @@ const ContainerIndex = ()=> {
                 });
             }
         });
-        console.log("ordenPicking",ordenPicking);
+        ////console.log("ordenPicking",ordenPicking);
         const registrarOrden = "https://proyectosmegalabs.000webhostapp.com/servicioregistrarorden2.php";
         var formData = new FormData();
         //Aca hacemos tantos Append como campos tengamos que pasarle al servicio web para que funcione
@@ -107,10 +107,6 @@ const ContainerIndex = ()=> {
         formData.append("estado", 1);
         fetch(registrarOrden,{method: 'POST', body: formData}).then(
             res=>res.text()
-        ).then(
-            (result)=>{
-                console.log("result",result);
-            }
         ).catch(function (err) {
             // There was an error
             console.warn('Something went wrong.', err);

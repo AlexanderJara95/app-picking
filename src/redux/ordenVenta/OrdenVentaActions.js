@@ -26,7 +26,7 @@ export const registrarOrden = (paramData) => async dispatch => {
     formData.append("fechaSubida", date);
 	formData.append("estado", 1);
 	const response = await axios.post(`${API_BASE_URL}/servicioregistrarorden.php`,formData);
-    console.log("Registrado",response.data);
+    //console.log("Registrado",response.data);
     return dispatch({
         type: REGISTRAR_ORDEN,
         status: response.status,
@@ -34,7 +34,7 @@ export const registrarOrden = (paramData) => async dispatch => {
     })  
 }  
 export const registrarOrdenDetalle = (paramData) => async dispatch => {
-	console.log("Parammmm",paramData);
+	//console.log("Parammmm",paramData);
 	var formData = new FormData();
 	formData.append("pedidoDeVentas", paramData.pedidoDeVentas);
     formData.append("codigoArticulo", paramData.codigoArticulo);
@@ -46,7 +46,7 @@ export const registrarOrdenDetalle = (paramData) => async dispatch => {
     formData.append("cantidad", paramData.cantidad);
 
 	const response = await axios.post(`${API_BASE_URL}/servicioregistrardetalleorden.php`,formData);
-    console.log("Registrado",response.data);
+    //console.log("Registrado",response.data);
     return dispatch({
         type: REGISTRAR_ORDEN_DETALLE,
         status: response.status,
@@ -55,13 +55,13 @@ export const registrarOrdenDetalle = (paramData) => async dispatch => {
 }  
 
 export const modificarOrdenDetalle = (paramData) => async dispatch => {
-	console.log("Param Actu",paramData);
+	//console.log("Param Actu",paramData);
 	var formData = new FormData();
     formData.append("idArticulo", paramData.idArticulo);
 	formData.append("listo", paramData.listo);
     
 	const response = await axios.post(`${API_BASE_URL}/servicioactualizardetalleorden.php`,formData);
-    console.log("Actualizado",response.data);
+    //console.log("Actualizado",response.data);
     return dispatch({
         type: MODIFICAR_ORDEN_DETALLE,
         status: response.status,
@@ -69,14 +69,14 @@ export const modificarOrdenDetalle = (paramData) => async dispatch => {
     })  
 }  
 export const modificarAvanceOrden = (paramData) => async dispatch => {
-	console.log("Param Actu",paramData);
+	//console.log("Param Actu",paramData);
 	var formData = new FormData();
     formData.append("idOrden", paramData.idOrden);
 	formData.append("estado", paramData.estado);
 	formData.append("avance", paramData.avance);
     
 	const response = await axios.post(`${API_BASE_URL}/servicioactualizaravanceorden.php`,formData);
-    console.log("Actualizado",response.data);
+    //console.log("Actualizado",response.data);
     return dispatch({
         type: MODIFICAR_AVANCE_ORDEN,
         status: response.status,
@@ -108,7 +108,7 @@ export const listarArticuloPorId = (id) => async dispatch => {
 }
 
 export const registrarDetalleArticulo = (paramData) => async dispatch => {
-	console.log("Parammmm",paramData);
+	//console.log("Parammmm",paramData);
 	var formData = new FormData();
 	formData.append("pedidoDeVentas", paramData.pedidoDeVentas);
     formData.append("codigoArticulo", paramData.codigoArticulo);
@@ -122,7 +122,7 @@ export const registrarDetalleArticulo = (paramData) => async dispatch => {
 
 
 	const response = await axios.post(`${API_BASE_URL}/servicioregistrardetallearticulo.php`,formData);
-    console.log("Registrado",response.data);
+    //console.log("Registrado",response.data);
     return dispatch({
         type: REGISTRAR_DETALLE_ARTICULO,
         status: response.status,
@@ -132,11 +132,11 @@ export const registrarDetalleArticulo = (paramData) => async dispatch => {
 
 
 export const eliminarDetalleHijos = (paramData) => async dispatch => {
-	console.log("Parammmm",paramData);
+	//console.log("Parammmm",paramData);
 	var formData = new FormData();
 	formData.append("codigoHijo", paramData.codigoHijo);
 	const response = await axios.post(`${API_BASE_URL}/servicioeliminardetallehijos.php`,formData);
-    console.log("Eliminados",response.data);
+    //console.log("Eliminados",response.data);
     return dispatch({
         type: ELIMINAR_DETALLE_HIJOS,
         status: response.status,

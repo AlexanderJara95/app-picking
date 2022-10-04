@@ -16,7 +16,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
     const [progresoLocal, setProgresoLocal] = useState();
 
     useEffect(() => {
-        console.log("muestra", id);
+        //console.log("muestra", id);
         listaOrdernesServicio(id);
     }, []);
 
@@ -30,7 +30,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                 setDatosTabla(response.detalleOrden);
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     }
     const seleccionarOrden = (itemOrden) => {
@@ -48,10 +48,10 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
 
     const cambiarProgreso = (e,idArticulo) => {
         const checked = e.target.checked;
-        console.log("checked", idArticulo);
+        //console.log("checked", idArticulo);
         if (checked) {
-            console.log("datosTabla.length", datosTabla.filter(item=>item.rama==1).length);
-            console.log("progreso", progreso);
+            //console.log("datosTabla.length", datosTabla.filter(item=>item.rama==1).length);
+            //console.log("progreso", progreso);
             setProgress(progreso + 100 / datosTabla.filter(item=>item.rama==1).length);
             setRowDataArticulos((prev)=>[...prev,idArticulo]);
         }
@@ -66,7 +66,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
 
     const contadorfilashijo=(index)=>{
         const newItems = datosTabla.splice(0,index);
-        console.log('newsitem',newItems);
+        //console.log('newsitem',newItems);
         
         return 3;
     };
@@ -84,7 +84,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
     }
     
     const guardarArticulos = async(json) =>{
-        console.log("json",json);
+        //console.log("json",json);
         //validando que exista detalle de orden
         //console.log("ddd",json);
         if(json.length > 0){
@@ -104,7 +104,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                         listaOrdernesServicio(id);
                         	  
                     } catch (error) {
-                        console.log(error);
+                        //console.log(error);
                     }
                 });                
             } catch (error) {
