@@ -119,7 +119,7 @@ class OrdenVenta extends Component {
                                     <td title="Personal disponible para asignar la orden" >
                                         {itemOrden.estado !== 'Anulado' ?
                                             <>
-                                                {itemOrden.estado=='Asignado'?
+                                                {itemOrden.estado=='Asignado' || itemOrden.estado=='Por Asignar'?
                                                     <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={this.seleccionarUsuario} style={{ width: '100px', fontSize: "10px" }}>
                                                         <option value='0'>Seleccione</option>
                                                         {this.state.listaUsuarios.map((usuario) => {
