@@ -29,7 +29,7 @@ const ListadoInformes = () =>{
     <div className="card-body">
       {
         returnInformes?
-          <h3 className="col m-0 font-weight-bold text-primary p-3">Listado de Informes</h3>
+          <h3 className="col m-0 font-weight-bold text-primary p-3">Listado de Ordenes</h3>
           : 
           <h3 className="col m-0 font-weight-bold text-primary p-3">No Hay Info</h3>
       }

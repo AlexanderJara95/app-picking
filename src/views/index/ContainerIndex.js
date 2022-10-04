@@ -135,7 +135,7 @@ const ContainerIndex = ()=> {
     
     return (
         <div className="container-fluid">
-            <h1 className="col m-0 font-weight-bold text-primary p-3">Sube tu archivo</h1>
+            <h1 className="col m-0 font-weight-bold text-primary p-3">Subir archivo</h1>
             <div className="row">
                 <div className="row">
                     <div className="col">

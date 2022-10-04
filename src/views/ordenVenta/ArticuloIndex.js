@@ -48,7 +48,7 @@ const ArticuloIndex = () =>{
             */} 
             <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'4em'}}>
                 <div className="row py-3">
-                    <div className="col-8 m-0 font-weight-bold text-primary pb-3">
+                    <div className="col-8 m-0 font-weight-bold text-primary pb-3" >
                         <h5>{articulo.descripcion}</h5>
                     </div>
                     <div className="col-2 text-center m-0 font-weight-bold text-primary">

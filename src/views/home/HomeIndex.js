@@ -15,11 +15,13 @@ const HomeIndex = ()=> {
 
     return (
         <>
+        {/*
             <Breadcrumb>
                 <Breadcrumb.Item>
                     Dashboard
                 </Breadcrumb.Item>
             </Breadcrumb>
+    */}
             <Card>                        
                 <Card.Body>
                 <h4 className="text-muted mb-4">BIENVENIDO AL SISTEMA</h4>
