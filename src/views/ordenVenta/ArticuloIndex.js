@@ -10,22 +10,24 @@ const ArticuloIndex = () =>{
     const param = useParams();
     const [articulo,setArticulo] =useState({});
     const [resta,setResta] =useState(0);
+    const [progreso, setProgreso] =useState();
     const addTableRows = useRef(null);
 
     useEffect(()=>{
         if((param.id).split("-")[1])busquedaArticulo((param.id).split("-")[1]);  
+        if((param.id).split("-")[2])setProgreso((param.id).split("-")[2]);  
     },[(param.id).split("-")[1]]);
       
     const busquedaArticulo= async(id)=>{
         try {
             const response = await store.dispatch(listarArticuloPorId(id));
-            //console.log("articuloinfo",response.detalleArticulo);
+            console.log("articuloinfo",response.detalleArticulo);
   
             if (response.status === StatusCodes.OK) {	
                 setArticulo(response.detalleArticulo);
             }
         } catch (error) {
-            //console.log(error);
+            console.log(error);
         }
     }
 
@@ -60,7 +62,7 @@ const ArticuloIndex = () =>{
                     </div>
                 </div>                
             </div>
-            <ModificarArticulo articulo={articulo} cod={(param.id).split("-")[1]} setArticulo={setArticulo} setResta={setResta} addTableRows={addTableRows}></ModificarArticulo>
+            <ModificarArticulo articulo={articulo} progreso={progreso} cod={(param.id).split("-")[1]} setArticulo={setArticulo} setResta={setResta} addTableRows={addTableRows}></ModificarArticulo>
         </>
     );
 }
