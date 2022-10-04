@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import { Table, Button, Alert } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import moment from 'moment';
 
 
 class OrdenVentaPicker extends Component {
@@ -123,7 +124,7 @@ class OrdenVentaPicker extends Component {
                                     <td  title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
                                     <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                     <td>{itemOrden.estado !== 'Anulado'? 
-                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
+                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}   onClick={() => this.actualizarEstadoApertura(itemOrden)}>
                                             <Button className="btn secondary"  title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye}/></Button></NavLink>
                                         :<Button className="btn secondary"  title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye}/></Button>}</td>
 
@@ -236,6 +237,20 @@ class OrdenVentaPicker extends Component {
             formData.append("idOrden", itemOrden.idOrden);
             fetch(rutaServicio, { method: 'POST', body: formData })
                 .then(() => { this.leerOrdenes(); })
+        }
+    })
+
+    actualizarEstadoApertura = (itemOrden => {
+        console.log(itemOrden);
+        if (itemOrden.abierto != '1'){
+            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizaestadoapertura.php"
+            var formData = new FormData();
+            var date = moment().format('YYYY-MM-DD h:mm:ss');
+            console.log(date);
+            formData.append("idOrden", itemOrden.idOrden);
+            formData.append("abierto", '1');
+            formData.append("fechaInicio", date);
+            fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
         }
     })
 

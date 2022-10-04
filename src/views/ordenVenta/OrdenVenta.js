@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import { Table, Button, Alert } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import moment from 'moment/moment';
 
 
 class OrdenVenta extends Component {
@@ -101,7 +102,7 @@ class OrdenVenta extends Component {
                                 <th scope="col">Asignado A</th>
                                 {/* <th scope="col">Fecha de Subida</th>
                                 <th scope="col">Fecha de Inicio</th> */}
-                                <th scope="col" width="40px">Fecha Terminado</th>
+                                <th scope="col" width="40px">Iniciado</th>
                                 <th scope="col" width="100px">Estado</th>
                                 <th scope="col">% Avance</th>
                                 <th colSpan={3}>Acciones</th>
@@ -147,7 +148,7 @@ class OrdenVenta extends Component {
                                     <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                     <td>{itemOrden.estado !== 'Anulado' ?
                                         <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
-                                            <Button className="btn secondary" title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye} /></Button></NavLink>
+                                            <Button className="btn secondary" title="Ver detalle de orden"><FontAwesomeIcon icon={faEye} /></Button></NavLink>
                                         : <Button className="btn secondary" title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye} /></Button>}</td>
                                     <td>{itemOrden.estado !== 'Anulado'?
                                         <Button className="btn btn-success" title="Asignar orden" onClick={() => this.asignarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>
@@ -263,6 +264,22 @@ class OrdenVenta extends Component {
             fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
         }
     })
+    
+    /*
+    actualizarEstadoApertura = (itemOrden => {
+        console.log(itemOrden);
+        if (itemOrden.abierto != '1'){
+            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizaestadoapertura.php"
+            var formData = new FormData();
+            var date = moment().format('YYYY-MM-DD h:mm:ss');
+            console.log(date);
+            formData.append("idOrden", itemOrden.idOrden);
+            formData.append("abierto", '1');
+            formData.append("fechaInicio", date);
+            fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
+        }
+    })
+*/
 
     render() {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
