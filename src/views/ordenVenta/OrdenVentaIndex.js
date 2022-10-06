@@ -22,7 +22,7 @@ const OrdenVentaIndex = ()=> {
                 </Breadcrumb.Item>
             </Breadcrumb>
         */} 
-            <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'1em',zIndex:'1000'}}>
+            <div className="container-fluid" style={{backgroundColor:'#ffffff'}}>
                 <div className="row pt-2">
                     <div className="col m-0 font-weight-bold text-primary pb-2">
                         <h3>Órdenes - Listado de Informes de Picking</h3>

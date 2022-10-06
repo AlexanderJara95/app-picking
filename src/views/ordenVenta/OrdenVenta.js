@@ -285,7 +285,7 @@ class OrdenVenta extends Component {
     render() {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
         return (
-            <section id="orden" className="padded"  style={{position:'sticky'}}>
+            <section id="orden" className="padded">
                 <div className="container-fluid">
                     <div className="row">
                         {contenidoTablaOrden}
