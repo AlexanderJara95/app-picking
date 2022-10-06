@@ -88,8 +88,7 @@ class OrdenVenta extends Component {
     dibujarTabla(datosTabla) {
         if (datosTabla !== null) {
             return (
-                <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab" >
-                    <Table className="table-sm border-white" responsive bordered hover striped>
+                    <Table className="table-sm border-white" id="tabla" role="tabpanel" aria-labelledby="home-tab" responsive bordered hover striped>
                         <thead className="thead-dark bg-dark text-white">
                             <tr className='align-middle'
                                 scope="col"
@@ -165,7 +164,6 @@ class OrdenVenta extends Component {
                             </tr>
                         </tbody>
                     </Table>
-                </div>
             )
         } else {
             return (
@@ -286,11 +284,7 @@ class OrdenVenta extends Component {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
         return (
             <section id="orden" className="padded">
-                <div className="container-fluid">
-                    <div className="row">
-                        {contenidoTablaOrden}
-                    </div>
-                </div>
+                {contenidoTablaOrden}
             </section>
         );
     }
