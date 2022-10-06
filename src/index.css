@@ -47,7 +47,6 @@ form a:hover{
     border-color:rgb(48, 139, 109);
 }
 .section-body{
-    background-color: #fff;
     position: relative;
     margin: var(--header-height) 0 0 0;
     padding: 0 1rem;
@@ -177,16 +176,13 @@ a {
     height: 100vh
 }
 
-
-.table-responsive>.table{
-    position: absolute;
-    width: 90%;
+thead{ 
+    position: sticky; 
+    top: 0 !important; 
+    z-index: 1000; 
 }
-
-.table-responsive>.table>thead{
-    position: sticky;
-    z-index: 1000;
-    top: 0;
+.table-responsive{
+    overflow-x: clip !important;
 }
 
 @media screen and (min-width: 768px) {

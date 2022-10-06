@@ -39,7 +39,7 @@ const ListadoOrdenes = () =>{
     }
 
     return(
-            <div className="table-responsive table-bordered" id="tabla" role="tabpanel" aria-labelledby="home-tab" >
+            <div className="table-bordered" id="tabla" role="tabpanel" aria-labelledby="home-tab" >
                 <table id="tabla" className="table" >
                     <thead id="thead" className="table thead-dark">
                         <tr>

@@ -36,7 +36,7 @@ const ListadoUsuarios = () =>{
 
 
     return(
-        <div className="table-responsive table-bordered" id="tabla" role="tabpanel" aria-labelledby="home-tab" >
+        <div className="table-bordered" id="tabla" role="tabpanel" aria-labelledby="home-tab" >
             <Table id="tabla" className="table table-hover" >
                 <thead id="thead" className="table thead-dark bg-dark text-white">
                     <tr>
