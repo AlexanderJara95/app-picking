@@ -27,6 +27,7 @@ export const obtenerTokenAcceso = () => {
 
 export const removerAutorizacion = () => {
 	localStorage.removeItem(ALMACENAMIENTO_DE_AUTORIZACION);
+	window.location.href='/';
 };
 
 export const existeTokenAcceso = () => {
