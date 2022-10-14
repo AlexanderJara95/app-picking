@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 const ALMACENAMIENTO_DE_AUTORIZACION = 'ALMACENAMIENTO_DE_AUTORIZACION';
 
 export const guardarAutorizacion = data => {
@@ -26,8 +28,20 @@ export const obtenerTokenAcceso = () => {
 };
 
 export const removerAutorizacion = () => {
-	localStorage.removeItem(ALMACENAMIENTO_DE_AUTORIZACION);
-	window.location.href='/';
+	
+	Swal.fire({
+		title: '¿Desea cerrar sesión?',
+		showCancelButton: true,
+		confirmButtonText: 'Confirmar',
+		cancelButtonText:'Cancelar'
+	  }).then((result) => {
+		/* Read more about isConfirmed, isDenied below */
+		if (result.isConfirmed) {
+		  localStorage.removeItem(ALMACENAMIENTO_DE_AUTORIZACION);
+		  window.location.href='/';
+		}
+	  })
+	
 };
 
 export const existeTokenAcceso = () => {

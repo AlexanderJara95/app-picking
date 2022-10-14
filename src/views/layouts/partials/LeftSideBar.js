@@ -20,12 +20,12 @@ const LeftSideBar = () => {
                   <a href="#" className="nav_link"> <i className='bx bx-bookmark nav_icon'></i> <span className="nav_name">Bookmark</span> </a>
                   <a href="#" className="nav_link"> <i className='bx bx-bar-chart-alt-2 nav_icon'></i> <span className="nav_name">Stats</span> </a>
                 </div>
-              </div><a href="" className="nav_link" onClick={() => {if (window.confirm('¿Estas seguro que deseas salir?')) { removerAutorizacion() };}}> <i className='bx bx-log-out nav_icon'></i> <span className="nav_name">Cerrar Sesión</span> </a>
+              </div><a href="" className="nav_link"  onClick={removerAutorizacion()}> <i className='bx bx-log-out nav_icon'></i> <span className="nav_name">Cerrar Sesión</span> </a>
           </nav>
           <Outlet/>
       </div>
       );
-      break;
+      
     case '2': 
       return(
         <div className="l-navbar" id="nav-bar">
