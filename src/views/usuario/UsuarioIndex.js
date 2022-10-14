@@ -2,6 +2,8 @@ import {useEffect,useState} from 'react';
 import ListadoUsuarios from './components/ListadoUsuarios';
 import { Breadcrumb, Button } from "react-bootstrap";
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAdd, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const UsuarioIndex = ()=> {
     useEffect(()=>{
@@ -17,7 +19,7 @@ const UsuarioIndex = ()=> {
                         <h3>Listado de Usuarios</h3>
                     </div>
                     <div className="offset-2 col-2" style={{textAlign: "center",alignSelf:"center"}}>
-                        <NavLink to={"/usuario/nuevo"} ><Button className="btn-primary">Nuevo +</Button></NavLink>
+                        <NavLink to={"/usuario/nuevo"} ><Button className="btn-primary"> Nuevo&nbsp;&nbsp;<FontAwesomeIcon icon={faAdd}></FontAwesomeIcon><FontAwesomeIcon icon={faUser}></FontAwesomeIcon></Button></NavLink>
                     </div>
                 </div>                
             </div>

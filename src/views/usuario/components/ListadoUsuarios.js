@@ -4,7 +4,7 @@ import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
 import { Button, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faEdit, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
+import { faCheck, faEdit, faEye, faLock, faTimes, faWindowRestore, faX, faXmarkCircle, faXRay } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import NivelUsuario from './NivelUsuario';
 
 const ListadoUsuarios = () =>{
@@ -12,13 +12,14 @@ const ListadoUsuarios = () =>{
     const [datosTabla,setDatosTabla] = useState([]);
     const [ordenSeleccionada,setOrdenSeleccionada] = useState({});
     useEffect(()=>{
+        console.log("window.usuario.nivelUsuario",parseInt(window.usuario.nivelUsuario)+1);
         listaUsuarioServicio();        
     },[]);
 
     const listaUsuarioServicio= async()=>{
         try {
             const response = await store.dispatch(listarUsuarios());
-
+            console.log("usuarios listados:",response);
             if (response.status === StatusCodes.OK) {	
                 setDatosTabla(response.usuarios);
             }
@@ -50,18 +51,25 @@ const ListadoUsuarios = () =>{
                     </tr>
                 </thead>
                 <tbody >
-                    {datosTabla.map((itemUsuario) =>
+                    {datosTabla.filter((item)=>(item.nivelUsuario==window.usuario.nivelUsuario)||(item.nivelUsuario==parseInt(window.usuario.nivelUsuario)+1)).map((itemUsuario) =>
                         <tr key={itemUsuario.idUsuario}
-                            id={"li-usuario-" + itemUsuario.idUsuario}
-                            onClick={() => this.seleccionarOrden(itemUsuario)}>
+                            id={"li-usuario-" + itemUsuario.idUsuario}>
                             <td>{itemUsuario.idUsuario}</td>
                             <td>{itemUsuario.nombre}</td>
                             <td>{itemUsuario.apellido}</td>
                             <td>{itemUsuario.correo}</td>
                             <td>{itemUsuario.username}</td>
                             <td><NivelUsuario nivel={itemUsuario.nivelUsuario}></NivelUsuario></td>
-                            <td><Button className="btn"><FontAwesomeIcon icon={faEdit} /></Button> </td>
-                            <td><Button className="btn btn-success"><FontAwesomeIcon icon={faCheck} onClick={() => this.mostrarEliminar(itemUsuario)} /></Button></td>
+                            <td>{itemUsuario.nivelUsuario==parseInt(window.usuario.nivelUsuario)+1?
+                                    <Button className="btn"><FontAwesomeIcon icon={faEdit} /></Button>
+                                    :<Button className="btn-secondary"><FontAwesomeIcon icon={faLock}/></Button>
+                                }
+                            </td>
+                            <td>{itemUsuario.estado == 1?
+                                <Button className="btn-success"><FontAwesomeIcon icon={faCheck} onClick={() => this.mostrarEliminar(itemUsuario)} /></Button>
+                                :<Button className="btn-danger"><FontAwesomeIcon icon={faXmarkCircle} onClick={() => this.mostrarEliminar(itemUsuario)} /></Button>
+                                }
+                            </td>
                         </tr>
                     )}
                 </tbody>
