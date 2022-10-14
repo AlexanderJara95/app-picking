@@ -4,7 +4,7 @@ import { removerAutorizacion } from '../../../config/LocalStorageService';
 import { Outlet,NavLink } from 'react-router-dom';
 const LeftSideBar = () => {    
   //NavLink => carga de componentes tipo Ajax    
- 
+  
   switch(window.usuario.nivelUsuario){
     case '1': 
       return(
@@ -20,7 +20,7 @@ const LeftSideBar = () => {
                   <a href="#" className="nav_link"> <i className='bx bx-bookmark nav_icon'></i> <span className="nav_name">Bookmark</span> </a>
                   <a href="#" className="nav_link"> <i className='bx bx-bar-chart-alt-2 nav_icon'></i> <span className="nav_name">Stats</span> </a>
                 </div>
-              </div><a href="" className="nav_link"  onClick={removerAutorizacion()}> <i className='bx bx-log-out nav_icon'></i> <span className="nav_name">Cerrar Sesión</span> </a>
+              </div><a className="nav_link"  onClick={()=>removerAutorizacion()}> <i className='bx bx-log-out nav_icon'></i> <span className="nav_name">Cerrar Sesión</span> </a>
           </nav>
           <Outlet/>
       </div>
