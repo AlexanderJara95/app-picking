@@ -178,7 +178,7 @@ a {
 
 thead{ 
     position: sticky; 
-    top: 0 !important; 
+    top: 63px !important; 
     z-index: 1000; 
 }
 .table-responsive{

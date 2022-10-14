@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom';
 function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progreso}) {
 
     const [restaCantidad,setRestaCantidad] = useState(0);
-    const [btnGuardar,setBtnGuardar] = useState(false); 
+    const [btnGuardar,setBtnGuardar] = useState(true); 
     const childFunc = React.useRef(null);
     useEffect(()=>{
       addTableRows.current = addTableRowsLocal;
@@ -87,6 +87,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
     }
     const handleChange = (index, evnt) => {     
         const { name, value } = evnt.target;
+        //	2022-10-30
         console.log("name,value", name, value);
         //console.log("cantidad", articulo.cantidad);
         const rowsInput = [...rowsData];
@@ -101,7 +102,8 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
           setBtnGuardar(false);
           setResta(articulo.cantidad-contador);
         }
-        if(contador == articulo.cantidad && rowsInput.length>1){ console.log("trueeeee");setBtnGuardar(true)};
+        //mas de un item && rowsInput.length>1
+        if(contador == articulo.cantidad){ console.log("trueeeee");setBtnGuardar(true)};
         
     }
     
@@ -122,7 +124,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
                         numeroLote: item.numeroLote,
                         ubicacion: item.ubicacion,
                         idPallet: item.idPallet,
-                        fechaCaducidad: item.fechaCaducidad,
+                        fechaCaducidad: item.fechaCaducidad.slice(8,10)+"/"+item.fechaCaducidad.slice(5,7)+"/"+item.fechaCaducidad.slice(0,4),
                         cantidad: item.cantidad,
                         codigoHijo: cod+item.codigoArticulo
                       }));
@@ -134,24 +136,28 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
                         //window.location.href = "/detalleorden/"+cod+'-'+item.pedidoDeVentas;	
                         
                       }
-                      const response2 = await store.dispatch(modificarOrdenDetalle({
-                        idArticulo: articulo.idArticulo,
-                        listo: 1
-                      }));
-                      const estadoAvance = progreso<100&&progreso>0?3:4;
-                      const response3 = await store.dispatch(modificarAvanceOrden({
-                            idOrden:cod,
-                            estado:estadoAvance,
-                            avance:progreso
-                      }));
-                      if (response2.status === StatusCodes.OK) {
-                        //console.log("Estado padre actualizado");		                        
-                      }
                       
                   } catch (error) {
                       console.log(error);
                   }
               });
+              const response2 = await store.dispatch(modificarOrdenDetalle({
+                idArticulo: articulo.idArticulo,
+                listo: 1
+              }));
+
+              if (response2.status === StatusCodes.OK) {
+                //console.log("Estado padre actualizado");		                        
+              }
+              //const estadoAvance = progreso<100&&progreso>0?3:4;
+              const estadoAvance = progreso < 100 && progreso > 0 ? 3 : 4;
+              console.log("progreso:",progreso);
+              const response3 = await store.dispatch(modificarAvanceOrden({
+                    idOrden:cod,
+                    estado:estadoAvance,
+                    avance:progreso
+              }));
+              console.log("response3:",response3);
               
           } catch (error) {
               toastme.error(

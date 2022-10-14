@@ -92,7 +92,7 @@ class OrdenVentaPicker extends Component {
     dibujarTabla(datosTabla) {
         if (datosTabla !== null) {
             return (
-                <div className="container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab" >
+                <div className="container-fluid" id="tabla" role="tabpanel" aria-labelledby="home-tab" >
                     <Table className="table-sm border-white" responsive bordered hover striped>
                         <thead className="thead-dark bg-dark text-white">
                             <tr className='align-middle'

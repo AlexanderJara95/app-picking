@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { listarUsuarios } from '../../../redux/usuario/UsuarioActions';
 import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faEdit, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import NivelUsuario from './NivelUsuario';
@@ -60,8 +60,8 @@ const ListadoUsuarios = () =>{
                             <td>{itemUsuario.correo}</td>
                             <td>{itemUsuario.username}</td>
                             <td><NivelUsuario nivel={itemUsuario.nivelUsuario}></NivelUsuario></td>
-                            <td><i className='bx bx-edit'data-bs-toggle="modal" data-bs-target="#exampleModalCenter" /> </td>
-                            <td><FontAwesomeIcon icon={faCheck} onClick={() => this.mostrarEliminar(itemUsuario)} /></td>
+                            <td><Button className="btn"><FontAwesomeIcon icon={faEdit} /></Button> </td>
+                            <td><Button className="btn btn-success"><FontAwesomeIcon icon={faCheck} onClick={() => this.mostrarEliminar(itemUsuario)} /></Button></td>
                         </tr>
                     )}
                 </tbody>

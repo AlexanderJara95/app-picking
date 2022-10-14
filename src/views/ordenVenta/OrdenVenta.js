@@ -149,12 +149,8 @@ class OrdenVenta extends Component {
                                     <td title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
                                     <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                     <td>{itemOrden.estado !== 'Anulado'?
-                                        <>{itemOrden.estado == 'Finalizado'?
-                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas + "-" + 0}>
-                                            <Button className="btn" title="Ver detalle de orden"><FontAwesomeIcon icon={faEye} /></Button></NavLink>
-                                        :<NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
-                                        <Button className="btn" title="Ver detalle de orden"><FontAwesomeIcon icon={faEye} /></Button></NavLink>
-                                        }</>
+                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
+                                        <Button className="btn" title="Ver detalle de orden"><FontAwesomeIcon icon={faEye} /></Button></NavLink>                                        
                                         :<Button className="btn btn-secondary" title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye} /></Button>}</td>
                                     <td>{itemOrden.estado !== 'Anulado' && itemOrden.estado !== 'Finalizado' ?
                                         <>{itemOrden.estado == 'Atendido'?

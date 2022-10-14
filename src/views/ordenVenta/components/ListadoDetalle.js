@@ -120,7 +120,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             }));
 
             const nuevoProgreso = progreso - 100 / datosTabla.filter(item => item.rama == 1).length;
-            //console.log("nuevoProgreso",nuevoProgreso);
+            console.log("nuevoProgreso",nuevoProgreso);
             const estadoAvance = nuevoProgreso < 100 && nuevoProgreso > 0 ? 3 : 2;
             const response3 = await store.dispatch(modificarAvanceOrden({
                 idOrden: cod,
