@@ -14,14 +14,7 @@ const HomeIndex = ()=> {
     },[]);
 
     return (
-        <>
-        {/*
-            <Breadcrumb>
-                <Breadcrumb.Item>
-                    Dashboard
-                </Breadcrumb.Item>
-            </Breadcrumb>
-    */}
+        <div className='container-fluid pt-5'>
             <Card>                        
                 <Card.Body>
                 <h4 className="text-muted mb-4">BIENVENIDO AL SISTEMA</h4>
@@ -31,7 +24,7 @@ const HomeIndex = ()=> {
                     </h3>
                     <div>                                
                         <h5 className="text-primary mb-1">
-                        {window.usuario && window.usuario.correo}
+                        {window.usuario && (window.usuario.nombre+' '+window.usuario.apellido)}
                         </h5>
                         <i className="text-secondary">
                             {window.usuario && window.usuario.correo}
@@ -40,7 +33,7 @@ const HomeIndex = ()=> {
                 </div>
                 </Card.Body>
             </Card>
-        </>
+        </div>
     )
 
 }

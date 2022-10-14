@@ -4,6 +4,8 @@ import { faCheck, faEye, faTimes, faWindowRestore } from '@fortawesome/free-soli
 import { Table, Button, Alert } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment/moment';
+import { modificarAvanceOrden } from '../../redux/ordenVenta/OrdenVentaActions';
+import store from '../../redux/Store';
 
 
 class OrdenVenta extends Component {
@@ -88,8 +90,7 @@ class OrdenVenta extends Component {
     dibujarTabla(datosTabla) {
         if (datosTabla !== null) {
             return (
-                <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab" >
-                    <Table className="table-sm border-white" responsive bordered hover striped>
+                    <Table className="table-sm border-white" id="tabla" role="tabpanel" aria-labelledby="home-tab" responsive bordered hover striped>
                         <thead className="thead-dark bg-dark text-white">
                             <tr className='align-middle'
                                 scope="col"
@@ -147,16 +148,22 @@ class OrdenVenta extends Component {
                                     <td  title="Fecha de culminada" >{itemOrden.fechaCompletado}</td> */}
                                     <td title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
                                     <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
-                                    <td>{itemOrden.estado !== 'Anulado' ?
-                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
-                                            <Button className="btn secondary" title="Ver detalle de orden"><FontAwesomeIcon icon={faEye} /></Button></NavLink>
-                                        : <Button className="btn secondary" title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye} /></Button>}</td>
                                     <td>{itemOrden.estado !== 'Anulado'?
-                                        <Button className="btn btn-success" title="Asignar orden" onClick={() => this.asignarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>
-                                        : <Button className="btn btn-success" title="Asignar orden" disabled><FontAwesomeIcon icon={faCheck} /></Button>}</td>  {/*onClick={() => this.mostrarEliminar(itemOrden)} */}
+                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
+                                        <Button className="btn" title="Ver detalle de orden"><FontAwesomeIcon icon={faEye} /></Button></NavLink>                                        
+                                        :<Button className="btn btn-secondary" title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye} /></Button>}</td>
+                                    <td>{itemOrden.estado !== 'Anulado' && itemOrden.estado !== 'Finalizado' ?
+                                        <>{itemOrden.estado == 'Atendido'?
+                                            <Button className="btn btn-warning" title="Finalizar orden" onClick={() => this.finalizarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>
+                                            : <Button className="btn btn-success" title="Asignar orden" onClick={() => this.asignarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>}
+                                        </>
+                                        : <Button className="btn btn-secondary" title="" disabled><FontAwesomeIcon icon={faCheck} /></Button>}</td>
                                     <td>{itemOrden.estado !== 'Anulado' ?
-                                        <Button className="btn btn-danger" title="Anular Orden" onClick={() => this.anularOrden(itemOrden)}><FontAwesomeIcon icon={faTimes} /></Button>
-                                        : <Button className="btn btn-danger" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></Button>}</td>
+                                        <>{itemOrden.estado == 'Finalizado'?
+                                            <Button className="btn btn-secondary" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></Button>
+                                            : <Button className="btn btn-danger" title="Anular Orden" onClick={() => this.anularOrden(itemOrden)}><FontAwesomeIcon icon={faTimes} /></Button>
+                                        }</>
+                                        : <Button className="btn btn-secondary" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></Button>}</td>
                                     {/* estuctura para condicion:
                                         {condicion a evaluar ? que pasa si es true : que pasa si es false} */}
                                 </tr>
@@ -165,7 +172,6 @@ class OrdenVenta extends Component {
                             </tr>
                         </tbody>
                     </Table>
-                </div>
             )
         } else {
             return (
@@ -203,6 +209,17 @@ class OrdenVenta extends Component {
         }
         this.setState({ usuarioAsignado: 0 });
         this.setState({ ordenSeleccionada: [] });
+    }
+    finalizarOrden = async(itemOrden) =>{
+        console.log("goooo",itemOrden.idOrden);
+        const response = await store.dispatch(modificarAvanceOrden({
+            idOrden: itemOrden.idOrden,
+            estado: 5,
+            avance: 100
+        }));
+        this.leerOrdenes();
+        console.log("gooo22o",response);
+
     }
 
     seleccionarOrden(itemOrden) {
@@ -285,12 +302,8 @@ class OrdenVenta extends Component {
     render() {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
         return (
-            <section id="orden" className="padded"  style={{position:'sticky'}}>
-                <div className="container-fluid">
-                    <div className="row">
-                        {contenidoTablaOrden}
-                    </div>
-                </div>
+            <section id="orden" className="padded">
+                {contenidoTablaOrden}
             </section>
         );
     }

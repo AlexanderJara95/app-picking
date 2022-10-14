@@ -39,7 +39,7 @@ const ListadoArticulo = ({id}) =>{
 
     return(
         <>         
-            <div className="table-responsive table-bordered container-fluid" id="tabla" role="tabpanel" aria-labelledby="home-tab">
+            <div className="table-bordered container-fluid" id="tabla" role="tabpanel" aria-labelledby="home-tab">
             <Table className="table" responsive bordered hover>
                 <thead className="thead-dark bg-dark text-white" >
                     <tr>

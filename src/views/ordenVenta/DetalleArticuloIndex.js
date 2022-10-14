@@ -25,7 +25,7 @@ const DetalleArticuloIndex = () =>{
                 </Breadcrumb.Items>
             </Breadcrumb>
              */} 
-            <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'4em'}}>
+            <div className="container-fluid" style={{backgroundColor:'#ffffff'}}>
                 <div className="row pt-3">
                     <div className="col m-0 font-weight-bold text-primary pb-3">
                         <h3><strong>Detalle de Articulo</strong></h3>

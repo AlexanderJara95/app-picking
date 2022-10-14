@@ -13,23 +13,13 @@ const OrdenVentaIndex = ()=> {
 
     return (
         <>
-          {/*  <Breadcrumb>
-                <Breadcrumb.Item href="/">
-                    Dashboard
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                    Órdenes
-                </Breadcrumb.Item>
-            </Breadcrumb>
-        */} 
-            <div className="container-fluid" style={{backgroundColor:'#ffffff',position:'sticky',top:'1em',zIndex:'1000'}}>
+            <div className="container-fluid" style={{backgroundColor:'#ffffff'}}>
                 <div className="row pt-2">
                     <div className="col m-0 font-weight-bold text-primary pb-2">
                         <h3>Órdenes - Listado de Informes de Picking</h3>
                     </div>
                 </div>
-            </div>
-            {(()=>{
+                {(()=>{
                 //console.log("window.usuario.nivelUsuario",window.usuario.nivelUsuario);
                 switch(window.usuario.nivelUsuario){
                     case '1':
@@ -40,7 +30,7 @@ const OrdenVentaIndex = ()=> {
                     return (<OrdenVentaPicker></OrdenVentaPicker>);
                 };
             })()}
-            
+            </div>
         </>
     )
 

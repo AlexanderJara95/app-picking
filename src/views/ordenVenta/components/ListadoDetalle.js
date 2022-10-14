@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { eliminarDetalleHijos, listarOrdenDetallePorId, modificarAvanceOrden, modificarOrdenDetalle } from '../../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
-import { Button, ProgressBar, Table } from 'react-bootstrap';
+import { Button, FormCheck, ProgressBar, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCirclePlus, faDeleteLeft, faEdit, faTimes, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
@@ -120,7 +120,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             }));
 
             const nuevoProgreso = progreso - 100 / datosTabla.filter(item => item.rama == 1).length;
-            //console.log("nuevoProgreso",nuevoProgreso);
+            console.log("nuevoProgreso",nuevoProgreso);
             const estadoAvance = nuevoProgreso < 100 && nuevoProgreso > 0 ? 3 : 2;
             const response3 = await store.dispatch(modificarAvanceOrden({
                 idOrden: cod,
@@ -147,7 +147,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
     return (
         <section>
 
-            <div className="table-responsive container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab">
+            <div className="container-fluid " id="tabla" role="tabpanel" aria-labelledby="home-tab">
                 <Table className="table-sm border-white" responsive bordered hover striped >
                     <thead className="thead-dark bg-dark text-white" >
                         <tr className='align-middle' scope="col" style={{ textAlign: 'center', fontSize: '12px' }}>
@@ -205,10 +205,10 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                     : <td style={{ textAlign: 'center', width: '50px' }}>{itemDetalle.cantidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ width: '50px' }}>
+                                    ? <td style={{ textAlign: 'center', width: '50px' }}>
                                         {itemDetalle.listo == 1
-                                            ? <div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} disabled checked /></div>
-                                            : <div className="form-check"><input className="form-check-input" type="checkbox" id={itemDetalle.idArticulo} onChange={(e) => cambiarProgreso(e, itemDetalle.idArticulo)} /></div>
+                                            ? <div className="form-check"><FormCheck disabled={true} checked /> </div>
+                                            : <div className="form-check"><input name={itemDetalle.idArticulo} className="form-check-input" type="checkbox" onChange={(e) => cambiarProgreso(e, itemDetalle.idArticulo)} /></div>
                                         }
                                     </td>
                                     : <td></td>

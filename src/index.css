@@ -176,6 +176,15 @@ a {
     height: 100vh
 }
 
+thead{ 
+    position: sticky; 
+    top: 63px !important; 
+    z-index: 1000; 
+}
+.table-responsive{
+    overflow-x: clip !important;
+}
+
 @media screen and (min-width: 768px) {
     .section-body{
         margin: calc(var(--header-height) + 1rem) 0 0 0;

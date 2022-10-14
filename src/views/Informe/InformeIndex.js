@@ -126,16 +126,7 @@ const InformeIndex = ()=> {
     
 
     return (
-        <>
-            <Breadcrumb>
-                <Breadcrumb.Item href="/">
-                    Dashboard
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                    Importar Informes
-                </Breadcrumb.Item>
-            </Breadcrumb>
-            <div className="container-fluid">
+        <div className="container-fluid pt-3">
             <div className="col m-0 font-weight-bold text-primary pb-3">
                 <h1><strong>Importar</strong></h1>
                 <h3>Informes de Picking</h3>
@@ -183,12 +174,11 @@ const InformeIndex = ()=> {
                                    </div>                 
                                </div>
                             }    
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 
 }
