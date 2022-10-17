@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCirclePlus, faDeleteLeft, faEdit, faTimes, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import { toastme } from 'toastmejs';
+import Swal from 'sweetalert2';
 
 const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
 
@@ -144,7 +145,29 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
         }, 500);
     }
 
-    
+    const borrarHijos = (itemDetalle) => {
+        Swal.fire({
+            title: '¿Está Seguro?',
+            text: "¿Desea borrar el progreso guardado en esta Orden?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#369978',
+            confirmButtonText: 'Si, Eliminar',
+            cancelButtonText: 'Cancelar',
+            iconColor: '#dc3545'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const response = store.dispatch(eliminarDetalleArticuloHijo(itemDetalle))
+                Swal.fire({
+                    title: '¡Eliminados!',
+                    text: "Productos eliminados correctamente",
+                    icon: 'success',
+                    confirmButtonColor: '#369978',
+                    confirmButtonText: 'Listo',
+                })
+            }
+        })
+    }
     return (
         <section>
 
@@ -218,9 +241,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                     ? <td style={{ textAlign: 'center', width: '100px', fontWeight: 'bold' }}>
                                         {itemDetalle.listo == 0
                                             ? <NavLink to={"/detallearticulo/" + cod + "-" + itemDetalle.idArticulo + "-" + (progresoDb + 100 / datosTabla.filter(item => item.rama == 1).length)}><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
-                                            : <Button className='btn-warning' onClick={() => {
-                                                if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) { eliminarDetalleArticuloHijo(itemDetalle) };
-                                            }}> <FontAwesomeIcon icon={faTrash} /> </Button>
+                                            : <Button className='btn-warning' onClick={() => {borrarHijos(itemDetalle)}}> <FontAwesomeIcon icon={faTrash} /> </Button>
                                             /*
                                                 <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} onClick={() => {
                                                     if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) 
