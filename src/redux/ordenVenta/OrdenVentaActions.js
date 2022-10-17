@@ -5,6 +5,7 @@ import {
     REGISTRAR_ORDEN,
     REGISTRAR_ORDEN_DETALLE,
     MODIFICAR_AVANCE_ORDEN, 
+    ANULAR_ORDEN,
     LISTAR_ARTICULO_DETALLE, MODIFICAR_ORDEN_DETALLE,REGISTRAR_DETALLE_ARTICULO, ELIMINAR_DETALLE_HIJOS} from './OrdenVentaTypes';
 import { API_BASE_URL } from '../../config/Services';
 import moment from 'moment';
@@ -149,6 +150,19 @@ export const eliminarDetalleHijos = (paramData) => async dispatch => {
     })  
 }  
 
+export const anularOrden = (paramData) => async dispatch => {
+	//console.log("Param Actu",paramData);
+	var formData = new FormData();
+    formData.append("idOrden", paramData.idOrden);
+    
+	const response = await axios.post(`${API_BASE_URL}/servicioanularorden.php`,formData);
+    //console.log("Actualizado",response.data);
+    return dispatch({
+        type: ANULAR_ORDEN,
+        status: response.status,
+        data: response.data
+    })  
+}  
 /*
 var formData = new FormData();
 	formData.append("username", paramData.username);
