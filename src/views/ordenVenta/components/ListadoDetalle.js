@@ -144,6 +144,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
         }, 500);
     }
 
+    
     return (
         <section>
 
@@ -232,7 +233,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                             */
                                         }
                                     </td>
-                                    : null
+                                        : null
                                 }
                             </tr>
                         )}
@@ -260,10 +261,8 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                         <NavLink to={"/orden"} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
                                     </div>
                                 </>}
-
                         </>
                     }
-
                 </div>
             </div>
         </section>

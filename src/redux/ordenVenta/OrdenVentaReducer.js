@@ -8,7 +8,8 @@ import {
 	LISTAR_ARTICULO_DETALLE,
 	MODIFICAR_ORDEN_DETALLE,
 	REGISTRAR_DETALLE_ARTICULO,
-	MODIFICAR_AVANCE_ORDEN	
+	MODIFICAR_AVANCE_ORDEN,
+	ANULAR_ORDEN	
 } from './OrdenVentaTypes';
 
 const OrdenVentaReducer = (state = {}, action) => {
@@ -79,6 +80,12 @@ const OrdenVentaReducer = (state = {}, action) => {
 			};
 		}
 		case ELIMINAR_DETALLE_HIJOS: {
+			return {
+				...state,
+				data: action.data,
+			};
+		}
+		case ANULAR_ORDEN: {
 			return {
 				...state,
 				data: action.data,
