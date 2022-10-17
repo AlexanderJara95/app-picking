@@ -261,7 +261,6 @@ class OrdenVenta extends Component {
                 this.leerOrdenes();
             }
         })
-
     }
 
     seleccionarOrden(itemOrden) {
