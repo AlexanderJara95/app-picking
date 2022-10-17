@@ -29,14 +29,21 @@ const Login = () => {
 			showPreloader();
 			const response = await store.dispatch(solicitarAcceso(credencial));
 
-			console.log("user",response.usuario.nombre);
+			console.log("user",response.usuario);
 
-			if (response.status === StatusCodes.OK && Object.keys(response.usuario).length !== 0) {
-				toastme.success(
-					`Bienvenido al sistema ${response.usuario.nombre}`,
-				);
-				guardarAutorizacion(response.usuario);
-                window.location.href = '/';				
+			if (response.status === StatusCodes.OK && Object.keys(response.usuario).length !== 0 ) {
+                if(response.usuario.estado!="0"){
+                    toastme.success(
+                        `Bienvenido al sistema ${response.usuario.nombre}`,
+                    );
+                    guardarAutorizacion(response.usuario);
+                    window.location.href = '/';	
+                }else{
+                    toastme.error(
+                        `Usuario Inhabilitado`,
+                    );
+                }
+							
 			}else{
                 toastme.error(
 					`Usuario o contraseña inválidos`,
