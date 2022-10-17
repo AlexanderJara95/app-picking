@@ -102,15 +102,15 @@ class OrdenVenta extends Component {
                             <th scope="col">#PV</th>
                             <th scope="col">Id Cliente</th>
                             <th scope="col">Nombre Cliente</th>
-                            <th scope="col" width="200px">Referencia</th>
-                            <th scope="col">Asignar</th>
-                            <th scope="col">Asignado A</th>
+                            {/* <th scope="col" width="200px">Referencia</th>*/}
+                            <th scope="col" width="100px">Asignar</th>
+                            <th scope="col" width="100px">Responsable</th>
                             {/* <th scope="col">Fecha de Subida</th>
                                 <th scope="col">Fecha de Inicio</th> */}
                             <th scope="col" width="100px">Iniciado</th>
                             <th scope="col" width="100px">Finalizado</th>
                             <th scope="col" width="100px">Estado</th>
-                            <th scope="col">% Avance</th>
+                            <th scope="col">Avance</th>
                             <th colSpan={3}>Acciones</th>
                         </tr>
                     </thead>
@@ -118,10 +118,10 @@ class OrdenVenta extends Component {
                         {datosTabla.map((itemOrden) =>
                             <tr className='align-middle' scope="row" key={itemOrden.idOrden} ref={ref => (this.accordionContent[itemOrden.idOrden] = ref)} id={"li-orden-" + itemOrden.idOrden} style={{ textAlign: 'center', fontSize: '12px' }} onClick={() => this.seleccionarOrden(itemOrden, itemOrden.idOrden)}>
                                 {/*<td>{itemOrden.idOrden}</td>*/}
-                                <td style={{ textAlign: 'center', fontSize: '10px' }}>{itemOrden.pedidoDeVentas}</td>
-                                <td>{itemOrden.idClienteAx}</td>
+                                <td style={{ textAlign: 'center', fontSize: '8px' }}>{itemOrden.pedidoDeVentas}</td>
+                                <td style={{ textAlign: 'center', fontSize: '8px' }}>{itemOrden.idClienteAx}</td>
                                 <td style={{ textTransform: 'lowercase', textAlign: 'left' }}>{itemOrden.nombreCliente}</td>
-                                <td style={{ textTransform: 'lowercase', textAlign: 'left' }}>{itemOrden.referencia}</td>
+                                {/*<td style={{ textTransform: 'lowercase', textAlign: 'left' }}>{itemOrden.referencia}</td>*/}
                                 <td title="Personal disponible para asignar la orden" >
                                     {itemOrden.estado !== 'Anulado' ?
                                         <>
@@ -138,10 +138,15 @@ class OrdenVenta extends Component {
                                                         }
                                                     }
                                                     )}
-                                                </select> : <>Asignado</>
+                                                </select> 
+                                                :<>
+                                                    Asignado
+                                                </>
                                             }
                                         </>
-                                        : <span> Orden Anulada</span>
+                                        :<span>
+                                            Anulada
+                                        </span>
                                     }
                                 </td>
                                 <td style={{ textAlign: 'center', }}>{this.state.listaUsuarios.map((usuario) => (
@@ -155,20 +160,20 @@ class OrdenVenta extends Component {
                                 <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                 <td>{itemOrden.estado !== 'Anulado' ?
                                     <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
-                                        <Button className="btn" title="Ver detalle de orden" onClick={() => this.actualizarFechaApertura(itemOrden)}><FontAwesomeIcon icon={faEye} /></Button></NavLink>
-                                    : <Button className="btn btn-secondary" title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye} /></Button>}</td>
+                                        <Button className="btn  btn-sm" title="Ver detalle de orden" onClick={() => this.actualizarFechaApertura(itemOrden)}><FontAwesomeIcon icon={faEye} /></Button></NavLink>
+                                    : <Button className="btn btn-secondary  btn-sm" title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye} /></Button>}</td>
                                 <td>{itemOrden.estado !== 'Anulado' && itemOrden.estado !== 'Finalizado' ?
                                     <>{itemOrden.estado == 'Atendido' ?
-                                        <Button className="btn btn-warning" title="Finalizar orden" onClick={() => this.finalizarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>
-                                        : <Button className="btn btn-success" title="Asignar orden" onClick={() => this.asignarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>}
+                                        <Button className="btn btn-warning  btn-sm" title="Finalizar orden" onClick={() => this.finalizarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>
+                                        : <Button className="btn btn-success  btn-sm" title="Asignar orden" onClick={() => this.asignarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>}
                                     </>
-                                    : <Button className="btn btn-secondary" title="" disabled><FontAwesomeIcon icon={faCheck} /></Button>}</td>
+                                    : <Button className="btn btn-secondary btn-sm" title="" disabled><FontAwesomeIcon icon={faCheck} /></Button>}</td>
                                 <td>{itemOrden.estado !== 'Anulado' ?
                                     <>{itemOrden.estado == 'Finalizado' ?
-                                        <a className="btn btn-secondary" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></a>
-                                        : <a className="btn btn-danger" title="Anular Orden" onClick={() => this.anularOrdenes(itemOrden)}><FontAwesomeIcon icon={faTimes} /></a>
+                                        <a className="btn btn-secondary  btn-sm" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></a>
+                                        : <a className="btn btn-danger  btn-sm" title="Anular Orden" onClick={() => this.anularOrdenes(itemOrden)}><FontAwesomeIcon icon={faTimes} /></a>
                                     }</>
-                                    : <a className="btn btn-secondary" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></a>}</td>
+                                    : <a className="btn btn-secondary  btn-sm" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></a>}</td>
                                 {/* estuctura para condicion:
                                         {condicion a evaluar ? que pasa si es true : que pasa si es false} */}
                             </tr>
@@ -275,13 +280,13 @@ class OrdenVenta extends Component {
     mostrarEstado(estado) {
         switch (estado) {
             case 'Por Asignar':
-                return <span style={{ backgroundColor: "#ffff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Por Asignar</span>
+                return <span style={{ backgroundColor: "#ffff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Pendiente</span>
             case 'Asignado':
                 return <span style={{ backgroundColor: "#00ff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Asignado</span>
             case 'En Proceso':
-                return <span style={{ backgroundColor: "#ff3333", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>En Proceso</span>
+                return <span style={{ backgroundColor: "#ff3333", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>En Curso</span>
             case 'Atendido':
-                return <span style={{ backgroundColor: "#3366ff", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '25px', paddingRight: '25px', fontWeight: 'bolder' }}>Atendido</span>
+                return <span style={{ backgroundColor: "#3366ff", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Atendido</span>
             case 'Finalizado':
                 return <span style={{ backgroundColor: "#00802b", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Finalizado</span>
             case 'Anulado':
