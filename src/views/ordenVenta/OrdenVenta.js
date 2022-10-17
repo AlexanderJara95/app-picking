@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import moment from 'moment/moment';
 import { modificarAvanceOrden } from '../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../redux/Store';
+import Swal from 'sweetalert2';
 
 
 class OrdenVenta extends Component {
@@ -160,10 +161,10 @@ class OrdenVenta extends Component {
                                         : <Button className="btn btn-secondary" title="" disabled><FontAwesomeIcon icon={faCheck} /></Button>}</td>
                                     <td>{itemOrden.estado !== 'Anulado' ?
                                         <>{itemOrden.estado == 'Finalizado'?
-                                            <Button className="btn btn-secondary" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></Button>
-                                            : <Button className="btn btn-danger" title="Anular Orden" onClick={() => this.anularOrden(itemOrden)}><FontAwesomeIcon icon={faTimes} /></Button>
+                                            <a className="btn btn-secondary" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></a>
+                                            : <a className="btn btn-danger" title="Anular Orden" onClick={() => this.anularOrden(itemOrden)}><FontAwesomeIcon icon={faTimes} /></a>
                                         }</>
-                                        : <Button className="btn btn-secondary" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></Button>}</td>
+                                        : <a className="btn btn-secondary" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></a>}</td>
                                     {/* estuctura para condicion:
                                         {condicion a evaluar ? que pasa si es true : que pasa si es false} */}
                                 </tr>
@@ -274,13 +275,30 @@ class OrdenVenta extends Component {
     })
 
     anularOrden = (itemOrden => {
-        var respuesta = window.confirm("¿Está seguro que desea anular la Orden " + itemOrden.pedidoDeVentas + "?")
-        if (respuesta === true) {
-            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioanularorden.php"
-            var formData = new FormData();
-            formData.append("idOrden", itemOrden.idOrden);
-            fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
-        }
+        Swal.fire({
+            title: '¿Está Seguro',
+            text: "De anular esta orden?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#369978',
+            confirmButtonText: 'Si, anular',
+            cancelButtonText:'Cancelar',
+            iconColor: '#dc3545'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                const rutaServicio = "http://megalabs.digitalbroperu.com/servicioanularorden.php"
+                var formData = new FormData();
+                formData.append("idOrden", itemOrden.idOrden);
+                fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
+                Swal.fire({
+                    title: '¡Anulado!',
+                    text: "Oreden anulada correctamente",
+                    icon: 'success',
+                    confirmButtonColor: '#369978',
+                    confirmButtonText: 'Listo',
+                })
+            }
+          })
     })
     
     /*

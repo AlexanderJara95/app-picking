@@ -33,7 +33,8 @@ export const removerAutorizacion = () => {
 		title: '¿Desea cerrar sesión?',
 		showCancelButton: true,
 		confirmButtonText: 'Confirmar',
-		cancelButtonText:'Cancelar'
+		cancelButtonText:'Cancelar',
+		confirmButtonColor: '#369978'
 	  }).then((result) => {
 		/* Read more about isConfirmed, isDenied below */
 		if (result.isConfirmed) {
