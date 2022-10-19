@@ -35,7 +35,7 @@ class OrdenVenta extends Component {
     }
 
     componentDidUpdate() {
-        // this.leerOrdenes();
+        this.leerOrdenes();
     }
 
     leerOrdenes() {
@@ -93,14 +93,14 @@ class OrdenVenta extends Component {
     dibujarTabla(datosTabla) {
         if (datosTabla !== null) {
             return (
-                <Table className="table-sm border-white" id="tabla" role="tabpanel" aria-labelledby="home-tab" responsive bordered hover striped>
+                <Table className="table-sm " id="tabla" role="tabpanel" aria-labelledby="home-tab" responsive hover >
                     <thead className="thead-dark bg-dark text-white">
                         <tr className='align-middle'
                             scope="col"
                             style={{ textAlign: 'center', fontSize: '12px' }}>
                             {/*<th scope="col">Id Orden</th>*/}
                             <th scope="col">#PV</th>
-                            <th scope="col">Id Cliente</th>
+                            {/* <th scope="col">Id Cliente</th>*/}
                             <th scope="col">Nombre Cliente</th>
                             {/* <th scope="col" width="200px">Referencia</th>*/}
                             <th scope="col" width="100px">Asignar</th>
@@ -118,9 +118,9 @@ class OrdenVenta extends Component {
                         {datosTabla.map((itemOrden) =>
                             <tr className='align-middle' scope="row" key={itemOrden.idOrden} ref={ref => (this.accordionContent[itemOrden.idOrden] = ref)} id={"li-orden-" + itemOrden.idOrden} style={{ textAlign: 'center', fontSize: '12px' }} onClick={() => this.seleccionarOrden(itemOrden, itemOrden.idOrden)}>
                                 {/*<td>{itemOrden.idOrden}</td>*/}
-                                <td style={{ textAlign: 'center', fontSize: '8px' }}>{itemOrden.pedidoDeVentas}</td>
-                                <td style={{ textAlign: 'center', fontSize: '8px' }}>{itemOrden.idClienteAx}</td>
-                                <td style={{ textTransform: 'lowercase', textAlign: 'left' }}>{itemOrden.nombreCliente}</td>
+                                <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.pedidoDeVentas}</td>
+                                {/*<td style={{ textAlign: 'center', fontSize: '8px' }}>{itemOrden.idClienteAx}</td>*/}
+                                <td style={{ textTransform: 'uppercase', textAlign: 'left', fontSize: '15px'  }}>{itemOrden.nombreCliente}</td>
                                 {/*<td style={{ textTransform: 'lowercase', textAlign: 'left' }}>{itemOrden.referencia}</td>*/}
                                 <td title="Personal disponible para asignar la orden" >
                                     {itemOrden.estado !== 'Anulado' ?
@@ -131,9 +131,9 @@ class OrdenVenta extends Component {
                                                     {this.state.listaUsuarios.map((usuario) => {
                                                         if (usuario.nivelUsuario == 3) {
                                                             if (usuario.idUsuario == itemOrden.asignadoA) {
-                                                                return (<option key={usuario.idUsuario} value={usuario.idUsuario}>{usuario.nombre}</option>);
+                                                                return (<option key={usuario.idUsuario} value={usuario.idUsuario}>{usuario.username}</option>);
                                                             } else {
-                                                                return (<option key={usuario.idUsuario} value={usuario.idUsuario}>{usuario.nombre}</option>);
+                                                                return (<option key={usuario.idUsuario} value={usuario.idUsuario}>{usuario.username}</option>);
                                                             }
                                                         }
                                                     }
@@ -154,13 +154,11 @@ class OrdenVenta extends Component {
                                 ))}</td>
                                 <td title="Persona encargada del picking" >{itemOrden.fechaInicio}</td>
                                 <td title="Persona encargada del picking" >{itemOrden.fechaCompletado}</td>
-                                {/*<td  title="Fecha de asignacion" >{itemOrden.fechaInicio}</td>
-                                    <td  title="Fecha de culminada" >{itemOrden.fechaCompletado}</td> */}
                                 <td title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
                                 <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                 <td>{itemOrden.estado !== 'Anulado' ?
                                     <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
-                                        <Button className="btn  btn-sm" title="Ver detalle de orden" onClick={() => this.actualizarFechaApertura(itemOrden)}><FontAwesomeIcon icon={faEye} /></Button></NavLink>
+                                        <Button className="btn  btn-sm" title="Ver detalle de orden"><FontAwesomeIcon icon={faEye} /></Button></NavLink>
                                     : <Button className="btn btn-secondary  btn-sm" title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye} /></Button>}</td>
                                 <td>{itemOrden.estado !== 'Anulado' && itemOrden.estado !== 'Finalizado' ?
                                     <>{itemOrden.estado == 'Atendido' ?
@@ -220,6 +218,7 @@ class OrdenVenta extends Component {
         this.setState({ usuarioAsignado: 0 });
         this.setState({ ordenSeleccionada: [] });
     }
+    
     finalizarOrden = async (itemOrden) => {
         this.actualizarFechaFinalizado(itemOrden);
         const response = await store.dispatch(modificarAvanceOrden({
@@ -231,14 +230,16 @@ class OrdenVenta extends Component {
     }
 
     actualizarFechaFinalizado = (itemOrden => {
+        if (itemOrden.abierto != '1') {
         console.log("ENTRO AL SERVICIO FECHA");
         const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizarfechacompletadaorden.php"
         var formData = new FormData();
-        var date = moment().format('YYYY-MM-DD h:mm:ss');
+        var date = moment().format('DD/MM/YYYY h:mm:ss');
         formData.append("idOrden", itemOrden.idOrden);
         formData.append("abierto", '2');
         formData.append("fechaCompletado", date);
         fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
+    }
     })
 
     anularOrdenes = (itemOrden) => {
@@ -302,13 +303,13 @@ class OrdenVenta extends Component {
             fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
         }
     })
-
+/*
     actualizarFechaApertura = (itemOrden => {
         console.log(itemOrden);
         if (itemOrden.abierto != '1') {
             const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizarfechainicioorden.php"
             var formData = new FormData();
-            var date = moment().format('YYYY-MM-DD h:mm:ss');
+            var date = moment().format('DD/MM/YYYY h:mm:ss');
             console.log(date);
             formData.append("idOrden", itemOrden.idOrden);
             formData.append("abierto", '1');
@@ -316,7 +317,7 @@ class OrdenVenta extends Component {
             fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
         }
     })
-
+*/
     render() {
         let contenidoTablaOrden = this.dibujarTabla(this.state.listaOrdenes)
         return (

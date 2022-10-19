@@ -53,7 +53,7 @@ const UsuarioForm = ({accion,id}) =>{
                 const response = await store.dispatch(registrarUsuario(usuario));
                 if (response.status === StatusCodes.OK) {
                     console.log("Nuevo Usuario agregado");
-                    //window.location.href = '/usuario';
+                    window.location.href = '/usuario';
                 }
             } catch (error) {
                 //console.log(error);

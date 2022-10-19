@@ -30,7 +30,7 @@ class OrdenVentaPicker extends Component {
     }
 
     componentDidUpdate() {
-        // this.leerOrdenes();
+        this.leerOrdenes();
     }
 
     leerOrdenes() {
@@ -104,8 +104,8 @@ class OrdenVentaPicker extends Component {
                                 <th scope="col">Nombre Cliente</th>
                                 <th scope="col">Referencia</th>
                                {/* <th scope="col">Fecha de Subida</th>
-                                <th scope="col">Fecha de Inicio</th> */}
-                                <th scope="col" width="40px">Fecha Terminado</th>
+                                <th scope="col">Fecha de Inicio</th> 
+                                <th scope="col" width="40px">Fecha Terminado</th>*/}
                                 <th scope="col" width="100px">Estado</th>
                                 <th scope="col">% Avance</th>
                                 <th >Acciones</th>
@@ -119,13 +119,13 @@ class OrdenVentaPicker extends Component {
                                     <td>{itemOrden.idClienteAx}</td>
                                     <td style={{ textTransform: 'lowercase'}}>{itemOrden.nombreCliente}</td>
                                     <td style={{ textTransform: 'lowercase'}}>{itemOrden.referencia}</td>
-                                    <td  title="Persona encargada del picking" >{itemOrden.fechaSubida}</td>
-                                    {/*<td  title="Fecha de asignacion" >{itemOrden.fechaInicio}</td>
+                                    {/*<td  title="Persona encargada del picking" >{itemOrden.fechaSubida}</td>
+                                    <td  title="Fecha de asignacion" >{itemOrden.fechaInicio}</td>
                                     <td  title="Fecha de culminada" >{itemOrden.fechaCompletado}</td> */}
                                     <td  title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
                                     <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                     <td>{itemOrden.estado !== 'Anulado'? 
-                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}   onClick={() => this.actualizarEstadoApertura(itemOrden)}>
+                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}  onClick={() => this.actualizarFechaApertura(itemOrden)}>
                                             <Button className="btn secondary"  title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye}/></Button></NavLink>
                                         :<Button className="btn secondary"  title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye}/></Button>}</td>
 
@@ -241,13 +241,13 @@ class OrdenVentaPicker extends Component {
         }
     })
 
-    actualizarEstadoApertura = (itemOrden => {
-        //console.log(itemOrden);
-        if (itemOrden.abierto != '1'){
-            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizaestadoapertura.php"
+    actualizarFechaApertura = (itemOrden => {
+        console.log(itemOrden);
+        if (itemOrden.abierto != '0') {
+            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizarfechainicioorden.php"
             var formData = new FormData();
-            var date = moment().format('YYYY-MM-DD h:mm:ss');
-            //console.log(date);
+            var date = moment().format('DD/MM/YYYY h:mm:ss');
+            console.log(date);
             formData.append("idOrden", itemOrden.idOrden);
             formData.append("abierto", '1');
             formData.append("fechaInicio", date);

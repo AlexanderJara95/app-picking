@@ -36,7 +36,7 @@ const InformeIndex = ()=> {
 
     const registrarOrdenPicking = async(json) =>{
         //validando que exista detalle de orden
-        //console.log("ddd",json);
+        console.log("ddd",json);
         if(json.detalleOrden.length > 0){
             try {
                 const response2 = await store.dispatch(listarOrden());

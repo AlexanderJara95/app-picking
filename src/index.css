@@ -2,8 +2,8 @@
 @import url("https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css");
 
 :root {
-    --header-height: 3rem;
-    --nav-width: 68px;
+    --header-height: 1rem;
+    --nav-width: 70px;
     --first-color: rgb(54, 153, 120);
     --first-color-light: rgb(148, 230, 209);
     --white-color: #F7F6FB;
@@ -13,7 +13,7 @@
     --bs-primary-rgb:54, 153, 120;
     --bs-btn-color: #fff;
     /*primary*/
-    --bs-btn-bg:  rgb(54, 153, 120) !important;
+    --bs-btn-bg:  rgb(79, 214, 169) !important;
     --bs-btn-border-color:  rgb(54, 153, 120) !important;
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: rgb(48, 133, 104) !important;
@@ -49,10 +49,10 @@ form a:hover{
 .section-body{
     position: relative;
     margin: var(--header-height) 0 0 0;
-    padding: 0 1rem;
+    padding: 10 1rem;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
-    transition: .5s
+    transition: .5s;
 }
 
 a {
@@ -60,7 +60,7 @@ a {
 }
 
 .header {
-    width: 100%;
+    width: 0%;
     height: var(--header-height);
     position: fixed;
     top: 0;
@@ -76,8 +76,11 @@ a {
 
 .header_toggle {
     color: var(--first-color);
-    font-size: 1.5rem;
-    cursor: pointer
+    font-size: 2.5rem;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-top: 20px;
+
 }
 
 .header_img {
@@ -110,7 +113,7 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden
+    overflow: hidden /* MUY IMPORTANTE, SIN ESTO EL SIDEBAR NO DESPLIEGA Y LA PANTALLA PARPADEA AL USARLO*/
 }
 
 .nav_logo,
@@ -118,12 +121,12 @@ a {
     display: grid;
     grid-template-columns: max-content max-content;
     align-items: center;
-    column-gap: 1rem;
-    padding: .5rem 0 .5rem 1.5rem
+    column-gap: 1.5rem;
+    padding: 1.0rem 0 .5rem 1.5rem
 }
 
 .nav_logo {
-    margin-bottom: 2rem
+    margin-bottom: 1rem
 }
 
 .nav_logo-icon {
@@ -148,7 +151,7 @@ a {
 }
 
 .nav_icon {
-    font-size: 1.25rem
+    font-size: 2.0rem
 }
 
 .show {
@@ -167,8 +170,8 @@ a {
     content: '';
     position: absolute;
     left: 0;
-    width: 2px;
-    height: 32px;
+    width: 3px;
+    height: 35px;
     background-color: var(--white-color)
 }
 
@@ -178,24 +181,38 @@ a {
 
 thead{ 
     position: sticky; 
-    top: 63px !important; 
+    top: 10px !important; 
     z-index: 1000; 
-}
-.table-responsive{
-    overflow-x: clip !important;
+    height: 50px;
+
+        
 }
 
-@media screen and (min-width: 768px) {
+div.offset-6:nth-child(2){
+    padding-right: 50px;
+}
+
+.table-responsive{
+    overflow-x: clip !important;
+    box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff; /* SOMBRA PARA HACER LA TABLA PARECER 3D */
+
+    padding-bottom: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-bottom: 30px;
+}
+
+@media screen and (min-width: 800px) {
     .section-body{
         margin: calc(var(--header-height) + 1rem) 0 0 0;
-        padding-left: calc(var(--nav-width) + 2rem);
+        padding-left: calc(var(--nav-width) + 0rem);
         padding-bottom: 10%;   /* PARA EMPUJAR EL CONTENIDO GENERAL HACIA ARRIBA ALEJADO DEL BORDE INFERIOR */
         
     }
 
     .header {
         height: calc(var(--header-height) + 1rem);
-        padding: 0 2rem 0 calc(var(--nav-width) + 2rem)
+        padding: 0 2rem 0 calc(var(--nav-width) + 1rem)
     }
 
     .header_img {
@@ -209,15 +226,16 @@ thead{
 
     .l-navbar {
         left: 0;
-        padding: 1rem 1rem 0 0
+        padding: 1rem 1rem 2rem 0rem
     }
 
     .show {
-        width: calc(var(--nav-width) + 156px)
+        width: calc(var(--nav-width) + 126px)
     }
 
     .body-pd {
-        padding-left: calc(var(--nav-width) + 188px)
+        padding-left: calc(var(--nav-width) + 128px)
+
     }
 }
 
@@ -251,8 +269,10 @@ tr.active::before{
 
 tr.active{
 
-    color: #ffffff;
-    background-color: #369978;
+    color: #202020;
+    background-color: #a9e4dc;
+    font-weight: bold;
+    
 
 }
 
