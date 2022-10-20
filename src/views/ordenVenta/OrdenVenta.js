@@ -4,9 +4,7 @@ import { faCheck, faEye, faTimes, faWindowRestore } from '@fortawesome/free-soli
 import { Table, Button, Alert } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment/moment';
-import { modificarAvanceOrden } from '../../redux/ordenVenta/OrdenVentaActions';
-import { anularOrden } from '../../redux/ordenVenta/OrdenVentaActions';
-
+import { modificarAvanceOrden,anularOrden  } from '../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../redux/Store';
 import Swal from 'sweetalert2';
 

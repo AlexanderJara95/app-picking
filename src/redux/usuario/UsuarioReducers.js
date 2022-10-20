@@ -4,6 +4,8 @@ import {
 	USUARIO_REGISTRAR,
 	USUARIO_ACTUALIZAR,
 	USUARIO_ELIMINAR,
+	ANULAR_USUARIO
+	
 } from './UsuarioTypes';
 
 const UsuarioReducers = (state = {}, action) => {
@@ -33,6 +35,12 @@ const UsuarioReducers = (state = {}, action) => {
 			};
 		}
 		case USUARIO_ELIMINAR: {
+			return {
+				...state,
+				data: action.data,
+			};
+		}		
+		case ANULAR_USUARIO: {
 			return {
 				...state,
 				data: action.data,
