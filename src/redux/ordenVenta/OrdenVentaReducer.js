@@ -91,6 +91,7 @@ const OrdenVentaReducer = (state = {}, action) => {
 				data: action.data,
 			};
 		}
+
 		default: {
 			return state;
 		}

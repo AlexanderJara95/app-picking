@@ -6,6 +6,7 @@ import {
     REGISTRAR_ORDEN_DETALLE,
     MODIFICAR_AVANCE_ORDEN, 
     ANULAR_ORDEN,
+    ANULAR_USUARIO,
     LISTAR_ARTICULO_DETALLE, MODIFICAR_ORDEN_DETALLE,REGISTRAR_DETALLE_ARTICULO, ELIMINAR_DETALLE_HIJOS} from './OrdenVentaTypes';
 import { API_BASE_URL } from '../../config/Services';
 import moment from 'moment';
@@ -163,6 +164,8 @@ export const anularOrden = (paramData) => async dispatch => {
         data: response.data
     })  
 }  
+
+
 /*
 var formData = new FormData();
 	formData.append("username", paramData.username);

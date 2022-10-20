@@ -5,6 +5,7 @@ import {
 	USUARIO_REGISTRAR,
 	USUARIO_ACTUALIZAR,
 	USUARIO_ELIMINAR,
+	ANULAR_USUARIO
 } from './UsuarioTypes';
 import { API_BASE_URL } from '../../config/Services';
 
@@ -33,6 +34,21 @@ export const listarUsuarios = () => async dispatch => {
 	})
 }
 
+
+
+export const anularUsuario = (paramData) => async dispatch => {
+	//console.log("Param Actu",paramData);
+	var formData = new FormData();
+    formData.append("idUsuario", paramData.idUsuario);
+    
+	const response = await axios.post(`${API_BASE_URL}/servicioanularusuario.php`,formData);
+    //console.log("Actualizado",response.data);
+    return dispatch({
+        type: ANULAR_USUARIO,
+        status: response.status,
+        data: response.data
+    })  
+}  
 
 /*export const detalleUsuario = id => async dispatch => {
 	const response = await axios.get(
