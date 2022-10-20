@@ -44,7 +44,7 @@ const DetalleOrdenIndex = () =>{
                     cod={(param.id).split("-")[0]}
                     setProgress={setProgress} 
                     progreso={progress}>
-                    </ListadoDetalle>
+                </ListadoDetalle>
                 :<ListadoDetalleAdmin 
                     id={(param.id).split("-")[1]} 
                     setProgress={setProgress} 
