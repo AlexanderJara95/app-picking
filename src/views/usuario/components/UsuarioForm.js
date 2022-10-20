@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Form, FormControl, FormSelect } from "react-bootstrap";
 import store from "../../../redux/Store";
 import { StatusCodes } from 'http-status-codes';
-import { registrarUsuario } from "../../../redux/usuario/UsuarioActions";
+import { listarUsuarios, registrarUsuario } from "../../../redux/usuario/UsuarioActions";
 
 const UsuarioForm = ({accion,id}) =>{
     const [usuario, setUsuario] = useState({});
@@ -41,10 +41,26 @@ const UsuarioForm = ({accion,id}) =>{
                 },
             ])
         }
-        
+        if(accion=='editar'){
+            listarUsuarioId(id);
+        }
         //console.log("windows usuario",window.usuario.nivelUsuario);
-        console.log("dataNivelUsuario",dataNivelUsuario);
+        //console.log("dataNivelUsuario",dataNivelUsuario);
     },[]);
+
+    const listarUsuarioId = async(id)=>{
+        try {
+            /*
+            const response = await store.dispatch(registrarUsuario(usuario));
+            if (response.status === StatusCodes.OK) {
+                console.log("Nuevo Usuario agregado");
+                window.location.href = '/usuario';
+            }
+            */
+        } catch (error) {
+            //console.log(error);
+        }
+    }
 
     const functAccion = async() =>{
         console.log("nuevo usuario",usuario);
