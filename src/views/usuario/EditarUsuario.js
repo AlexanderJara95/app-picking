@@ -8,7 +8,7 @@ const EditarUsuario = () =>{
     const param = useParams();
    
     useEffect(()=>{
-        console.log("param:",param);
+        console.log("param:",param.id);
     },[param]);
     const cargaInfo = async()=>{
        
@@ -20,7 +20,7 @@ const EditarUsuario = () =>{
                 <h1><strong>Editar</strong></h1>
                 <h3>Usuario</h3>
             </div>
-            <UsuarioForm accion={'Editar'} ></UsuarioForm>
+            <UsuarioForm accion={'editar'} id={param.id}></UsuarioForm>
         </div>
 );
 }

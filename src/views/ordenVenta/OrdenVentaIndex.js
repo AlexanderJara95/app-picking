@@ -13,10 +13,11 @@ const OrdenVentaIndex = ()=> {
 
     return (
         <>
-            <div className="container-fluid" style={{backgroundColor:'#ffffff'}}>
-                <div className="row pt-2">
-                    <div className="col m-0 font-weight-bold text-primary pb-2">
-                        <h3>Órdenes - Listado de Informes de Picking</h3>
+            <div className="container-fluid p-3" style={{backgroundColor:'#ffffff'}}>
+                <div className="row py-3">
+                    <div className="col-8 m-0 font-weight-bold text-primary pb-3" >
+                        <h1><strong>Órdenes</strong></h1>
+                        <h3>Listado de Informes de Picking</h3>
                     </div>
                 </div>
                 {(()=>{
