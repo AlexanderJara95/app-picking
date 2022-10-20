@@ -17,7 +17,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
       addTableRows.current = addTableRowsLocal;
     });
     useEffect(()=>{
-      console.log("articulo,",articulo);
+      //console.log("articulo,",articulo);
       if(Object.keys(articulo).length !== 0){
         setRowsData([...rowsData, {
             idArticulo: articulo.idArticulo,

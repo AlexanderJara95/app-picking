@@ -15,13 +15,11 @@ const ArticuloIndex = () =>{
 
     useEffect(()=>{
         if((param.id).split("-")[1])busquedaArticulo((param.id).split("-")[1]);  
-        if((param.id).split("-")[2])setProgreso((param.id).split("-")[2]);  
     },[(param.id).split("-")[1]]);
       
     const busquedaArticulo= async(id)=>{
         try {
             const response = await store.dispatch(listarArticuloPorId(id));
-            console.log("articuloinfo",response.detalleArticulo);
   
             if (response.status === StatusCodes.OK) {	
                 setArticulo(response.detalleArticulo);
@@ -62,7 +60,7 @@ const ArticuloIndex = () =>{
                     </div>
                 </div>                
             </div>
-            <ModificarArticulo articulo={articulo} progreso={progreso} cod={(param.id).split("-")[1]} setArticulo={setArticulo} setResta={setResta} addTableRows={addTableRows}></ModificarArticulo>
+            <ModificarArticulo articulo={articulo} progreso={(param.id).split("-")[2]} cod={(param.id).split("-")[0]} setArticulo={setArticulo} setResta={setResta} addTableRows={addTableRows}></ModificarArticulo>
         </>
     );
 }
