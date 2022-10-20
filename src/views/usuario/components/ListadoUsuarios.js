@@ -83,7 +83,7 @@ const ListadoUsuarios = () =>{
                             <td>{itemUsuario.username}</td>
                             <td><NivelUsuario nivel={itemUsuario.nivelUsuario}></NivelUsuario></td>
                             <td>{itemUsuario.nivelUsuario==parseInt(window.usuario.nivelUsuario)+1?
-                                    <Button className="btn"><FontAwesomeIcon icon={faEdit} /></Button>
+                                    <NavLink to={"/usuario/editar/"+itemUsuario.idUsuario}><Button className="btn"><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
                                     :<Button className="btn-secondary"><FontAwesomeIcon icon={faLock}/></Button>
                                 }
                             </td>
