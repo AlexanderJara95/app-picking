@@ -127,7 +127,7 @@ class OrdenVenta extends Component {
                                                 <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={this.seleccionarUsuario} style={{ width: '100px', fontSize: "10px" }}>
                                                     <option value='0'>Seleccione</option>
                                                     {this.state.listaUsuarios.map((usuario) => {
-                                                        if (usuario.nivelUsuario == 3) {
+                                                        if (usuario.nivelUsuario == 3 && usuario.estado == 1) {
                                                             if (usuario.idUsuario == itemOrden.asignadoA) {
                                                                 return (<option key={usuario.idUsuario} value={usuario.idUsuario}>{usuario.username}</option>);
                                                             } else {
