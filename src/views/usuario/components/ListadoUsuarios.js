@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faEdit, faEye, faLock, faTimes, faWindowRestore, faX, faXmarkCircle, faXRay } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import NivelUsuario from './NivelUsuario';
 import Swal from 'sweetalert2';
+import { NavLink } from 'react-router-dom';
 
 const ListadoUsuarios = () =>{
 
