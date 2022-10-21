@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Button, Form, FormControl, FormSelect } from "react-bootstrap";
 import store from "../../../redux/Store";
 import { StatusCodes } from 'http-status-codes';
-import { listarUsuarios, registrarUsuario } from "../../../redux/usuario/UsuarioActions";
+import { listarUsuarios, registrarUsuario, validarregistrarUsuario } from "../../../redux/usuario/UsuarioActions";
+import { toastme } from "toastmejs";
 
 const UsuarioForm = ({accion,id}) =>{
     const [usuario, setUsuario] = useState({});
@@ -64,19 +65,36 @@ const UsuarioForm = ({accion,id}) =>{
 
     const functAccion = async() =>{
         console.log("nuevo usuario",usuario);
-        if(accion=='nuevo'){
-            try {
-                const response = await store.dispatch(registrarUsuario(usuario));
-                if (response.status === StatusCodes.OK) {
-                    console.log("Nuevo Usuario agregado");
-                    window.location.href = '/usuario';
+        if(usuario.correo.split("@")[1] == 'megalabs.com.pe'){
+            if(accion=='nuevo'){
+                try {
+                    const response = await store.dispatch(validarregistrarUsuario(usuario));
+                    if(response.data==0){
+                        try {
+                            const response = await store.dispatch(registrarUsuario(usuario));
+                            if (response.status === StatusCodes.OK) {
+                                console.log("Nuevo Usuario agregado");
+                                window.location.href = '/usuario';
+                            }
+                        } catch (error) {
+                            //console.log(error);
+                        }
+                    }else{
+                        toastme.error(
+                            `Usuario ya registrado`,
+                        );
+                    }
+                } catch (error) {
+                    //console.log(error);
                 }
-            } catch (error) {
-                //console.log(error);
             }
-        }
-        if(accion=='editar'){
-            console.log("Nuevo Usuario agregadop");
+            if(accion=='editar'){
+                console.log("Nuevo Usuario agregadop");
+            }
+        }else{
+            toastme.error(
+                `Ingrese un correo de la empresa`,
+            );
         }
     }    
 
@@ -106,70 +124,68 @@ const UsuarioForm = ({accion,id}) =>{
 	};
 
     return(
-        <div className='row'>
-            <Form className='col-10 col-sm-6 col-md-4 col-xl-4 d-grid gap-5' noValidate validated={validated} onSubmit={handleSubmit}>
-                <select
-                    className="form-select"
-                    value={usuario.nivelUsuario??''}
-                    name="nivelUsuario"
-                    onChange={cambiosEnFormulario}
-                    required
-                    autoFocus
-                >
-                    <option value="">Seleccione</option>
-                    {dataNivelUsuario.map((item) => (
-                        <option key={item.id} value={item.id}>
-                            {item.descripcion}
-                        </option>
-                    ))}
-                </select>
-                <FormControl
-                    type='input'
-                    name='nombres'
-                    value={usuario.nombres??''}
-                    onChange={cambiosEnFormulario}
-                    placeholder='Nombres'
-                    required
-                    autoFocus
-                />
-                <FormControl
-                    type='input'
-                    name='apellidos'
-                    value={usuario.apellidos??''}
-                    onChange={cambiosEnFormulario}
-                    placeholder='Apellidos'
-                    required
-                    autoFocus
-                />
-                <FormControl
-                    type='email'
-                    name='correo'
-                    value={usuario.correo??''}
-                    onChange={cambiosEnFormulario}
-                    placeholder='Correo'
-                    required
-                    autoFocus
-                />
-                <FormControl
-                    type='password'
-                    name='password'
-                    value={usuario.password??''}
-                    onChange={cambiosEnFormulario}
-                    placeholder='Contraseña'
-                    required
-                    autoFocus
-                />
-                {/* <Form.Check type="checkbox" name='recuerdame' label="Recuerdame" /> */}
-                <Button
-                    variant='primary'
-                    size='lg'
-                    className='rounded-pill'
-                    type="submit"
-                >
-                    Guardar
-                </Button>
-            </Form>
-        </div>
+        <Form className='col-10 col-sm-6 col-md-4 col-xl-4 d-grid gap-5' noValidate validated={validated} onSubmit={handleSubmit}>
+            <select
+                className="form-select"
+                value={usuario.nivelUsuario??''}
+                name="nivelUsuario"
+                onChange={cambiosEnFormulario}
+                required
+                autoFocus
+            >
+                <option value="">Seleccione</option>
+                {dataNivelUsuario.map((item) => (
+                    <option key={item.id} value={item.id}>
+                        {item.descripcion}
+                    </option>
+                ))}
+            </select>
+            <FormControl
+                type='input'
+                name='nombres'
+                value={usuario.nombres??''}
+                onChange={cambiosEnFormulario}
+                placeholder='Nombres'
+                required
+                autoFocus
+            />
+            <FormControl
+                type='input'
+                name='apellidos'
+                value={usuario.apellidos??''}
+                onChange={cambiosEnFormulario}
+                placeholder='Apellidos'
+                required
+                autoFocus
+            />
+            <FormControl
+                type='email'
+                name='correo'
+                value={usuario.correo??''}
+                onChange={cambiosEnFormulario}
+                placeholder='Correo'
+                required
+                autoFocus
+            />
+            <FormControl
+                type='password'
+                name='password'
+                value={usuario.password??''}
+                onChange={cambiosEnFormulario}
+                placeholder='Contraseña'
+                required
+                autoFocus
+            />
+            {/* <Form.Check type="checkbox" name='recuerdame' label="Recuerdame" /> */}
+            <Button
+                variant='primary'
+                size='lg'
+                className='rounded-pill'
+                type="submit"
+            >
+                Guardar
+            </Button>
+        </Form>
     );
 }
 export default UsuarioForm;
