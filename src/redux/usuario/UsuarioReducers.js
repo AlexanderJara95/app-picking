@@ -1,6 +1,7 @@
 import {
 	USUARIO_LISTAR,
 	USUARIO_DETALLE,
+	USUARIO_VALIDAR_REGISTRAR,
 	USUARIO_REGISTRAR,
 	USUARIO_ACTUALIZAR,
 	USUARIO_ELIMINAR,
@@ -20,6 +21,12 @@ const UsuarioReducers = (state = {}, action) => {
 			return {
 				...state,
 				usuario: action.usuario,
+			};
+		}
+		case USUARIO_VALIDAR_REGISTRAR: {
+			return {
+				...state,
+				data: action.data,
 			};
 		}
 		case USUARIO_REGISTRAR: {

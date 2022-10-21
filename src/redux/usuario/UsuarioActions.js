@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
 	USUARIO_LISTAR,
 	USUARIO_DETALLE,
+	USUARIO_VALIDAR_REGISTRAR,
 	USUARIO_REGISTRAR,
 	USUARIO_ACTUALIZAR,
 	USUARIO_ELIMINAR,
@@ -9,11 +10,25 @@ import {
 } from './UsuarioTypes';
 import { API_BASE_URL } from '../../config/Services';
 
+export const validarregistrarUsuario =(paramData)=>async dispatch=>{
+	var formData = new FormData();	
+	console.log("correo:",(paramData.correo).split("@")[0]);
+    formData.append("username", (paramData.correo).split("@")[0]);
+	const response = await axios.post(`${API_BASE_URL}/serviciovalidarregistrarusuario.php`,formData);
+	return dispatch({
+		type: USUARIO_REGISTRAR,
+		status: response.status,
+		data: response.data,
+	})
+}
+
 export const registrarUsuario = (paramData) => async dispatch => {
 	var formData = new FormData();	
+	//console.log("correo:",(paramData.correo).split("@")[0]);
     formData.append("nombre", paramData.nombres);
 	formData.append("apellido", paramData.apellidos);
     formData.append("correo", paramData.correo);
+    formData.append("username", (paramData.correo).split("@")[0]);
 	formData.append("password", paramData.password);
 	formData.append("nivelUsuario", paramData.nivelUsuario);
 	const response = await axios.post(`${API_BASE_URL}/servicioregistrarusuario.php`,formData);
