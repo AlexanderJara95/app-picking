@@ -15,10 +15,12 @@ const EditarUsuario = () =>{
     }
 
     return(
-        <div className="container-fluid pt-3">
-            <div className="col m-0 font-weight-bold text-primary pb-3">
-                <h1><strong>Editar</strong></h1>
-                <h3>Usuario</h3>
+        <div className="container-fluid pt-3 ">
+            <div className="row py-3 text-center">
+                <div className="col m-0 font-weight-bold text-primary pb-3">
+                    <h1><strong>Editar</strong></h1>
+                    <h3>Usuario</h3>
+                </div>
             </div>
             <UsuarioForm accion={'editar'} id={param.id}></UsuarioForm>
         </div>
