@@ -12,8 +12,7 @@ import { API_BASE_URL } from '../../config/Services';
 
 export const validarregistrarUsuario =(paramData)=>async dispatch=>{
 	var formData = new FormData();	
-	console.log("correo:",(paramData.correo).split("@")[0]);
-    formData.append("username", (paramData.correo).split("@")[0]);
+    formData.append("username", paramData.username);
 	const response = await axios.post(`${API_BASE_URL}/serviciovalidarregistrarusuario.php`,formData);
 	return dispatch({
 		type: USUARIO_REGISTRAR,
@@ -27,8 +26,8 @@ export const registrarUsuario = (paramData) => async dispatch => {
 	//console.log("correo:",(paramData.correo).split("@")[0]);
     formData.append("nombre", paramData.nombres);
 	formData.append("apellido", paramData.apellidos);
-    formData.append("correo", paramData.correo);
-    formData.append("username", (paramData.correo).split("@")[0]);
+    formData.append("correo", paramData.username+"@megalabs.com.pe");
+    formData.append("username", paramData.username);
 	formData.append("password", paramData.password);
 	formData.append("nivelUsuario", paramData.nivelUsuario);
 	const response = await axios.post(`${API_BASE_URL}/servicioregistrarusuario.php`,formData);

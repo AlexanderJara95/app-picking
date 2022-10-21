@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Form, FormControl, FormSelect } from "react-bootstrap";
+import { Button, Form, FormControl, FormSelect, InputGroup } from "react-bootstrap";
 import store from "../../../redux/Store";
 import { StatusCodes } from 'http-status-codes';
 import { listarUsuarios, registrarUsuario, validarregistrarUsuario } from "../../../redux/usuario/UsuarioActions";
@@ -64,37 +64,31 @@ const UsuarioForm = ({accion,id}) =>{
     }
 
     const functAccion = async() =>{
-        console.log("nuevo usuario",usuario);
-        if(usuario.correo.split("@")[1] == 'megalabs.com.pe'){
-            if(accion=='nuevo'){
-                try {
-                    const response = await store.dispatch(validarregistrarUsuario(usuario));
-                    if(response.data==0){
-                        try {
-                            const response = await store.dispatch(registrarUsuario(usuario));
-                            if (response.status === StatusCodes.OK) {
-                                console.log("Nuevo Usuario agregado");
-                                window.location.href = '/usuario';
-                            }
-                        } catch (error) {
-                            //console.log(error);
+    console.log("nuevo usuario",usuario);
+        if(accion=='nuevo'){
+            try {
+                const response = await store.dispatch(validarregistrarUsuario(usuario));
+                if(response.data==0){
+                    try {
+                        const response = await store.dispatch(registrarUsuario(usuario));
+                        if (response.status === StatusCodes.OK) {
+                            console.log("Nuevo Usuario agregado");
+                            window.location.href = '/usuario';
                         }
-                    }else{
-                        toastme.error(
-                            `Usuario ya registrado`,
-                        );
+                    } catch (error) {
+                        //console.log(error);
                     }
-                } catch (error) {
-                    //console.log(error);
+                }else{
+                    toastme.error(
+                        `Usuario ya registrado`,
+                    );
                 }
+            } catch (error) {
+                //console.log(error);
             }
-            if(accion=='editar'){
-                console.log("Nuevo Usuario agregadop");
-            }
-        }else{
-            toastme.error(
-                `Ingrese un correo de la empresa`,
-            );
+        }
+        if(accion=='editar'){
+            console.log("Nuevo Usuario agregadop");
         }
     }    
 
@@ -124,7 +118,7 @@ const UsuarioForm = ({accion,id}) =>{
 	};
 
     return(
-        <Form className='col-10 col-sm-6 col-md-4 col-xl-4 d-grid gap-5' noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form className='col-10 col-sm-6 col-md-4 col-xl-4 d-grid gap-5 mx-auto' noValidate validated={validated} onSubmit={handleSubmit}>
             <select
                 className="form-select"
                 value={usuario.nivelUsuario??''}
@@ -158,15 +152,19 @@ const UsuarioForm = ({accion,id}) =>{
                 required
                 autoFocus
             />
-            <FormControl
-                type='email'
-                name='correo'
-                value={usuario.correo??''}
-                onChange={cambiosEnFormulario}
-                placeholder='Correo'
-                required
-                autoFocus
-            />
+            
+            <InputGroup className="mb-3">
+                <FormControl
+                    type='input'
+                    name='username'
+                    value={usuario.username??''}
+                    onChange={cambiosEnFormulario}
+                    placeholder='Correo'
+                    required
+                    autoFocus
+                />
+                <InputGroup.Text>@megalabs.com.pe</InputGroup.Text>
+            </InputGroup>
             <FormControl
                 type='password'
                 name='password'
