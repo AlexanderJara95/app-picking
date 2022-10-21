@@ -242,12 +242,10 @@ class OrdenVentaPicker extends Component {
     })
 
     actualizarFechaApertura = (itemOrden => {
-        console.log(itemOrden);
         if (itemOrden.abierto != '0') {
             const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizarfechainicioorden.php"
             var formData = new FormData();
             var date = moment().format('DD/MM/YYYY h:mm:ss');
-            console.log(date);
             formData.append("idOrden", itemOrden.idOrden);
             formData.append("abierto", '1');
             formData.append("fechaInicio", date);

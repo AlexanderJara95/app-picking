@@ -73,6 +73,25 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
         //console.log('newsitem', newItems);
         return 3;
     }
+    const atenderOrden = ()=>{
+        try {
+            const responseAtender = store.dispatch(modificarAvanceOrden({
+                idOrden: cod,
+                estado: 4,
+                avance: progreso
+            }));  
+            Swal.fire({
+                title: '¡Orden Atendida!',
+                text: "Orden atendida correctamente",
+                icon: 'success',
+                confirmButtonColor: '#0d6efd',
+                confirmButtonText: 'Listo',
+                iconColor: '#0d6efd'
+            });
+        } catch (error) {
+            //console.log(error);
+        }
+    }
     const guardarArticulos = async (json) => {
         //console.log("json", json);
         //validando que exista detalle de orden
@@ -84,10 +103,10 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                         idArticulo: item,
                         listo: 1
                     }));
-                    const estadoAvance = progreso < 100 && progreso > 0 ? 3 : 4;
+                    //const estadoAvance = progreso < 100 && progreso > 0 ? 3 : 4;
                     const response2 = await store.dispatch(modificarAvanceOrden({
                         idOrden: cod,
-                        estado: estadoAvance,
+                        estado: 3,
                         avance: progreso
                     }));
                     if (response.status === StatusCodes.OK) {
@@ -264,9 +283,14 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             <div className="offset-6 col-6">
                 <div className='row'>
                     {progresoLocal == 100 ?
-                        <div className='offset-6 col-6'>
-                            <NavLink to={"/orden"} className="nav"><Button className='btn-primary col-sm-12'>Finalizar Orden</Button></NavLink>
-                        </div>
+                        <>
+                            <div className='col-6'>
+                                <NavLink to={"/orden"} className="nav"><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
+                            </div>
+                            <div className='col-6'>
+                                <NavLink to={"/orden"} className="nav"><Button className='btn-primary col-sm-12' onClick={() => atenderOrden()}>Orden Atendida</Button></NavLink>
+                            </div>
+                        </>
                         : <>
                             {rowDataArticulos.length > 0 ?
                                 <>
