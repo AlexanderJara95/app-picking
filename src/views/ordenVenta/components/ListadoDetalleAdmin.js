@@ -184,7 +184,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                                 {itemDetalle.rama == 1
                                     ? <td style={{fontWeight:'bold', width: '100px'}} >
                                         {itemDetalle.listo == 0?<NavLink to={"#"} className="nav"><Button className='btn-warning'><FontAwesomeIcon icon={faExclamation} /></Button></NavLink>
-                                        :<NavLink to={"#"} className="nav"><Button className='btn-success'><FontAwesomeIcon icon={faCheck} /></Button></NavLink>
+                                        :<NavLink to={"#"} className="nav"><Button className='btn-secondary' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faCheck} />&nbsp;&nbsp;&nbsp;Listo</Button></NavLink>
                                         }
                                       </td>
                                     : null
