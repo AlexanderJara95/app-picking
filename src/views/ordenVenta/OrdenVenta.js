@@ -274,7 +274,7 @@ class OrdenVenta extends Component {
                     idOrden: itemOrden.idOrden,
                 }))
                 Swal.fire({
-                    title: '¡6!',
+                    title: '¡Anulado!',
                     text: "Oreden anulada correctamente",
                     icon: 'success',
                     confirmButtonColor: '#369978',
