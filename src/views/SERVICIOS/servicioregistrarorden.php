@@ -8,7 +8,7 @@
     $idClienteAx = $_REQUEST["idClienteAx"];
     $nombreCliente = $_REQUEST["nombreCliente"];
     $referencia = $_REQUEST["referencia"];
-    $pedidoDeVentas = $_REQUEST["pedidoDeVentas"];
+    $envio = $_REQUEST["envio"];
     //$asignadoPor = $_REQUEST["asignadoPor"];
     //$completadoPor = $_REQUEST["completadoPor"];
     $fechaSubida = $_REQUEST["fechaSubida"];
@@ -22,9 +22,9 @@
 
 	$rs = mysqli_query($cn,
 		"insert into Orden (idClienteAx,nombreCliente,
-        referencia,pedidoDeVentas,fechaSubida,estado) 
+        referencia,envio,fechaSubida,estado) 
         values('".$idClienteAx."',
-        '".$nombreCliente."','".$referencia."','".$pedidoDeVentas."',
+        '".$nombreCliente."','".$referencia."','".$envio."',
         '".$fechaSubida."','".$estado."')");
 
 	echo mysqli_insert_id($cn); 

@@ -9,14 +9,14 @@ const HtmlToJson = (html) => {
     temporalDivElement.innerHTML = html;
     // Retrieve the text property of the element (cross-browser support)
     const arrayObtenido = (temporalDivElement.textContent || temporalDivElement.innerText || '').split("\n").filter(x => x!=='');
-    const venta_sin_con_fecha = (arrayObtenido[36].slice(0,3)==="PV_")?arrayObtenido[36]:arrayObtenido[37];
+    const venta_sin_con_fecha = (arrayObtenido[36].slice(0,3)==="ENV_")?arrayObtenido[36]:arrayObtenido[37];
     //("arrayObtenido",arrayObtenido);
     const ordenPicking={
         envio:arrayObtenido[21],
         referenciaCliente:arrayObtenido[25]=="  "?"No referenciado":arrayObtenido[25],
         codCliente:arrayObtenido[10],
         nomCliente:arrayObtenido[17],
-        pedidoVentas:venta_sin_con_fecha=="  "?arrayObtenido[35]:venta_sin_con_fecha,
+        envio:venta_sin_con_fecha=="  "?arrayObtenido[35]:venta_sin_con_fecha,
         detalleOrden:[]
     }
     arrayObtenido.map((item,index)=>{

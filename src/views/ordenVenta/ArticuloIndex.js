@@ -38,8 +38,8 @@ const ArticuloIndex = () =>{
                 <Breadcrumb.Item href="/orden">
                     Órdenes
                 </Breadcrumb.Item>
-                <Breadcrumb.Item href={"/detalleorden/"+(param.id).split("-")[1]+"-"+articulo.pedidoDeVentas}>
-                    {articulo.pedidoDeVentas}
+                <Breadcrumb.Item href={"/detalleorden/"+(param.id).split("-")[1]+"-"+articulo.envio}>
+                    {articulo.envio}
                 </Breadcrumb.Item>
                 <Breadcrumb.Item href="#">
                     {articulo.descripcion}

@@ -21,7 +21,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
       if(Object.keys(articulo).length !== 0){
         setRowsData([...rowsData, {
             idArticulo: articulo.idArticulo,
-            pedidoDeVentas: articulo.pedidoDeVentas,
+            envio: articulo.envio,
             codigoArticulo: articulo.codigoArticulo,
             descripcion: articulo.descripcion,
             numeroLote: articulo.numeroLote,
@@ -46,7 +46,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
         if(contador < articulo.cantidad) {
           const rowsInput = {
             idArticulo: articulo.idArticulo,
-            pedidoDeVentas: articulo.pedidoDeVentas,
+            envio: articulo.envio,
             codigoArticulo: articulo.codigoArticulo,
             descripcion: articulo.descripcion,
             numeroLote: articulo.numeroLote,
@@ -115,10 +115,10 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
               json.map(async(item,index)=>{
                   try {
                       //console.log("ini");
-                      //console.log(item.pedidoDeVentas);                      
+                      //console.log(item.envio);                      
 
                       const response = await store.dispatch(registrarDetalleArticulo({
-                        pedidoDeVentas: item.pedidoDeVentas,
+                        envio: item.envio,
                         codigoArticulo: item.codigoArticulo,
                         descripcion: item.descripcion??'',
                         numeroLote: item.numeroLote,
@@ -126,14 +126,14 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
                         idPallet: item.idPallet,
                         fechaCaducidad: item.fechaCaducidad.slice(8,10)+"/"+item.fechaCaducidad.slice(5,7)+"/"+item.fechaCaducidad.slice(0,4),
                         cantidad: item.cantidad,
-                        codigoHijo: cod+item.codigoArticulo
+                        codigoHijo: cod + item.idArticulo + item.codigoArticulo
                       }));
-                      console.log("Codigo Hijo ACA: ",cod+item.codigoArticulo)
+                      console.log("Codigo Hijo ACA: ",cod + item.idArticulo + item.codigoArticulo)
                       if (response.status === StatusCodes.OK) {
                         toastme.success(
                             `Artículo agregado al Detalle`,
                         );		
-                        //window.location.href = "/detalleorden/"+cod+'-'+item.pedidoDeVentas;	
+                        //window.location.href = "/detalleorden/"+cod+'-'+item.envio;	
                         
                       }
                       
@@ -198,17 +198,17 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
                           btnGuardar?
                           <>
                             <div className='col-6'>
-                              <NavLink to={"/detalleorden/"+cod+"-"+articulo.pedidoDeVentas}><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
+                              <NavLink to={"/detalleorden/"+cod+"-"+articulo.envio}><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
                             </div>
                             <div className='col-6'>
-                              <NavLink to={"/detalleorden/"+cod+"-"+articulo.pedidoDeVentas} className="text-white" ><Button onClick={()=>guardarArticulos(rowsData)} className='btn-success col-sm-12'>Guardar</Button></NavLink>
+                              <NavLink to={"/detalleorden/"+cod+"-"+articulo.envio} className="text-white" ><Button onClick={()=>guardarArticulos(rowsData)} className='btn-success col-sm-12'>Guardar</Button></NavLink>
                             </div>
                           </>:
                           <>
                             <div className='col-6'>
                             </div>
                             <div className='col-6'>
-                              <NavLink to={"/detalleorden/"+cod+"-"+articulo.pedidoDeVentas}><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
+                              <NavLink to={"/detalleorden/"+cod+"-"+articulo.envio}><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
                             </div>
                           </>
                         }

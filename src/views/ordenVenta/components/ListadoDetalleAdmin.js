@@ -91,7 +91,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
             try {
                 json.map(async(item)=>{
                     try {
-                        console.log(item.pedidoDeVentas);                      
+                        console.log(item.envio);                      
                         const response = await store.dispatch(modificarOrdenDetalle({
                           idArticulo: item
                         }));    
@@ -131,7 +131,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                         <tr className='align-middle text-center' scope="col">
                             {/*<th>Id Orden</th>*/}
                             {/*<th scope="col">Id</th>*/}
-                            {/*<th scope="col">Pedido Venta</th>*/}
+                            {/*<th scope="col">Orden</th>*/}
                             <th scope="col" width="50px">Codigo Articulo</th>
                             <th scope="col" style={{width:'400px'}}>Descripcion</th>
                             <th scope="col" width="50px">N° Lote</th>
@@ -150,7 +150,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                                     : <td colSpan={4}></td>
                                 }*/}
                                 {/*{itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.pedidoDeVentas}</td>
+                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.envio}</td>
                                     : null
                                 }*/}
                                 {itemDetalle.rama == 1

@@ -29,7 +29,7 @@ export const registrarOrden = (paramData) => async dispatch => {
     formData.append("idClienteAx", paramData.codCliente);
     formData.append("nombreCliente", paramData.nomCliente);
     formData.append("referencia", paramData.referenciaCliente);
-    formData.append("pedidoDeVentas", paramData.pedidoVentas);
+    formData.append("envio", paramData.envio);
     formData.append("fechaSubida", date);
 	formData.append("estado", 1);
 	const response = await axios.post(`${API_BASE_URL}/servicioregistrarorden.php`,formData);
@@ -43,7 +43,7 @@ export const registrarOrden = (paramData) => async dispatch => {
 export const registrarOrdenDetalle = (paramData) => async dispatch => {
 	//console.log("Parammmm",paramData);
 	var formData = new FormData();
-	formData.append("pedidoDeVentas", paramData.pedidoDeVentas);
+	formData.append("envio", paramData.envio);
     formData.append("codigoArticulo", paramData.codigoArticulo);
     formData.append("descripcion", paramData.descripcion);
     formData.append("numeroLote", paramData.numeroLote);	
@@ -92,7 +92,7 @@ export const modificarAvanceOrden = (paramData) => async dispatch => {
 }  
 export const listarOrdenDetallePorId = (id) => async dispatch => {
 	var formData = new FormData();
-    formData.append("pedidoDeVentas", id);
+    formData.append("envio", id);
     const response = await axios.post(`${API_BASE_URL}/servicioconsultardetalleorden.php`,formData);
     return dispatch({
         type: LISTAR_ORDEN_DETALLE,
@@ -117,7 +117,7 @@ export const listarArticuloPorId = (id) => async dispatch => {
 export const registrarDetalleArticulo = (paramData) => async dispatch => {
 	//console.log("Parammmm",paramData);
 	var formData = new FormData();
-	formData.append("pedidoDeVentas", paramData.pedidoDeVentas);
+	formData.append("envio", paramData.envio);
     formData.append("codigoArticulo", paramData.codigoArticulo);
     formData.append("descripcion", paramData.descripcion);
     formData.append("numeroLote", paramData.numeroLote);	

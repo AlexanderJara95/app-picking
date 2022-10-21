@@ -45,7 +45,7 @@ const ListadoArticulo = ({id}) =>{
                     <tr>
                     {/*<th>Id Orden</th>*/}
                     <th>Id</th>
-                    <th>Pedido de Ventas</th>
+                    <th>Orden</th>
                     <th>Codigo de Articulo</th>
                     <th>Descripcion</th>
                     <th>Numero de Lote</th>
@@ -63,7 +63,7 @@ const ListadoArticulo = ({id}) =>{
                     {datosTabla.map((itemDetalle, index) =>
                     <tr key={index}>
                         <td>{itemDetalle.idArticulo}</td>
-                        <td>{itemDetalle.pedidoDeVentas}</td>
+                        <td>{itemDetalle.envio}</td>
                         <td>{itemDetalle.codigoArticulo}</td>
                         <td>{itemDetalle.descripcion}</td>
                         <td>{itemDetalle.numeroLote}</td>

@@ -49,12 +49,12 @@ const InformeIndex = ()=> {
                                 `Nuevo Informe registrado`,
                             );		
                             setSubtitle("Pedidos Ingresados:");
-                            setListadeInformes([...listadeInformes,json.pedidoVentas])
+                            setListadeInformes([...listadeInformes,json.envio])
                         }
                         json.detalleOrden.map(async(item)=>{
                             try {
                                 const response = await store.dispatch(registrarOrdenDetalle({
-                                    pedidoDeVentas: json.pedidoVentas??'',
+                                    envio: json.envio??'',
                                     codigoArticulo: item.codigoArticulo??'',
                                     descripcion: item.descripcion??'',
                                     numeroLote: item.numLote??'',
@@ -73,10 +73,10 @@ const InformeIndex = ()=> {
                             }
                         });
                 }else{
-                    var resp = response2.listaOrden.filter(item => (json.pedidoVentas == item.pedidoDeVentas && item.estado !== 'Anulado'));
+                    var resp = response2.listaOrden.filter(item => (json.envio == item.envio && item.estado !== 'Anulado'));
                     //console.log("conslaa",resp);
                     if(resp.length != 0){
-                        setListadeInformes([...listadeInformes,json.pedidoVentas + " ya existe"])
+                        setListadeInformes([...listadeInformes,json.envio + " ya existe"])
                     }else{
                         const response = await store.dispatch(registrarOrden(json));
                        //console.log("user",response);
@@ -85,12 +85,12 @@ const InformeIndex = ()=> {
                                 `Nuevo Informe registrado`,
                             );		
                             setSubtitle("Pedidos Ingresados:");
-                            setListadeInformes([...listadeInformes,json.pedidoVentas])
+                            setListadeInformes([...listadeInformes,json.envio])
                         }
                         json.detalleOrden.map(async(item)=>{
                             try {
                                 const response = await store.dispatch(registrarOrdenDetalle({
-                                    pedidoDeVentas: json.pedidoVentas??'',
+                                    envio: json.envio??'',
                                     codigoArticulo: item.codigoArticulo??'',
                                     descripcion: item.descripcion??'',
                                     numeroLote: item.numLote??'',

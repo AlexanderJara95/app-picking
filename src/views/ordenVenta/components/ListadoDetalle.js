@@ -131,8 +131,12 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
     const eliminarDetalleArticuloHijo = async (itemDetalle) => {
         try {
             const response = await store.dispatch(eliminarDetalleHijos({
-                codigoHijo: itemDetalle.idArticulo + itemDetalle.codigoArticulo,
+                codigoHijo: cod + itemDetalle.idArticulo + itemDetalle.codigoArticulo
+                
             }));
+            console.log("CODIGO HIJO EN ELIMINAR DETALLE HIJO", itemDetalle.idArticulo + itemDetalle.codigoArticulo)
+            console.log("ID ARTICULO", itemDetalle.idArticulo)
+            console.log("CODIGO ARTICULO", itemDetalle.codigoArticulo)
             //console.log("eliminación: ",response);
             const response2 = await store.dispatch(modificarOrdenDetalle({
                 idArticulo: itemDetalle.idArticulo,
@@ -196,8 +200,8 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                         <tr className='align-middle' scope="col" style={{ textAlign: 'center', fontSize: '12px' }}>
                             {/*<th>Id Orden</th>*/}
                             {/*<th scope="col">Id</th> */}
-                            {/*<th scope="col" width="50px">Pedido Venta</th>*/}
-                            <th scope="col" width="50px">Codigo Articulo</th>
+                            {/*<th scope="col" width="50px">Orden</th>*/}
+                            <th scope="col" width="50px">Codigo Articulo</th>envio
                             <th scope="col" style={{ width: '400px' }}>Descripcion</th>
                             <th scope="col" width="50px">N° Lote</th>
                             <th scope="col" width="50px">Ubicacion</th>
@@ -216,7 +220,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                     : <td colSpan={4}></td>
                                 } */}
                                 {/*{itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.pedidoDeVentas}</td>
+                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.envio}</td>
                                     : null
                                 } */}
                                 {itemDetalle.rama == 1

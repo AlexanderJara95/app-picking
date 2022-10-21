@@ -44,7 +44,7 @@ const ListadoOrdenes = () =>{
                     <thead id="thead" className="table thead-dark">
                         <tr>
                             <th>Id Orden</th>
-                            <th>Pedido de Ventas</th>
+                            <th>Orden</th>
                             <th>Id Cliente AX</th>
                             <th>Nombre Cliente</th>
                             <th>Referencia</th>
@@ -65,7 +65,7 @@ const ListadoOrdenes = () =>{
                                 id={"li-orden-" + itemOrden.idOrden}
                                 onClick={() => seleccionarOrden(itemOrden)}>
                                 <td>{itemOrden.idOrden}</td>
-                                <td>{itemOrden.pedidoDeVentas}</td>
+                                <td>{itemOrden.envio}</td>
                                 <td>{itemOrden.idClienteAx}</td>
                                 <td>{itemOrden.nombreCliente}</td>
                                 <td>{itemOrden.referencia}</td>
