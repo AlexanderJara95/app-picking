@@ -12,6 +12,7 @@
      //echo $date[year],'-',$date[mon],'-',$date[mday],' ',$date[hours],':',$date[minutes],':',$date[seconds];
 
 	$rs = mysqli_query($cn,
-		"update Orden set abierto = $abierto, fechaCompletado = '$fechaCompletado' where idOrden = ".$idOrden);
+		"UPDATE Orden set abierto = $abierto, fechaCompletado = '$fechaCompletado' where idOrden = ".$idOrden);
 	mysqli_close($cn);
 ?>
+
