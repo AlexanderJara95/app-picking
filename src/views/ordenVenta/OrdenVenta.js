@@ -323,6 +323,7 @@ class OrdenVenta extends Component {
             fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
         }
     })
+    
 /*
     actualizarFechaApertura = (itemOrden => {
         console.log(itemOrden);
