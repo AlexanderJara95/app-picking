@@ -48,7 +48,7 @@ const InformeIndex = ()=> {
                             toastme.success(
                                 `Nuevo Informe registrado`,
                             );		
-                            setSubtitle("Pedidos Ingresados:");
+                            setSubtitle("Envíos Ingresados:");
                             setListadeInformes([...listadeInformes,json.envio])
                         }
                         json.detalleOrden.map(async(item)=>{
@@ -84,7 +84,7 @@ const InformeIndex = ()=> {
                             toastme.success(
                                 `Nuevo Informe registrado`,
                             );		
-                            setSubtitle("Pedidos Ingresados:");
+                            setSubtitle("Envíos Ingresados:");
                             setListadeInformes([...listadeInformes,json.envio])
                         }
                         json.detalleOrden.map(async(item)=>{
@@ -151,7 +151,7 @@ const InformeIndex = ()=> {
                                listadeInformes?
                                <div className="card-body">
                                    <div className="col m-0 font-weight-bold text-primary p-3">
-                                        <h3><strong>Pedidos Ingresados:</strong></h3>
+                                        <h3><strong>Envíos Ingresados:</strong></h3>
                                         {
                                             listadeInformes && 
                                             listadeInformes.map((item,index) =>{

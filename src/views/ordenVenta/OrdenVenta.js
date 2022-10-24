@@ -226,26 +226,47 @@ class OrdenVenta extends Component {
     }
     
     finalizarOrden = async (itemOrden) => {
-        console.log("ENTRO AL SERVICIO FECHA");
-        console.log(itemOrden.estado);
-        if (itemOrden.estado == "4") {
-            console.log("ENTRO AL SERVICIO FECHA");
-            console.log(itemOrden.estado);
+        Swal.fire({
+            title: '¿Está Seguro',
+            text: "De finalizar esta orden?",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#369978',
+            confirmButtonText: 'Si, finalizar',
+            cancelButtonText: 'Cancelar',
+            iconColor: '#369978'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("ENTRO AL SERVICIO FECHA");
+                console.log(itemOrden.estado);
+                if (itemOrden.estado == "4") {
+                    console.log("ENTRO AL SERVICIO FECHA");
+                    console.log(itemOrden.estado);
 
-            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizarfechacompletadaorden.php"
-            var formData = new FormData();
-            var date = moment().format('DD/MM/YYYY h:mm:ss');
-            formData.append("idOrden", itemOrden.idOrden);
-            formData.append("abierto", '2');
-            formData.append("fechaCompletado", date);
-            fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
-        }
-        const response = await store.dispatch(modificarAvanceOrden({
-            idOrden: itemOrden.idOrden,
-            estado: 5,
-            avance: 100
-        }));
-        this.leerOrdenes();
+                    const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizarfechacompletadaorden.php"
+                    var formData = new FormData();
+                    var date = moment().format('DD/MM/YYYY h:mm:ss');
+                    formData.append("idOrden", itemOrden.idOrden);
+                    formData.append("abierto", '2');
+                    formData.append("fechaCompletado", date);
+                    fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
+                }
+                const response = store.dispatch(modificarAvanceOrden({
+                    idOrden: itemOrden.idOrden,
+                    estado: 5,
+                    avance: 100
+                }));
+                Swal.fire({
+                    title: '¡Orden Finalizada!',
+                    text: "Orden finalizada correctamente",
+                    icon: 'success',
+                    confirmButtonColor: '#369978',
+                    confirmButtonText: 'Listo',
+                    iconColor: '#369978'
+                });
+                this.leerOrdenes();
+            }
+        })
     }
 
     actualizarFechaFinalizado = (itemOrden => {
@@ -258,7 +279,7 @@ class OrdenVenta extends Component {
         formData.append("abierto", '2');
         formData.append("fechaCompletado", date);
         fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
-    }
+        }
     })
 
     anularOrdenes = (itemOrden) => {
