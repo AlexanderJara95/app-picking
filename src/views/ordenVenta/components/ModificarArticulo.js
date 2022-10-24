@@ -90,10 +90,18 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
         //	2022-10-30
         console.log("name,value", name, value);
         //console.log("cantidad", articulo.cantidad);
-        const rowsInput = [...rowsData];
-        rowsInput[index][name] = value;
-        console.log("ingrese",rowsInput);
-        setRowsData(rowsInput);
+        if(name=='fechaCaducidad'){
+          const rowsInput = [...rowsData];
+          rowsInput[index][name] = value.slice(8,10)+"/"+value.slice(5,7)+"/"+value.slice(0,4);
+          console.log("ingrese",rowsInput);
+          setRowsData(rowsInput);
+        }else{
+          const rowsInput = [...rowsData];
+          rowsInput[index][name] = value;
+          console.log("ingrese",rowsInput);
+          setRowsData(rowsInput);
+        }
+        
         var contador=0;
         rowsData.map((item)=>{
           contador = contador + parseInt(item.cantidad);
@@ -115,8 +123,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
               json.map(async(item,index)=>{
                   try {
                       //console.log("ini");
-                      //console.log(item.envio);                      
-
+                      //console.log(item.envio);
                       const response = await store.dispatch(registrarDetalleArticulo({
                         envio: item.envio,
                         codigoArticulo: item.codigoArticulo,
@@ -124,7 +131,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
                         numeroLote: item.numeroLote,
                         ubicacion: item.ubicacion,
                         idPallet: item.idPallet,
-                        fechaCaducidad: item.fechaCaducidad.slice(8,10)+"/"+item.fechaCaducidad.slice(5,7)+"/"+item.fechaCaducidad.slice(0,4),
+                        fechaCaducidad: item.fechaCaducidad,
                         cantidad: item.cantidad,
                         codigoHijo: cod + item.idArticulo + item.codigoArticulo
                       }));
@@ -154,7 +161,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
               console.log("progreso:",progreso);
               const response3 = await store.dispatch(modificarAvanceOrden({
                     idOrden:cod,
-                    estado:estadoAvance,
+                    estado:3,
                     avance:progreso
               }));
               console.log("response3:",response3);

@@ -201,7 +201,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                             {/*<th>Id Orden</th>*/}
                             {/*<th scope="col">Id</th> */}
                             {/*<th scope="col" width="50px">Orden</th>*/}
-                            <th scope="col" width="50px">Codigo Articulo</th>envio
+                            <th scope="col" width="50px">Codigo Articulo</th>
                             <th scope="col" style={{ width: '400px' }}>Descripcion</th>
                             <th scope="col" width="50px">N° Lote</th>
                             <th scope="col" width="50px">Ubicacion</th>
