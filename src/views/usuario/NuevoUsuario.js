@@ -21,5 +21,4 @@ const NuevoUsuario = ()=> {
 
 }
 
-
 export default NuevoUsuario;
