@@ -1,9 +1,9 @@
 <?php
 	require_once("config.php");
 
-	$CodOrden = $_REQUEST["envio"];
+	$idUsuario = $_REQUEST["idUsuario"];
 	$rs = mysqli_query($cn,
-		"select * from Detalle_Orden where envio='".$CodOrden."' order by codigoArticulo, cantidad desc");
+		"SELECT idUsuario, nombre, apellido, correo, username, password, nivelUsuario, estado FROM Usuario WHERE idUsuario =".$idUsuario);
 		
 		//contamos si existe un producto en la categoria
 	if($rs->num_rows > 0){

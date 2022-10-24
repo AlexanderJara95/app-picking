@@ -6,6 +6,7 @@ import ListadoArticulo from "./components/ListadoArticulo";
 import ListadoDetalle from "./components/ListadoDetalle";
 const DetalleArticuloIndex = () =>{
     const param = useParams();
+
     useEffect(()=>{
         console.log("ListadoArticulo", (param.id).split("-")[1]);
     },[]);

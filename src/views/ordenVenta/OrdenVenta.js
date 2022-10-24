@@ -97,7 +97,7 @@ class OrdenVenta extends Component {
                             scope="col"
                             style={{ textAlign: 'center', fontSize: '12px' }}>
                             {/*<th scope="col">Id Orden</th>*/}
-                            <th scope="col">#PV</th>
+                            <th scope="col">#ENV</th>
                             {/* <th scope="col">Id Cliente</th>*/}
                             <th scope="col">Nombre Cliente</th>
                             {/* <th scope="col" width="200px">Referencia</th>*/}
@@ -121,7 +121,7 @@ class OrdenVenta extends Component {
                             style={{ textAlign: 'center', fontSize: '12px' }} 
                             onClick={() => this.seleccionarOrden(itemOrden, itemOrden.idOrden)}>
                                 {/*<td>{itemOrden.idOrden}</td>*/}
-                                <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.pedidoDeVentas}</td>
+                                <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.envio}</td>
                                 {/*<td style={{ textAlign: 'center', fontSize: '8px' }}>{itemOrden.idClienteAx}</td>*/}
                                 <td style={{ textTransform: 'uppercase', textAlign: 'left', fontSize: '15px'  }}>{itemOrden.nombreCliente}</td>
                                 {/*<td style={{ textTransform: 'lowercase', textAlign: 'left' }}>{itemOrden.referencia}</td>*/}
@@ -153,14 +153,17 @@ class OrdenVenta extends Component {
                                     }
                                 </td>
                                 <td style={{ textAlign: 'center', }}>{this.state.listaUsuarios.map((usuario) => (
-                                    usuario.idUsuario == itemOrden.asignadoA ? <span style={{ backgroundColor: "#00ff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }} key={usuario.idUsuario}>{usuario.username}</span> : null
+                                    usuario.idUsuario == itemOrden.asignadoA 
+                                    ? <span style={{ backgroundColor: "#00ff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }} 
+                                    key={usuario.idUsuario}>{usuario.username}</span> 
+                                    : null
                                 ))}</td>
                                 <td title="Persona encargada del picking" >{itemOrden.fechaInicio}</td>
                                 <td title="Persona encargada del picking" >{itemOrden.fechaCompletado}</td>
                                 <td title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
                                 <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                 <td>{itemOrden.estado !== '6' ?
-                                    <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}>
+                                    <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.envio}>
                                         <Button className="btn  btn-sm" title="Ver detalle de orden"><FontAwesomeIcon icon={faEye} /></Button></NavLink>
                                     : <Button className="btn btn-secondary  btn-sm" title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye} /></Button>}</td>
                                 <td>{itemOrden.estado !== '6' && itemOrden.estado !== '5' ?
@@ -245,7 +248,7 @@ class OrdenVenta extends Component {
         this.leerOrdenes();
     }
 
-    actualizarFecha5 = (itemOrden => {
+    actualizarFechaFinalizado = (itemOrden => {
         if (itemOrden.abierto != '1') {
         console.log("ENTRO AL SERVICIO FECHA");
         const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizarfechacompletadaorden.php"
@@ -289,6 +292,7 @@ class OrdenVenta extends Component {
         //esta logica siguiente es para capturar el item clickeado y luego si se clickea otro, desmarque como "active" el anterior
         if (this.state.ordenSeleccionada !== '') {
             this.accordionContent[this.state.ordenSeleccionada.idOrden].classList.remove("active");
+            console.log(this.state.ordenSeleccionada)
         }
         this.setState({ ordenSeleccionada: itemOrden })
         this.accordionContent[itemOrden.idOrden].classList.add("active");
@@ -311,7 +315,7 @@ class OrdenVenta extends Component {
         }
     }
     mostrarEliminar = (itemOrden => {
-        var respuesta = window.confirm("¿Está seguro que desea eliminar la Orden " + itemOrden.pedidoDeVentas + "?")
+        var respuesta = window.confirm("¿Está seguro que desea eliminar la Orden " + itemOrden.envio + "?")
         if (respuesta === true) {
             const rutaServicio = "http://megalabs.digitalbroperu.com/servicioeliminarorden.php"
             var formData = new FormData();
@@ -319,6 +323,7 @@ class OrdenVenta extends Component {
             fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
         }
     })
+    
 /*
     actualizarFechaApertura = (itemOrden => {
         console.log(itemOrden);

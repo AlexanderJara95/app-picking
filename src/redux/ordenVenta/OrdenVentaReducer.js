@@ -1,5 +1,5 @@
 import { 
-	CONSULTAR_ORDEN_POR_PV,
+	CONSULTAR_ORDEN_POR_ENVIO,
 	LISTAR_ORDEN,
 	LISTAR_ORDEN_DETALLE,
 	REGISTRAR_ORDEN,
@@ -14,7 +14,7 @@ import {
 
 const OrdenVentaReducer = (state = {}, action) => {
 	switch (action.type) {
-		case CONSULTAR_ORDEN_POR_PV: {
+		case CONSULTAR_ORDEN_POR_ENVIO: {
 			return {
 				...state,
 				listarOrden: action.listarOrden,

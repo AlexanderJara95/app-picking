@@ -70,14 +70,14 @@ const ContainerIndex = ()=> {
         temporalDivElement.innerHTML = html;
         // Retrieve the text property of the element (cross-browser support)
         const arrayObtenido = (temporalDivElement.textContent || temporalDivElement.innerText || '').split("\n").filter(x => x!=='');
-        const venta_sin_con_fecha = (arrayObtenido[36].slice(0,3)==="PV_")?arrayObtenido[36]:arrayObtenido[37];
+        const venta_sin_con_fecha = (arrayObtenido[36].slice(0,3)==="ENV_")?arrayObtenido[36]:arrayObtenido[37];
         ////console.log(venta_sin_con_fecha);
         const ordenPicking={
             envio:arrayObtenido[21],
             referenciaCliente:arrayObtenido[25],
             codCliente:arrayObtenido[10],
             nomCliente:arrayObtenido[17],
-            pedidoVentas:venta_sin_con_fecha,
+            envio:venta_sin_con_fecha,
             detalleOrden:[]
         }
         arrayObtenido.map((item,index)=>{
@@ -102,7 +102,7 @@ const ContainerIndex = ()=> {
         formData.append("idClienteAx", ordenPicking.codCliente);
         formData.append("nombreCliente", ordenPicking.nomCliente);
         formData.append("referencia", ordenPicking.referenciaCliente);
-        formData.append("pedidoDeVentas", ordenPicking.pedidoVentas);
+        formData.append("envio", ordenPicking.envio);
         formData.append("fechaSubida", year+'-'+month+'-'+ day);
         formData.append("estado", 1);
         fetch(registrarOrden,{method: 'POST', body: formData}).then(

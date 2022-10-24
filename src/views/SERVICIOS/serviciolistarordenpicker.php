@@ -2,7 +2,7 @@
 	require_once("config.php");
     try{
         $idUsuario = $_REQUEST["idUsuario"];
-        $rs = mysqli_query($cn, "SELECT idOrden, pedidoDeVentas, idUsuario, idClienteAx, nombreCliente, 
+        $rs = mysqli_query($cn, "SELECT idOrden, envio, idUsuario, idClienteAx, nombreCliente, 
                             referencia, asignadoPor, asignadoA, fechaSubida, fechaInicio, fechaCompletado, 
                             estado, avance 
                             FROM Orden 

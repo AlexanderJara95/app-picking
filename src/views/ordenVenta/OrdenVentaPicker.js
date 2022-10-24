@@ -99,7 +99,7 @@ class OrdenVentaPicker extends Component {
                                 scope="col"
                                 style={{ textAlign: 'center', fontSize: '12px' }}>
                                 {/*<th scope="col">Id Orden</th>*/}
-                                <th scope="col">Pedido de Ventas</th>
+                                <th scope="col">Orden</th>
                                 <th scope="col">Id Cliente AX</th>
                                 <th scope="col">Nombre Cliente</th>
                                 <th scope="col">Referencia</th>
@@ -115,7 +115,7 @@ class OrdenVentaPicker extends Component {
                             {datosTabla.map((itemOrden) =>
                                 <tr className='align-middle' scope="row" key={itemOrden.idOrden} ref={ref => (this.accordionContent[itemOrden.idOrden] = ref)} id={"li-orden-" + itemOrden.idOrden} style={{ textAlign: 'center', fontSize: '12px' }} onClick={() => this.seleccionarOrden(itemOrden,itemOrden.idOrden)}>
                                     {/*<td>{itemOrden.idOrden}</td>*/}
-                                    <td style={{ textAlign: 'center', fontSize: '10px' }}>{itemOrden.pedidoDeVentas}</td>
+                                    <td style={{ textAlign: 'center', fontSize: '10px' }}>{itemOrden.envio}</td>
                                     <td>{itemOrden.idClienteAx}</td>
                                     <td style={{ textTransform: 'lowercase'}}>{itemOrden.nombreCliente}</td>
                                     <td style={{ textTransform: 'lowercase'}}>{itemOrden.referencia}</td>
@@ -125,7 +125,7 @@ class OrdenVentaPicker extends Component {
                                     <td  title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
                                     <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                     <td>{itemOrden.estado !== '6'? 
-                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.pedidoDeVentas}  onClick={() => this.actualizarFechaApertura(itemOrden)}>
+                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.envio}  onClick={() => this.actualizarFechaApertura(itemOrden)}>
                                             <Button className="btn secondary"  title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye}/></Button></NavLink>
                                         :<Button className="btn secondary"  title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye}/></Button>}</td>
 
@@ -220,7 +220,7 @@ class OrdenVentaPicker extends Component {
         }
     }
     mostrarEliminar = (itemOrden => {
-        var respuesta = window.confirm("¿Está seguro que desea eliminar la Orden " + itemOrden.pedidoDeVentas + "?")
+        var respuesta = window.confirm("¿Está seguro que desea eliminar la Orden " + itemOrden.envio + "?")
         if (respuesta === true) {
             const rutaServicio = "http://megalabs.digitalbroperu.com/servicioeliminarorden.php"
             var formData = new FormData();
@@ -231,7 +231,7 @@ class OrdenVentaPicker extends Component {
     })
     
     anularOrden = (itemOrden => {
-        var respuesta = window.confirm("¿Está seguro que desea anular la Orden " + itemOrden.pedidoDeVentas + "?")
+        var respuesta = window.confirm("¿Está seguro que desea anular la Orden " + itemOrden.envio + "?")
         if (respuesta === true) {
             const rutaServicio = "http://megalabs.digitalbroperu.com/servicioanularorden.php"
             var formData = new FormData();

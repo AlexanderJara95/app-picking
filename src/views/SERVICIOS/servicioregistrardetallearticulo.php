@@ -3,7 +3,7 @@
 
     //$id = $_POST[uniqid()]  ;
     //$idDetalleOrden = $_REQUEST[uniqid()];
-    $pedidoDeVentas = $_REQUEST["pedidoDeVentas"];
+    $envio = $_REQUEST["envio"];
     $codigoArticulo = $_REQUEST["codigoArticulo"];
     $descripcion = $_REQUEST["descripcion"];
     $numeroLote = $_REQUEST["numeroLote"];
@@ -18,8 +18,8 @@
      //echo $date[year],'-',$date[mon],'-',$date[mday],' ',$date[hours],':',$date[minutes],':',$date[seconds];
 
 	$rs = mysqli_query($cn,
-		"insert into Detalle_Orden (pedidoDeVentas,codigoArticulo,descripcion,numeroLote, ubicacion,idPallet,fechaCaducidad,cantidad, rama, codigoHijo) 
-        values('".$pedidoDeVentas."','".$codigoArticulo."','".$descripcion."',
+		"insert into Detalle_Orden (envio,codigoArticulo,descripcion,numeroLote, ubicacion,idPallet,fechaCaducidad,cantidad, rama, codigoHijo) 
+        values('".$envio."','".$codigoArticulo."','".$descripcion."',
          '".$numeroLote."','".$ubicacion."','".$idPallet."', '".$fechaCaducidad."','".$cantidad."','".$rama."','".$codigoHijo."')");
 
 	echo mysqli_insert_id($cn); 

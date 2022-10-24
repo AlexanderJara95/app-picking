@@ -4,7 +4,7 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
     return (
 
         rowsData.map((data, index) => {
-            const { idArticulo, pedidoDeVentas, codigoArticulo, descripcion, numeroLote, ubicacion, idPallet, fechaCaducidad, cantidad } = data;
+            const { idArticulo, envio, codigoArticulo, descripcion, numeroLote, ubicacion, idPallet, fechaCaducidad, cantidad } = data;
             //const fecha= fechaCaducidad.slice(6,10)+"-"+fechaCaducidad.slice(3,5)+"-"+fechaCaducidad.slice(0,2);
             return (
                 <tr key={index}>
