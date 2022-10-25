@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb } from "react-bootstrap";
 import ListadoDetalle from "./components/ListadoDetalle";
 import ListadoDetalleAdmin from "./components/ListadoDetalleAdmin";
+import ListadoDetalleVisual from "./components/ListadoDetalleVisual";
 
 const DetalleOrdenIndex = () =>{
     const param = useParams();
@@ -39,12 +40,21 @@ const DetalleOrdenIndex = () =>{
                 </div>                
             </div>
             {window.usuario.nivelUsuario==1||window.usuario.nivelUsuario==3?                  
-                <ListadoDetalle 
-                    id={(param.id).split("-")[1]} 
-                    cod={(param.id).split("-")[0]}
-                    setProgress={setProgress} 
-                    progreso={progress}>
-                </ListadoDetalle>
+                <>{(param.id).split("-")[2]==4?
+                    <ListadoDetalleVisual 
+                        id={(param.id).split("-")[1]} 
+                        cod={(param.id).split("-")[0]}
+                        setProgress={setProgress} 
+                        progreso={progress}>
+                    </ListadoDetalleVisual>
+                    :<ListadoDetalle 
+                        id={(param.id).split("-")[1]} 
+                        cod={(param.id).split("-")[0]}
+                        setProgress={setProgress} 
+                        progreso={progress}>
+                    </ListadoDetalle>
+                }
+                </>
                 :<ListadoDetalleAdmin 
                     id={(param.id).split("-")[1]} 
                     setProgress={setProgress} 
