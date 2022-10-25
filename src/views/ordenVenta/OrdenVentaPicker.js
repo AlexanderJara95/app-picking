@@ -128,7 +128,6 @@ class OrdenVentaPicker extends Component {
                                         <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.envio + "-" + itemOrden.estado}  onClick={() => this.actualizarFechaApertura(itemOrden)}>
                                             <Button className="btn secondary"  title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye}/></Button></NavLink>
                                         :<Button className="btn secondary"  title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye}/></Button>}</td>
-
                                         {/* estuctura para condicion:
                                         {condicion a evaluar ? que pasa si es true : que pasa si es false} */}
                                         

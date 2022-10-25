@@ -54,6 +54,7 @@ export const anularUsuario = (paramData) => async dispatch => {
 	//console.log("Param Actu",paramData);
 	var formData = new FormData();
     formData.append("idUsuario", paramData.idUsuario);
+    formData.append("estado", paramData.estado);
     
 	const response = await axios.post(`${API_BASE_URL}/servicioanularusuario.php`,formData);
     //console.log("Actualizado",response.data);
