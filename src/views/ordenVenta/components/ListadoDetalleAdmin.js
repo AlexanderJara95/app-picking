@@ -166,7 +166,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                                     : <td>{itemDetalle.numeroLote}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}></td>
+                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.ubicacion}</td>
                                     : <td>{itemDetalle.ubicacion}</td>
                                 }
                                 {itemDetalle.rama == 1
