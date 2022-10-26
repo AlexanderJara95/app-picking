@@ -125,10 +125,9 @@ class OrdenVentaPicker extends Component {
                                     <td  title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
                                     <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                     <td>{itemOrden.estado !== '6'? 
-                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.envio}  onClick={() => this.actualizarFechaApertura(itemOrden)}>
+                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.envio + "-" + itemOrden.estado}  onClick={() => this.actualizarFechaApertura(itemOrden)}>
                                             <Button className="btn secondary"  title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye}/></Button></NavLink>
                                         :<Button className="btn secondary"  title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye}/></Button>}</td>
-
                                         {/* estuctura para condicion:
                                         {condicion a evaluar ? que pasa si es true : que pasa si es false} */}
                                         

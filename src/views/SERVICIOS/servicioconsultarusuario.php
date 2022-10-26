@@ -8,7 +8,7 @@
 		//contamos si existe un producto en la categoria
 	if($rs->num_rows > 0){
 		while($row = mysqli_fetch_assoc($rs)){		
-			$res[] = $row;
+			$res = $row;
 			//De esta manera los datos de cda fila
 			//se colocan en un arreglo
 		}

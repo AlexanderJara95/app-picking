@@ -32,32 +32,68 @@ const ListadoUsuarios = () =>{
     }
 
     const anularUsuarios = (itemUsuario) => {
-        Swal.fire({
-            title: '¿Está Seguro',
-            text: "De anular este usuario?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#369978',
-            confirmButtonText: 'Si, anular',
-            cancelButtonText: 'Cancelar',
-            iconColor: '#dc3545'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    console.log(itemUsuario.idUsuario);
-                    const response = store.dispatch(anularUsuario({
-                        idUsuario: itemUsuario.idUsuario,
-                    }))
-                    Swal.fire({
-                        title: '¡Anulado!',
-                        text: "Usuario anulado correctamente",
-                        icon: 'success',
-                        confirmButtonColor: '#369978',
-                        confirmButtonText: 'Listo',
-                    })
-                    listaUsuarioServicio();
-                }
-            })
-        } 
+        if(itemUsuario.estado==1){
+            Swal.fire({
+                title: '¿Está Seguro',
+                text: "De anular este usuario?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                confirmButtonText: 'Si, anular',
+                cancelButtonText: 'Cancelar',
+                iconColor: '#dc3545'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log(itemUsuario.estado);
+                        const response = store.dispatch(anularUsuario({
+                            idUsuario: itemUsuario.idUsuario,
+                            estado: itemUsuario.estado==1?0:1,
+                        }));
+                        Swal.fire({
+                            title: '¡Anulado!',
+                            text: "Usuario anulado correctamente",
+                            icon: 'success',
+                            confirmButtonColor: '#dc3545',
+                            confirmButtonText: 'Listo',
+                            iconColor: '#dc3545'
+                        });
+                        setTimeout(() => {
+                            listaUsuarioServicio();
+                        }, 250);
+                    }
+                });
+        }else{
+            Swal.fire({
+                title: '¿Está Seguro',
+                text: "De activar este usuario?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#369978',
+                confirmButtonText: 'Si, activar',
+                cancelButtonText: 'Cancelar',
+                iconColor: '#369978'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log(itemUsuario.estado);
+                        const response = store.dispatch(anularUsuario({
+                            idUsuario: itemUsuario.idUsuario,
+                            estado: itemUsuario.estado==1?0:1,
+                        }));
+                        Swal.fire({
+                            title: 'Activado!',
+                            text: "Usuario acivado correctamente",
+                            icon: 'success',
+                            confirmButtonColor: '#369978',
+                            confirmButtonText: 'Listo',
+                        });
+                        setTimeout(() => {
+                            listaUsuarioServicio();
+                        }, 250);
+                    }
+                })
+        }
+        
+    } 
 
     return(
         <div className="table-bordered" id="tabla" role="tabpanel" aria-labelledby="home-tab" >
@@ -74,7 +110,7 @@ const ListadoUsuarios = () =>{
                     </tr>
                 </thead>
                 <tbody >
-                    {datosTabla.filter((item)=>(item.nivelUsuario==window.usuario.nivelUsuario)||(item.nivelUsuario==parseInt(window.usuario.nivelUsuario)+1)).map((itemUsuario) =>
+                    {datosTabla.filter((item)=>(item.nivelUsuario==window.usuario.nivelUsuario)||(item.nivelUsuario>=parseInt(window.usuario.nivelUsuario)+1)).map((itemUsuario) =>
                         <tr key={itemUsuario.idUsuario}
                             id={"li-usuario-" + itemUsuario.idUsuario}>
                             <td>{itemUsuario.idUsuario}</td>
@@ -88,11 +124,11 @@ const ListadoUsuarios = () =>{
                                     :<Button className="btn-secondary"><FontAwesomeIcon icon={faLock}/></Button>
                                 }
                             </td>
-                            <td>{itemUsuario.estado == 1
-                                    ? <Button className="btn-danger" onClick={() => {anularUsuarios(itemUsuario)}}><FontAwesomeIcon icon={faXmarkCircle} /></Button>
+                            <td>{itemUsuario.estado == 1 && itemUsuario.idUsuario == window.usuario.idUsuario
+                                    ? <Button className="btn-secondary"><FontAwesomeIcon icon={faLock} /></Button>
                                     :<>
-                                        {itemUsuario.estado == 2
-                                            ? <Button className="btn-secondary" disabled><FontAwesomeIcon icon={faXmarkCircle} /></Button>
+                                        {itemUsuario.estado == 1
+                                            ? <Button className="btn-success" onClick={() => {anularUsuarios(itemUsuario)}}  ><FontAwesomeIcon icon={faCheck} /></Button>
                                             : <Button className="btn-danger" onClick={() => {anularUsuarios(itemUsuario)}}><FontAwesomeIcon icon={faXmarkCircle} /></Button>
                                     } 
                                 </>
