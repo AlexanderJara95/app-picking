@@ -29,7 +29,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             const response = await store.dispatch(listarOrdenDetallePorId(id));
             const progressDb = (100 / response.detalleOrden.filter(item => item.rama == 1).length) * response.detalleOrden.filter(item => item.listo == 1).length;
             if (response.status === StatusCodes.OK) {
-                if (progressDb == 100) setProgresoLocal(progressDb);
+                if (progressDb >= 100) setProgresoLocal(100);
                 setProgress(progressDb == 0 ? 0 : progressDb);
                 setDatosTabla(response.detalleOrden);
                 setProgresoDb(progressDb);
