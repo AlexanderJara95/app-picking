@@ -101,7 +101,6 @@ export const listarOrdenDetallePorId = (id) => async dispatch => {
     })
 }
 
-
 /*  NUEVO SERVICIO - MOISES    */
 export const listarArticuloPorId = (id) => async dispatch => {
 	var formData = new FormData();

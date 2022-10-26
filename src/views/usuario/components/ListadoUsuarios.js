@@ -61,7 +61,7 @@ const ListadoUsuarios = () =>{
                             listaUsuarioServicio();
                         }, 250);
                     }
-                })
+                });
         }else{
             Swal.fire({
                 title: '¿Está Seguro',
