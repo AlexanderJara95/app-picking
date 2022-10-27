@@ -35,7 +35,7 @@ const DetalleOrdenIndex = () =>{
                     </div>
                     <div className="col text-primary">
                         <h4><strong>Procentaje de avance</strong></h4>
-                        <ProgressBar variant='success' animated now={progress} label={progress.toFixed(2)}></ProgressBar>
+                        <ProgressBar variant='success' animated now={progress} label={progress.toFixed(2)+' %'}></ProgressBar>
                     </div>
                 </div>                
             </div>
