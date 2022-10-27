@@ -26,8 +26,8 @@ export const validarregistrarUsuario =(paramData)=>async dispatch=>{
 export const registrarUsuario = (paramData) => async dispatch => {
 	var formData = new FormData();	
 	//console.log("correo:",(paramData.correo).split("@")[0]);
-    formData.append("nombre", paramData.nombres);
-	formData.append("apellido", paramData.apellidos);
+    formData.append("nombre", paramData.nombre);
+	formData.append("apellido", paramData.apellido);
     formData.append("correo", paramData.username+"@megalabs.com.pe");
     formData.append("username", paramData.username);
 	formData.append("password", paramData.password);

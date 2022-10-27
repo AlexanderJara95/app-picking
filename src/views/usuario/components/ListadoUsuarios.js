@@ -121,13 +121,14 @@ const ListadoUsuarios = () =>{
                             <td><NivelUsuario nivel={itemUsuario.nivelUsuario}></NivelUsuario></td>
                             <td>{itemUsuario.nivelUsuario==parseInt(window.usuario.nivelUsuario)+1?
                                     <NavLink to={"/usuario/editar/"+itemUsuario.idUsuario}><Button className="btn"><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
-                                    :<Button className="btn-secondary"><FontAwesomeIcon icon={faLock}/></Button>
+                                    :<Button className="btn-secondary" disabled><FontAwesomeIcon icon={faLock}/></Button>
                                 }
                             </td>
-                            <td>{itemUsuario.estado == 1 && itemUsuario.idUsuario == window.usuario.idUsuario
-                                    ? <Button className="btn-secondary"><FontAwesomeIcon icon={faLock} /></Button>
+                            {/*pendiente por mejorar */}
+                            <td>{itemUsuario.idUsuario != window.usuario.idUsuario || itemUsuario.estado == 1 && itemUsuario.idUsuario == window.usuario.idUsuario || itemUsuario.nivelUsuario>=parseInt(window.usuario.nivelUsuario)+1
+                                    ? <Button className="btn-secondary" disabled><FontAwesomeIcon icon={faLock} /></Button>
                                     :<>
-                                        {itemUsuario.estado == 1
+                                        {itemUsuario.estado == 1 && itemUsuario.nivelUsuario != window.usuario.nivelUsuario
                                             ? <Button className="btn-success" onClick={() => {anularUsuarios(itemUsuario)}}  ><FontAwesomeIcon icon={faCheck} /></Button>
                                             : <Button className="btn-danger" onClick={() => {anularUsuarios(itemUsuario)}}><FontAwesomeIcon icon={faXmarkCircle} /></Button>
                                     } 
