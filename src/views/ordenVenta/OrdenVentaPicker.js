@@ -100,6 +100,7 @@ class OrdenVentaPicker extends Component {
                                 style={{ textAlign: 'center', fontSize: '12px' }}>
                                 {/*<th scope="col">Id Orden</th>*/}
                                 <th scope="col">Orden</th>
+                                <th scope="col">#PV</th>
                                 <th scope="col">Id Cliente AX</th>
                                 <th scope="col">Nombre Cliente</th>
                                 <th scope="col">Referencia</th>
@@ -116,6 +117,7 @@ class OrdenVentaPicker extends Component {
                                 <tr className='align-middle' scope="row" key={itemOrden.idOrden} ref={ref => (this.accordionContent[itemOrden.idOrden] = ref)} id={"li-orden-" + itemOrden.idOrden} style={{ textAlign: 'center', fontSize: '12px' }} onClick={() => this.seleccionarOrden(itemOrden,itemOrden.idOrden)}>
                                     {/*<td>{itemOrden.idOrden}</td>*/}
                                     <td style={{ textAlign: 'center', fontSize: '10px' }}>{itemOrden.envio}</td>
+                                    <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.pedidoVentas}</td>
                                     <td>{itemOrden.idClienteAx}</td>
                                     <td style={{ textTransform: 'lowercase'}}>{itemOrden.nombreCliente}</td>
                                     <td style={{ textTransform: 'lowercase'}}>{itemOrden.referencia}</td>
