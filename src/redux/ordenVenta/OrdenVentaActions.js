@@ -30,6 +30,8 @@ export const registrarOrden = (paramData) => async dispatch => {
     formData.append("nombreCliente", paramData.nomCliente);
     formData.append("referencia", paramData.referenciaCliente);
     formData.append("envio", paramData.envio);
+    formData.append("pedidoVentas", paramData.pedidoVentas);
+    formData.append("idUsuario", window.usuario.idUsuario);
     formData.append("fechaSubida", date);
 	formData.append("estado", 1);
 	const response = await axios.post(`${API_BASE_URL}/servicioregistrarorden.php`,formData);
