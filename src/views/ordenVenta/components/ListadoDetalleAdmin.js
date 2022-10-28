@@ -155,11 +155,11 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                                 }*/}
                                 {itemDetalle.rama == 1
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.codigoArticulo}</td>
-                                    : null
+                                    : <td></td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.descripcion}</td>
-                                    : null
+                                    : <td></td>
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td  style={{fontWeight:'bold'}}>{itemDetalle.numeroLote}</td>
@@ -183,7 +183,8 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td style={{fontWeight:'bold', width: '100px'}} >
-                                        {itemDetalle.listo == 0?<NavLink to={"#"} className="nav"><Button className='btn-warning'><FontAwesomeIcon icon={faExclamation} /></Button></NavLink>
+                                        {itemDetalle.listo == 0?
+                                        <NavLink to={"#"} className="nav"><Button className='btn-warning' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faExclamation} /></Button></NavLink>
                                         :<NavLink to={"#"} className="nav"><Button className='btn-secondary' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faCheck} />&nbsp;&nbsp;&nbsp;Listo</Button></NavLink>
                                         }
                                       </td>
