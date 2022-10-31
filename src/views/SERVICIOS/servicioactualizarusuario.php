@@ -6,6 +6,7 @@
     $correo = $_REQUEST["correo"];
     $username = $_REQUEST["username"];
     $password = $_REQUEST["password"];
+    $estado= '1';
 	$passwordHash = password_hash($password, PASSWORD_DEFAULT);
     $nivelUsuario = $_REQUEST["nivelUsuario"];
 
