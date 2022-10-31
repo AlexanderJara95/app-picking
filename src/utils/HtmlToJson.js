@@ -10,7 +10,7 @@ const HtmlToJson = (html) => {
     // Retrieve the text property of the element (cross-browser support)
     const arrayObtenido = (temporalDivElement.textContent || temporalDivElement.innerText || '').split("\n").filter(x => x!=='');
     console.log("arrayObt:", arrayObtenido);
-    const venta_sin_con_fecha = (arrayObtenido[36].slice(0,3)==="ENV_")?arrayObtenido[36]:arrayObtenido[37];
+    const venta_sin_con_fecha = (arrayObtenido[36].slice(0,3)==="PV_")?arrayObtenido[36]:arrayObtenido[37];
     const envio_sin_con_fecha = (arrayObtenido[21].slice(0,4)==="ENV_")?arrayObtenido[21]:arrayObtenido[22];
     //("arrayObtenido",arrayObtenido);
     const ordenPicking={

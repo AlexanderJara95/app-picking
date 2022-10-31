@@ -98,6 +98,7 @@ class OrdenVenta extends Component {
                             style={{ textAlign: 'center', fontSize: '12px' }}>
                             {/*<th scope="col">Id Orden</th>*/}
                             <th scope="col">#ENV</th>
+                            <th scope="col">#PV</th>
                             {/* <th scope="col">Id Cliente</th>*/}
                             <th scope="col">Nombre Cliente</th>
                             {/* <th scope="col" width="200px">Referencia</th>*/}
@@ -122,6 +123,7 @@ class OrdenVenta extends Component {
                             onClick={() => this.seleccionarOrden(itemOrden, itemOrden.idOrden)}>
                                 {/*<td>{itemOrden.idOrden}</td>*/}
                                 <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.envio}</td>
+                                <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.pedidoVentas}</td>
                                 {/*<td style={{ textAlign: 'center', fontSize: '8px' }}>{itemOrden.idClienteAx}</td>*/}
                                 <td style={{ textTransform: 'uppercase', textAlign: 'left', fontSize: '15px'  }}>{itemOrden.nombreCliente}</td>
                                 {/*<td style={{ textTransform: 'lowercase', textAlign: 'left' }}>{itemOrden.referencia}</td>*/}
@@ -160,7 +162,11 @@ class OrdenVenta extends Component {
                                 ))}</td>
                                 <td title="Persona encargada del picking" >{itemOrden.fechaInicio}</td>
                                 <td title="Persona encargada del picking" >{itemOrden.fechaCompletado}</td>
-                                <td title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
+                                <td title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>
+                                    {itemOrden.asignadoA == 0
+                                        ?<></>
+                                        :<>{this.mostrarEstado(itemOrden.estado)}</>
+                                    }</td>
                                 <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                 <td>{itemOrden.estado !== '6' ?
                                     <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.envio}>

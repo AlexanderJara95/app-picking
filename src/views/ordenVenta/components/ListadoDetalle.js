@@ -263,7 +263,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                 {itemDetalle.rama == 1
                                     ? <td style={{ textAlign: 'center', width: '100px', fontWeight: 'bold' }}>
                                         {itemDetalle.listo == 0
-                                            ? <NavLink to={"/detallearticulo/" + cod + "-" + itemDetalle.idArticulo + "-" + (progresoDb + 100 / datosTabla.filter(item => item.rama == 1).length)}><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
+                                            ? <NavLink to={"/detallearticulo/" + cod + "-" + itemDetalle.idArticulo + "-" + (progresoDb + 100 / datosTabla.filter(item => item.rama == 1).length).toFixed(0)}><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
                                             : <Button className='btn-warning' onClick={() => {borrarHijos(itemDetalle)}}> <FontAwesomeIcon icon={faTrash} /> </Button>
                                             /*
                                                 <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} onClick={() => {

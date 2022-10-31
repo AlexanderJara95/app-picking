@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Form, FormControl, FormSelect, InputGroup } from "react-bootstrap";
 import store from "../../../redux/Store";
 import { StatusCodes } from 'http-status-codes';
-import { listarUsuarios, registrarUsuario, validarregistrarUsuario } from "../../../redux/usuario/UsuarioActions";
+import { listarUsuarioPorId, listarUsuarios, registrarUsuario, validarregistrarUsuario, actualizarUsuario } from "../../../redux/usuario/UsuarioActions";
 import { toastme } from "toastmejs";
 
 const UsuarioForm = ({accion,id}) =>{
@@ -42,6 +42,7 @@ const UsuarioForm = ({accion,id}) =>{
                 },
             ])
         }
+
         if(accion=='editar'){
             listarUsuarioId(id);
         }
@@ -51,27 +52,26 @@ const UsuarioForm = ({accion,id}) =>{
 
     const listarUsuarioId = async(id)=>{
         try {
-            /*
-            const response = await store.dispatch(registrarUsuario(usuario));
+            const response = await store.dispatch(listarUsuarioPorId(id));
+            console.log("usuario:", response.detalleUsuario);
             if (response.status === StatusCodes.OK) {
-                console.log("Nuevo Usuario agregado");
-                window.location.href = '/usuario';
+                setUsuario(response.detalleUsuario);
             }
-            */
+            
         } catch (error) {
             //console.log(error);
         }
     }
-
+    
     const functAccion = async() =>{
-    console.log("nuevo usuario",usuario);
+        console.log("nuevo usuario",usuario);
         if(accion=='nuevo'){
             try {
                 const response = await store.dispatch(validarregistrarUsuario(usuario));
                 if(response.data==0){
                     try {
-                        const response = await store.dispatch(registrarUsuario(usuario));
-                        if (response.status === StatusCodes.OK) {
+                        const response2 = await store.dispatch(registrarUsuario(usuario));
+                        if (response2.status === StatusCodes.OK) {
                             console.log("Nuevo Usuario agregado");
                             window.location.href = '/usuario';
                         }
@@ -88,7 +88,16 @@ const UsuarioForm = ({accion,id}) =>{
             }
         }
         if(accion=='editar'){
-            console.log("Nuevo Usuario agregadop");
+            try {
+                const response = await store.dispatch(actualizarUsuario(usuario));
+                console.log("response.data",response.data);
+                if (response.status === StatusCodes.OK) {
+                    console.log("Nuevo Usuario agregado");
+                    window.location.href = '/usuario';
+                }
+            } catch (error) {
+                //console.log(error);
+            }
         }
     }    
 
@@ -136,8 +145,8 @@ const UsuarioForm = ({accion,id}) =>{
             </select>
             <FormControl
                 type='input'
-                name='nombres'
-                value={usuario.nombres??''}
+                name='nombre'
+                value={usuario.nombre??''}
                 onChange={cambiosEnFormulario}
                 placeholder='Nombres'
                 required
@@ -145,14 +154,13 @@ const UsuarioForm = ({accion,id}) =>{
             />
             <FormControl
                 type='input'
-                name='apellidos'
-                value={usuario.apellidos??''}
+                name='apellido'
+                value={usuario.apellido??''}
                 onChange={cambiosEnFormulario}
                 placeholder='Apellidos'
                 required
                 autoFocus
-            />
-            
+            />            
             <InputGroup className="mb-3">
                 <FormControl
                     type='input'

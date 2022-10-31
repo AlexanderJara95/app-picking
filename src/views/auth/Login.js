@@ -90,11 +90,15 @@ const Login = () => {
                 {/* <NavLink to="/sendresetlink" className="text-center">
                 <FontAwesomeIcon icon="fa-solid fa-lock" className='me-1' />
                 ¿Olvidaste tu contraseña?
-                </NavLink> */}
+                </NavLink> 
+                
                 <a href='#' className='text-center'>
                     <i className='me-1 bx bxs-lock-alt'></i>
                     ¿Olvidaste tu contraseña?
                 </a>
+                
+                */}
+                
             </Form>
         </div>
 	);
