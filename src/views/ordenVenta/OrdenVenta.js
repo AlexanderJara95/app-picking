@@ -162,7 +162,11 @@ class OrdenVenta extends Component {
                                 ))}</td>
                                 <td title="Persona encargada del picking" >{itemOrden.fechaInicio}</td>
                                 <td title="Persona encargada del picking" >{itemOrden.fechaCompletado}</td>
-                                <td title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
+                                <td title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>
+                                    {itemOrden.asignadoA == 0
+                                        ?<></>
+                                        :<>{this.mostrarEstado(itemOrden.estado)}</>
+                                    }</td>
                                 <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                 <td>{itemOrden.estado !== '6' ?
                                     <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.envio}>
