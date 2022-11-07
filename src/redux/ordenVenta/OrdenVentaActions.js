@@ -19,6 +19,14 @@ export const listarOrden = () => async dispatch => {
         listaOrden: response.data==null ? 0:response.data
     })
 }
+export const listarOrdenUsuarios = () => async dispatch => {
+	const response = await axios.get(`${API_BASE_URL}/serviciolistarordenusuario.php`);
+	return dispatch({
+		type: LISTAR_ORDEN,
+		status: response.status,
+		listaOrden: response.data==null ? 0:response.data
+	})
+}
 export const registrarOrden = (paramData) => async dispatch => {
 	var dateObj = new Date();
     var month = ((dateObj.getMonth() + 1 )<10)?'0'+(dateObj.getMonth() + 1 ):(dateObj.getMonth() + 1 ); //months from 1-12
@@ -62,7 +70,6 @@ export const registrarOrdenDetalle = (paramData) => async dispatch => {
         data: response.data
     })  
 }  
-
 export const modificarOrdenDetalle = (paramData) => async dispatch => {
 	//console.log("Param Actu",paramData);
 	var formData = new FormData();
