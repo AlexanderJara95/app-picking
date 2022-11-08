@@ -7,18 +7,12 @@ import store from '../../redux/Store';
 const HomeIndex = ()=> {
 
     const [usuario, setUsuario] = useState({});
-    const [usuariosOrden, setUsuariosOrden] = useState([
-        { name: '/home', value: 456 },
-        { name: '/imprint', value: 351 },
-        { name: '/cancellation', value: 271 },
-        { name: '/special-offer-august-get', value: 191 },
-        { name: '/documentation', value: 91 },
-    ]);
+    const [usuariosOrden, setUsuariosOrden] = useState([]);
 
     useEffect(()=>{
         let data = obtenerAutorizacion();
         setUsuario(data);
-        if(window.usuario.nivelUsuario==1)listaUsuarios()
+        if(window.usuario.nivelUsuario==1)listaUsuarios();
     },[]);
 
     const listaUsuarios = async () =>{
@@ -31,17 +25,21 @@ const HomeIndex = ()=> {
         }
     }
     const filtradoPorEstado = (array) =>{
-       const param = array.filter(x => x.estado=='3'||x.estado=='2');
-       console.log("aas");
-      const groupByCategory = param.reduce((group, product) => {
-        const { username } = product;
-        group[username] = group[username] ?? [];
-        group[username].push(product);
-        return group;
-      }, {});
-      console.log("dsd", groupByCategory);
+       const param = array.filter(x => x.estado=='3'||x.estado=='2');       
+       const groupByCategory = param.reduce((group, product) => {
+            const { username } = product;
+            group[username] = group[username] ?? [];
+            group[username].push(product);
+            return group;
+       }, {});
+        console.log("dsd",Object.getOwnPropertyNames(groupByCategory));
+        Object.getOwnPropertyNames(groupByCategory).forEach((val) => {
+        setUsuariosOrden((prev) => [...prev, {
+             name: groupByCategory[val][0].username,
+             value: groupByCategory[val].length 
+        }]);
+      });
       
-       
     }
 
     return (
@@ -77,7 +75,7 @@ const HomeIndex = ()=> {
                                 <Text><Bold>Usuario</Bold></Text>
                                 <Text><Bold>Órdenes</Bold></Text>
                             </Flex>
-                            <BarList data={ usuariosOrden } marginTop="mt-2" color='emerald' />
+                            <BarList data={usuariosOrden} marginTop="mt-2" color='emerald' />
                         </Card>
                     </Col>
                 </>
