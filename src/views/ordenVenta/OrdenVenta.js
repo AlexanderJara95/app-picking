@@ -1,6 +1,6 @@
 import React, { Component, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
+import { faCheck, faEye, faPrint, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import { Table, Button, Alert } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment/moment';
@@ -177,7 +177,7 @@ class OrdenVenta extends Component {
                                         <Button className="btn btn-warning  btn-sm" title="Finalizar orden" onClick={() => this.finalizarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>
                                         : <Button className="btn btn-success  btn-sm" title="Asignar orden" onClick={() => this.asignarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>}
                                     </>
-                                    : <Button className="btn btn-secondary btn-sm" title="" disabled><FontAwesomeIcon icon={faCheck} /></Button>}</td>
+                                    : <Button className="btn btn-info btn-sm" onClick={() => this.imprimirTicket(itemOrden)} title=""><FontAwesomeIcon icon={faPrint} /></Button>}</td>
                                 <td>{itemOrden.estado !== '6' ?
                                     <>{itemOrden.estado == '5' ?
                                         <a className="btn btn-secondary  btn-sm" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></a>
@@ -230,7 +230,24 @@ class OrdenVenta extends Component {
         this.setState({ usuarioAsignado: 0 });
         this.setState({ ordenSeleccionada: [] });
     }
-    
+
+    imprimirTicket = (orden) =>{
+        //const response = store.dispatch(anularOrden());
+        const picker = this.state.listaUsuarios.filter(x=>x.idUsuario==orden.asignadoA);
+        //console.log("this.state.listaUsuarios",this.state.listaUsuarios);
+        const newWin = window.open('', '', 'height=500, width=1000');
+        newWin.document.write('<title>Informe Orden</title>');
+        newWin.document.write('<h2>Orden</h2>');
+        newWin.document.write('<div><b>Pedido Ventas:</b> '+orden.pedidoVentas+'</div>');
+        newWin.document.write('<div><b>Envío:</b> '+orden.envio+'</div>');
+        newWin.document.write('<div><b>Nombre Cliente:</b> '+orden.nombreCliente+'</div>');
+        newWin.document.write('<div><b>Referencia:</b> '+orden.referencia+'</div>');
+        newWin.document.write('<div><b>Fecha Emisión:</b> '+orden.referencia+'</div>');
+        newWin.document.write('<div><b>Asignado:</b> '+picker[0].nombre+' '+picker[0].apellido+'</div>');
+        newWin.document.close();
+        newWin.print();
+    }
+
     finalizarOrden = async (itemOrden) => {
         Swal.fire({
             title: '¿Está Seguro',
