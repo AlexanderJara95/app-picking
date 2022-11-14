@@ -279,6 +279,9 @@ tr.active{
 #exampleModalCenter {
     --nav-width: 100%;
 }
+#printInfo{
+    display: none;
+}
 
 
 .toastme-list{

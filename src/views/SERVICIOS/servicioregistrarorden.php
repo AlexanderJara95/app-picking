@@ -6,6 +6,7 @@
     //$idDetalleOrden = $_REQUEST["idDetalleOrden"];
     //$idUsuario = $_REQUEST["idUsuario"];
     $idClienteAx = $_REQUEST["idClienteAx"];
+    $emitido = $_REQUEST["emitido"];
     $nombreCliente = $_REQUEST["nombreCliente"];
     $referencia = $_REQUEST["referencia"];
     $envio = $_REQUEST["envio"];
@@ -23,9 +24,9 @@
      //echo $date[year],'-',$date[mon],'-',$date[mday],' ',$date[hours],':',$date[minutes],':',$date[seconds];
 
 	$rs = mysqli_query($cn,
-		"insert into Orden (idClienteAx,nombreCliente,
+		"insert into Orden (idClienteAx,emitido,nombreCliente,
         referencia,envio,pedidoVentas,idUsuario,fechaSubida,estado) 
-        values('".$idClienteAx."',
+        values('".$idClienteAx."','".$emitido."',
         '".$nombreCliente."','".$referencia."','".$envio."',
         '".$pedidoVentas."','".$idUsuario."','".$fechaSubida."','".$estado."')");
 

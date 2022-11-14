@@ -6,9 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const UsuarioIndex = ()=> {
-    useEffect(()=>{
-
-    },[]);
 
     return (
         <div className="container-fluid p-3">

@@ -15,6 +15,7 @@ const HtmlToJson = (html) => {
     //("arrayObtenido",arrayObtenido);
     const ordenPicking={
         envio:envio_sin_con_fecha=="  "?arrayObtenido[20]:envio_sin_con_fecha,
+        emitido:arrayObtenido[2]=="Emitido:"?arrayObtenido[3]:arrayObtenido[4],
         referenciaCliente:arrayObtenido[25]=="  "?"No referenciado":arrayObtenido[25],
         codCliente:arrayObtenido[10],
         nomCliente:arrayObtenido[17],

@@ -3,9 +3,6 @@ import { Breadcrumb } from "react-bootstrap";
 import UsuarioForm from './components/UsuarioForm';
 
 const NuevoUsuario = ()=> {
-    useEffect(()=>{
-
-    },[]);
 
     return (
         <div className="container-fluid pt-3 ">
