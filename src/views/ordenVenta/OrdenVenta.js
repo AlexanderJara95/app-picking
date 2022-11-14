@@ -1,12 +1,14 @@
 import React, { Component, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEye, faPrint, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
-import { Table, Button, Alert } from 'react-bootstrap';
+import { Table, Button, Alert, CardImg} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment/moment';
 import { modificarAvanceOrden,anularOrden  } from '../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../redux/Store';
 import Swal from 'sweetalert2';
+import { Card, List, ListItem, Title } from '@tremor/react';
+import logo from '../../img/logo-megalabs-green.webp';
 
 
 class OrdenVenta extends Component {
@@ -233,19 +235,28 @@ class OrdenVenta extends Component {
 
     imprimirTicket = (orden) =>{
         //const response = store.dispatch(anularOrden());
-        const picker = this.state.listaUsuarios.filter(x=>x.idUsuario==orden.asignadoA);
+        
         //console.log("this.state.listaUsuarios",this.state.listaUsuarios);
-        const newWin = window.open('', '', 'height=500, width=1000');
-        newWin.document.write('<title>Informe Orden</title>');
+        //const newWin = window.open('', '', 'height=500, width=1000');
+        //var newWin = document.getElementById('printInfo').innerHTML;
+        /*newWin.document.write('<title>Informe Orden</title>');
         newWin.document.write('<h2>Orden Finalizada</h2>');
         newWin.document.write('<div><b>Pedido Ventas:</b> '+orden.pedidoVentas+'</div>');
         newWin.document.write('<div><b>Envío:</b> '+orden.envio+'</div>');
         newWin.document.write('<div><b>Nombre Cliente:</b> '+orden.nombreCliente+'</div>');
         newWin.document.write('<div><b>Referencia:</b> '+orden.referencia+'</div>');
-        newWin.document.write('<div><b>Fecha Emisión:</b> '+orden.referencia+'</div>');
-        newWin.document.write('<div><b>Asignado:</b> '+picker[0].nombre+' '+picker[0].apellido+'</div>');
-        newWin.document.close();
-        newWin.print();
+        newWin.document.write('<div><b>Fecha Emisión:</b> '+orden.emitido+'</div>');
+        newWin.document.write('<div><b>Asignado:</b> '+picker[0].nombre+' '+picker[0].apellido+'</div>');*/
+        //newWin.document.close();
+        //newWin.print();
+          //console.log('print');  
+        
+        setTimeout(() => {
+            let printContents = document.getElementById('printInfo').innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            window.location.href='/orden';
+        }, 500);
     }
 
     finalizarOrden = async (itemOrden) => {
@@ -358,6 +369,12 @@ class OrdenVenta extends Component {
                 return <span style={{ backgroundColor: "#8c8c8c", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Anulado</span>
         }
     }
+
+    mostrarUsuario(){
+        const picker = this.state.listaUsuarios.filter(x=>x.idUsuario==this.state.ordenSeleccionada.asignadoA);
+        return picker.length?(picker[0].nombre+' '+ picker[0].apellido):'sin info';
+    }
+
     mostrarEliminar = (itemOrden => {
         var respuesta = window.confirm("¿Está seguro que desea eliminar la Orden " + itemOrden.envio + "?")
         if (respuesta === true) {
@@ -388,6 +405,41 @@ class OrdenVenta extends Component {
         return (
             <section id="orden" className="padded">
                 {contenidoTablaOrden}
+                <div id="printInfo">
+                    <br></br>
+                    <br></br>
+                    <Card maxWidth="max-w-lg">
+                        <CardImg src={logo} style={{width:'100px',position:'absolute',right:'2rem',top: '2rem'}}></CardImg>
+                        <Title><b>Orden Finalizada</b></Title>
+                        <br></br>
+                        <List>
+                            <ListItem>
+                            <span><b>Pedido Ventas</b></span>
+                            <span>{this.state.ordenSeleccionada.pedidoVentas}</span>
+                            </ListItem>
+                            <ListItem>
+                            <span><b>Envío</b></span>
+                            <span>{this.state.ordenSeleccionada.envio}</span>
+                            </ListItem>
+                            <ListItem>
+                            <span><b>Nombre Cliente</b></span>
+                            <span>{this.state.ordenSeleccionada.nombreCliente}</span>
+                            </ListItem>
+                            <ListItem>
+                            <span><b>Referencia</b></span>
+                            <span>{this.state.ordenSeleccionada.referencia}</span>
+                            </ListItem>
+                            <ListItem>
+                            <span><b>Fecha Emisión</b></span>
+                            <span>{this.state.ordenSeleccionada.emitido}</span>
+                            </ListItem>
+                            <ListItem>
+                            <span><b>Asignado</b></span>
+                            <span>{this.mostrarUsuario(this.state.ordenSeleccionada.asignadoA)}</span>
+                            </ListItem>
+                        </List>
+                    </Card>
+                </div>
             </section>
         );
     }

@@ -1,71 +1,22 @@
 import { BarList, Bold, Flex, Text, Title, Card, Metric, Col, ColGrid, Datepicker } from '@tremor/react';
 import {useEffect, useState} from 'react';
 import {obtenerAutorizacion} from '../../config/LocalStorageService';
-import { listarOrdenUsuarios } from '../../redux/ordenVenta/OrdenVentaActions';
+import { listarOrden, listarOrdenUsuarios } from '../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../redux/Store';
 import { listarUsuarios } from '../../redux/usuario/UsuarioActions';
+import ActividadUsuarios from './componentes/ActividadUsuarios';
+import EstadoOrdenes from './componentes/EstadoOrdenes';
 
 const HomeIndex = ()=> {
 
     const [usuario, setUsuario] = useState({});
     const [selectedDate, setSelectedDate] = useState();
-    const [usuariosPicker, setUsuariosPicker] = useState({});
-    const [usuariosOrden, setUsuariosOrden] = useState([]);
 
     useEffect(()=>{
         let data = obtenerAutorizacion();
-        listaUsuariosPicker();
-        setUsuario(data);
-        
-        if(window.usuario.nivelUsuario==1){
-            listaUsuarios();
-        }
+        setUsuario(data);        
     },[]);
-    useEffect(()=>{
-        console.log("selectedDate",selectedDate);
-    },[selectedDate]);
-
-    const listaUsuarios = async () =>{
-        try {
-            const response = await store.dispatch(listarOrdenUsuarios());
-            filtradoPorEstado(response.listaOrden);
-            //setUsuariosOrden();
-        }catch(error){
-
-        }
-    }
-
-    const listaUsuariosPicker = async()=>{
-        try {
-            const response = await store.dispatch(listarUsuarios());
-            setUsuariosPicker((response.usuarios).filter(x => x.nivelUsuario=='3'));
-        } catch (error) {
-            //console.log(error);
-        }
-    }
-
-    const filtradoPorEstado = (array) =>{
-       const param = array.filter(x =>x.estado=='4'|| x.estado=='3'||x.estado=='2');       
-       const groupByCategory = param.reduce((group, product) => {
-            const { username } = product;
-            group[username] = group[username] ?? [];
-            group[username].push(product);
-            return group;
-       }, {});
-        //console.log("dsd",Object.getOwnPropertyNames(groupByCategory));
-        Object.getOwnPropertyNames(groupByCategory).forEach((val) => {
-        setUsuariosOrden((prev) => [...prev, {
-             name: groupByCategory[val][0].username,
-             value: groupByCategory[val].length 
-        }]);
-      });
-      
-    }
-    const handleFecha =(evnt)=>{
-        //	2022-10-30
-        console.log("recib",evnt);
-    }
-
+    
     return (
         <div className='container-fluid pt-5'>
             <Card decoration="top" decorationColor="emerald"
@@ -97,30 +48,17 @@ const HomeIndex = ()=> {
                                 <Text><Bold>Usuario</Bold></Text>
                                 <Text><Bold>Órdenes</Bold></Text>
                             </Flex>
-                            <BarList data={usuariosOrden} marginTop="mt-2" color='emerald' />
+                            <ActividadUsuarios></ActividadUsuarios>
                         </Card>
                     </Col>
                     <Col>
                         <Card>
-                            <Title>Actividad de Usuarios</Title>
-                            <Datepicker
-                                placeholder="Seleccionar"
-                                enableRelativeDates={false}
-                                handleSelect={(value) => setSelectedDate(value)}
-                                defaultStartDate={null}
-                                defaultEndDate={null}
-                                defaultRelativeFilterOption={null}
-                                minDate={null}
-                                maxDate={null}
-                                color="blue"
-                                maxWidth="max-w-none"
-                                marginTop="mt-0"
-                            />
+                            <Title>Estado de Las Órdenes</Title>
                             <Flex justifyContent="justify-between" marginTop="mt-4">
-                                <Text><Bold>Usuario</Bold></Text>
+                                <Text><Bold>Estado</Bold></Text>
                                 <Text><Bold>Órdenes</Bold></Text>
                             </Flex>
-                            <BarList data={usuariosOrden} marginTop="mt-2" color='emerald' />
+                            <EstadoOrdenes></EstadoOrdenes>
                         </Card>
                     </Col>
                 </>
