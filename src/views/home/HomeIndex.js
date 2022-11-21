@@ -4,6 +4,7 @@ import {obtenerAutorizacion} from '../../config/LocalStorageService';
 import { listarOrden, listarOrdenUsuarios } from '../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../redux/Store';
 import { listarUsuarios } from '../../redux/usuario/UsuarioActions';
+import ActividadPorUsuario from './componentes/ActividadPorUsuario';
 import ActividadUsuarios from './componentes/ActividadUsuarios';
 import EstadoOrdenes from './componentes/EstadoOrdenes';
 
