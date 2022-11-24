@@ -4,6 +4,7 @@ import {obtenerAutorizacion} from '../../config/LocalStorageService';
 import { listarOrden, listarOrdenUsuarios } from '../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../redux/Store';
 import { listarUsuarios } from '../../redux/usuario/UsuarioActions';
+import ActividadPorUsuario from './componentes/ActividadPorUsuario';
 import ActividadUsuarios from './componentes/ActividadUsuarios';
 import EstadoOrdenes from './componentes/EstadoOrdenes';
 
@@ -39,7 +40,7 @@ const HomeIndex = ()=> {
             </Card>
             <br/>
             <ColGrid numCols={1} numColsSm={2} numColsLg={2} gapX="gap-x-2" gapY="gap-y-2">
-                {window.usuario.nivelUsuario==1?
+                {window.usuario.nivelUsuario==1||window.usuario.nivelUsuario==2?
                 <>
                     <Col>
                         <Card>
@@ -69,6 +70,4 @@ const HomeIndex = ()=> {
     )
 
 }
-
-
 export default HomeIndex;

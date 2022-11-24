@@ -1,4 +1,5 @@
 import { faUser, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { Icon } from "@tremor/react";
 import { BarList } from "@tremor/react";
 import { useEffect, useState } from "react";
 import { listarOrdenUsuarios } from "../../../redux/ordenVenta/OrdenVentaActions";
@@ -14,9 +15,7 @@ const ActividadUsuarios = () =>{
     },[]);
 
     useEffect(()=>{
-        if(window.usuario.nivelUsuario==1){
             listaUsuarios();
-        }
     });
 
     const listaUsuarios = async () =>{

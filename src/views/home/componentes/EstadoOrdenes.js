@@ -8,9 +8,7 @@ const EstadoOrdenes =()=>{
     const [ordenesEstado, setOrdenesEstado] = useState([]);
 
     useEffect(()=>{
-        if(window.usuario.nivelUsuario==1){
-            listaOrdenes();
-        }
+        listaOrdenes();
     });
 
     const listaOrdenes = async () =>{
