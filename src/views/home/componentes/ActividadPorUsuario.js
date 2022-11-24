@@ -82,9 +82,6 @@ const ActividadPorUsuario = () =>{
         }
     }
 
-
-
-
     const filterByUsername = (username, data) => (
         username === 'all'
             ? data

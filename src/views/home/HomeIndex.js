@@ -40,7 +40,7 @@ const HomeIndex = ()=> {
             </Card>
             <br/>
             <ColGrid numCols={1} numColsSm={2} numColsLg={2} gapX="gap-x-2" gapY="gap-y-2">
-                {window.usuario.nivelUsuario==1?
+                {window.usuario.nivelUsuario==1||window.usuario.nivelUsuario==2?
                 <>
                     <Col>
                         <Card>
@@ -70,6 +70,4 @@ const HomeIndex = ()=> {
     )
 
 }
-
-
 export default HomeIndex;

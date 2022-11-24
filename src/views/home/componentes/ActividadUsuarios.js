@@ -15,9 +15,7 @@ const ActividadUsuarios = () =>{
     },[]);
 
     useEffect(()=>{
-        if(window.usuario.nivelUsuario==1){
             listaUsuarios();
-        }
     });
 
     const listaUsuarios = async () =>{
