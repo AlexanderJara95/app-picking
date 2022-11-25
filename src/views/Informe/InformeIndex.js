@@ -55,6 +55,7 @@ const InformeIndex = ()=> {
                             try {
                                 const response = await store.dispatch(registrarOrdenDetalle({
                                     envio: json.envio??'',
+                                    emitido: json.emitido??'',
                                     codigoArticulo: item.codigoArticulo??'',
                                     descripcion: item.descripcion??'',
                                     numeroLote: item.numLote??'',

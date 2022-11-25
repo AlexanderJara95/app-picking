@@ -35,6 +35,7 @@ export const registrarOrden = (paramData) => async dispatch => {
 	var formData = new FormData();
     var date = moment().format('YYYY-MM-DD h:mm:ss');
     formData.append("idClienteAx", paramData.codCliente);
+    formData.append("emitido", paramData.emitido);
     formData.append("nombreCliente", paramData.nomCliente);
     formData.append("referencia", paramData.referenciaCliente);
     formData.append("envio", paramData.envio);

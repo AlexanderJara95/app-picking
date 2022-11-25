@@ -1,12 +1,14 @@
 import React, { Component, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
-import { Table, Button, Alert } from 'react-bootstrap';
+import { faCheck, faEye, faPrint, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
+import { Table, Button, Alert, CardImg} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment/moment';
 import { modificarAvanceOrden,anularOrden  } from '../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../redux/Store';
 import Swal from 'sweetalert2';
+import { Card, List, ListItem, Title } from '@tremor/react';
+import logo from '../../img/logo-megalabs-green.webp';
 
 
 class OrdenVenta extends Component {
@@ -177,7 +179,7 @@ class OrdenVenta extends Component {
                                         <Button className="btn btn-warning  btn-sm" title="Finalizar orden" onClick={() => this.finalizarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>
                                         : <Button className="btn btn-success  btn-sm" title="Asignar orden" onClick={() => this.asignarOrden(itemOrden)}><FontAwesomeIcon icon={faCheck} /></Button>}
                                     </>
-                                    : <Button className="btn btn-secondary btn-sm" title="" disabled><FontAwesomeIcon icon={faCheck} /></Button>}</td>
+                                    : <Button className="btn btn-info btn-sm" onClick={() => this.imprimirTicket(itemOrden)} title=""><FontAwesomeIcon icon={faPrint} /></Button>}</td>
                                 <td>{itemOrden.estado !== '6' ?
                                     <>{itemOrden.estado == '5' ?
                                         <a className="btn btn-secondary  btn-sm" title="Anular Orden" disabled><FontAwesomeIcon icon={faTimes} /></a>
@@ -230,7 +232,16 @@ class OrdenVenta extends Component {
         this.setState({ usuarioAsignado: 0 });
         this.setState({ ordenSeleccionada: [] });
     }
-    
+
+    imprimirTicket = (orden) =>{        
+        setTimeout(() => {
+            let printContents = document.getElementById('printInfo').innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            window.location.href='/orden';
+        }, 500);
+    }
+
     finalizarOrden = async (itemOrden) => {
         Swal.fire({
             title: '¿Está Seguro',
@@ -341,6 +352,12 @@ class OrdenVenta extends Component {
                 return <span style={{ backgroundColor: "#8c8c8c", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Anulado</span>
         }
     }
+
+    mostrarUsuario(){
+        const picker = this.state.listaUsuarios.filter(x=>x.idUsuario==this.state.ordenSeleccionada.asignadoA);
+        return picker.length?(picker[0].nombre+' '+ picker[0].apellido):'sin info';
+    }
+
     mostrarEliminar = (itemOrden => {
         var respuesta = window.confirm("¿Está seguro que desea eliminar la Orden " + itemOrden.envio + "?")
         if (respuesta === true) {
@@ -371,6 +388,41 @@ class OrdenVenta extends Component {
         return (
             <section id="orden" className="padded">
                 {contenidoTablaOrden}
+                <div id="printInfo">
+                    <br></br>
+                    <br></br>
+                    <Card maxWidth="max-w-lg">
+                        <CardImg src={logo} style={{width:'100px',position:'absolute',right:'2rem',top: '2rem'}}></CardImg>
+                        <Title><b>Orden Finalizada</b></Title>
+                        <br></br>
+                        <List>
+                            <ListItem>
+                            <span><b>Pedido Ventas</b></span>
+                            <span>{this.state.ordenSeleccionada.pedidoVentas}</span>
+                            </ListItem>
+                            <ListItem>
+                            <span><b>Envío</b></span>
+                            <span>{this.state.ordenSeleccionada.envio}</span>
+                            </ListItem>
+                            <ListItem>
+                            <span><b>Nombre Cliente</b></span>
+                            <span>{this.state.ordenSeleccionada.nombreCliente}</span>
+                            </ListItem>
+                            <ListItem>
+                            <span><b>Referencia</b></span>
+                            <span>{this.state.ordenSeleccionada.referencia}</span>
+                            </ListItem>
+                            <ListItem>
+                            <span><b>Fecha Emisión</b></span>
+                            <span>{this.state.ordenSeleccionada.emitido}</span>
+                            </ListItem>
+                            <ListItem>
+                            <span><b>Asignado</b></span>
+                            <span>{this.mostrarUsuario(this.state.ordenSeleccionada.asignadoA)}</span>
+                            </ListItem>
+                        </List>
+                    </Card>
+                </div>
             </section>
         );
     }
