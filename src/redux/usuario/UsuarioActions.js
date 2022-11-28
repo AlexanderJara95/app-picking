@@ -8,7 +8,8 @@ import {
 	USUARIO_ACTUALIZAR,
 	USUARIO_ELIMINAR,
 	ANULAR_USUARIO,
-	LISTAR_USUARIO_ID
+	LISTAR_USUARIO_ID,
+	USUARIO_ORDENES
 } from './UsuarioTypes';
 import { API_BASE_URL } from '../../config/Services';
 
@@ -46,6 +47,15 @@ export const listarUsuarios = () => async dispatch => {
 		type: USUARIO_LISTAR,
 		status: response.status,
 		usuarios: response.data,
+	})
+}
+
+export const listarUsuarioOrdenes = () => async dispatch => {
+	const response = await axios.get(`${API_BASE_URL}/serviciolistarusuariosordenes.php`);
+	return dispatch({
+		type: USUARIO_ORDENES,
+		status: response.status,
+		data: response.data,
 	})
 }
 

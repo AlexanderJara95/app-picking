@@ -4,25 +4,30 @@ import { BarList } from "@tremor/react";
 import { useEffect, useState } from "react";
 import { listarOrdenUsuarios } from "../../../redux/ordenVenta/OrdenVentaActions";
 import store from "../../../redux/Store";
-import { listarUsuarios } from "../../../redux/usuario/UsuarioActions";
+import { listarUsuarioOrdenes, listarUsuarios } from "../../../redux/usuario/UsuarioActions";
 
 const ActividadUsuarios = () =>{
     const [usuariosOrden, setUsuariosOrden] = useState([]);
     const [usuariosPicker, setUsuariosPicker] = useState({});
 
-    useEffect(()=>{
-        listaUsuariosPicker();
-    },[]);
 
     useEffect(()=>{
             listaUsuarios();
-    });
+    },[]);
 
     const listaUsuarios = async () =>{
         try {            
-            const response = await store.dispatch(listarOrdenUsuarios());
+            const response = await store.dispatch(listarUsuarioOrdenes());
             setTimeout(()=>{
-                filtradoPorEstado(response.listaOrden);
+                console.log("data",response.data);
+                //filtradoPorEstado(response.listaOrden);
+                response.data.map((item)=>{
+                    setUsuariosOrden((prev) => [...prev, {
+                        name: item.username,
+                        value: item.ordenes==null?'0':item.ordenes,
+                        icon: faUserCircle
+                   }]);
+               });
             },[300]);
         }catch(error){
             console.log(error);
@@ -37,7 +42,7 @@ const ActividadUsuarios = () =>{
         }
     }
 
-    const filtradoPorEstado = (array) =>{
+    /*const filtradoPorEstado = (array) =>{
         setUsuariosOrden([]);
         var usuarios = [];
         var usuariosOcupados = [];
@@ -72,7 +77,7 @@ const ActividadUsuarios = () =>{
            }]);
        });
        
-     }
+     }*/
  
       return(
         <BarList data={usuariosOrden} marginTop="mt-2" color='emerald' />

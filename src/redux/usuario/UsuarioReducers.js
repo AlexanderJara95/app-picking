@@ -30,7 +30,6 @@ const UsuarioReducers = (state = {}, action) => {
 				detalleUsuario: action.detalleUsuario,
 			};
 		}
-		
 		case USUARIO_VALIDAR_REGISTRAR: {
 			return {
 				...state,
@@ -56,6 +55,12 @@ const UsuarioReducers = (state = {}, action) => {
 			};
 		}		
 		case ANULAR_USUARIO: {
+			return {
+				...state,
+				data: action.data,
+			};
+		}
+		case USUARIO_ORDENES:{
 			return {
 				...state,
 				data: action.data,
