@@ -8,41 +8,39 @@ import { listarUsuarioOrdenes, listarUsuarios } from "../../../redux/usuario/Usu
 
 const ActividadUsuarios = () =>{
     const [usuariosOrden, setUsuariosOrden] = useState([]);
-    const [usuariosPicker, setUsuariosPicker] = useState({});
-
 
     useEffect(()=>{
-            listaUsuarios();
-    },[]);
+        listaUsuarios();
+    });
 
     const listaUsuarios = async () =>{
         try {            
             const response = await store.dispatch(listarUsuarioOrdenes());
-            setTimeout(()=>{
-                console.log("data",response.data);
-                //filtradoPorEstado(response.listaOrden);
-                response.data.map((item)=>{
-                    setUsuariosOrden((prev) => [...prev, {
-                        name: item.username,
-                        value: item.ordenes==null?'0':item.ordenes,
-                        icon: faUserCircle
-                   }]);
-               });
-            },[300]);
+            listaUsuariosOrden(response.data);
         }catch(error){
             console.log(error);
         }
     }
-    const listaUsuariosPicker = async()=>{
+    const listaUsuariosOrden = async(array)=>{
+        setUsuariosOrden([]);
+        array.map((item)=>{
+            setUsuariosOrden((prev) => [...prev, {
+                name: item.username,
+                value: item.ordenes==null?'0':item.ordenes,
+                icon: faUserCircle
+           }]);
+        });
+    }
+    /*const listaUsuariosPicker = async()=>{
         try {
             const response = await store.dispatch(listarUsuarios());
             setUsuariosPicker((response.usuarios).filter(x => x.nivelUsuario=='3'));
         } catch (error) {
             console.log(error);
         }
-    }
+    }/
 
-    /*const filtradoPorEstado = (array) =>{
+    const filtradoPorEstado = (array) =>{
         setUsuariosOrden([]);
         var usuarios = [];
         var usuariosOcupados = [];

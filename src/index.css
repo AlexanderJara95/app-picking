@@ -46,6 +46,15 @@ form a:hover{
     background-color: rgb(54, 153, 120) !important;
     border-color:rgb(48, 139, 109);
 }
+.rounded-pill-cancel{
+    border-radius: var(--bs-border-radius-pill) !important;
+}
+.cancel-a{
+    color: #fff;
+}
+.cancel-a:hover{
+    color: #fff !important;
+}
 .section-body{
     position: relative;
     margin: var(--header-height) 0 0 0;
