@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Form, FormControl, FormSelect, InputGroup } from "react-bootstrap";
+import { Button, Col, Form, FormControl, FormSelect, InputGroup, NavLink, Row, Stack } from "react-bootstrap";
 import store from "../../../redux/Store";
 import { StatusCodes } from 'http-status-codes';
 import { listarUsuarioPorId, listarUsuarios, registrarUsuario, validarregistrarUsuario, actualizarUsuario } from "../../../redux/usuario/UsuarioActions";
@@ -127,7 +127,7 @@ const UsuarioForm = ({accion,id}) =>{
 	};
 
     return(
-        <Form className='col-10 col-sm-6 col-md-4 col-xl-4 d-grid gap-5 mx-auto' noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form className='col-10 col-sm-6 col-md-4 col-xl-4 d-grid gap-4 mx-auto' noValidate validated={validated} onSubmit={handleSubmit}>
             <select
                 className="form-select"
                 value={usuario.nivelUsuario??''}
@@ -161,7 +161,7 @@ const UsuarioForm = ({accion,id}) =>{
                 required
                 autoFocus
             />            
-            <InputGroup className="mb-3">
+            <InputGroup >
                 <FormControl
                     type='input'
                     name='username'
@@ -183,14 +183,20 @@ const UsuarioForm = ({accion,id}) =>{
                 autoFocus
             />
             {/* <Form.Check type="checkbox" name='recuerdame' label="Recuerdame" /> */}
-            <Button
-                variant='primary'
-                size='lg'
-                className='rounded-pill'
-                type="submit"
-            >
-                Guardar
-            </Button>
+            <Stack gap={4} className="col-12 mx-auto">
+                <Button
+                    variant='primary'
+                    size='lg'
+                    className='rounded-pill'
+                    type="submit"
+                    >
+                        Guardar
+                </Button>
+                <a href="/usuario" className='btn btn-secondary btn-lg rounded-pill-cancel cancel-a'>
+                    Cancelar
+                </a>
+            </Stack>
+                        
         </Form>
     );
 }
