@@ -125,7 +125,7 @@ const ListadoUsuarios = () =>{
                                 }
                             </td>
                             {/*pendiente por mejorar */}
-                            <td>{itemUsuario.idUsuario != window.usuario.idUsuario || itemUsuario.estado == 1 && itemUsuario.idUsuario == window.usuario.idUsuario || itemUsuario.nivelUsuario>=parseInt(window.usuario.nivelUsuario)+1
+                            <td>{itemUsuario.estado == 1 && itemUsuario.nivelUsuario == window.usuario.nivelUsuario
                                     ? <Button className="btn-secondary" disabled><FontAwesomeIcon icon={faLock} /></Button>
                                     :<>
                                         {itemUsuario.estado == 1 && itemUsuario.nivelUsuario != window.usuario.nivelUsuario
