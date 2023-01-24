@@ -3,7 +3,7 @@
 
 	$CodOrden = $_REQUEST["envio"];
 	$rs = mysqli_query($cn,
-		"select * from Detalle_Orden where envio='".$CodOrden."' order by idArticulo, codigoArticulo, cantidad desc");
+		"select * from Detalle_Orden where envio='".$CodOrden."' order by ubicacion, codigoArticulo, cantidad desc");
 		
 		//contamos si existe un producto en la categoria
 	if($rs->num_rows > 0){
@@ -22,6 +22,5 @@
 	//Se genera del arreglo un conjunto de resultados
 	//en formato JSON
 	mysqli_close($cn);
-	
-	
+		
 ?>

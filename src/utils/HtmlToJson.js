@@ -23,6 +23,7 @@ const HtmlToJson = (html) => {
         detalleOrden:[]
     }
     arrayObtenido.map((item,index)=>{
+        var qant=arrayObtenido[index+6].replace(',','');
         if((item.slice(0,1)==="P" && item.slice(3,4)==="N" && item.slice(6,7)==="U" && item.length === 9) || (item =='ExtLlegada')){
             ordenPicking.detalleOrden.push({
                 ubicacion:arrayObtenido[index],
@@ -31,7 +32,7 @@ const HtmlToJson = (html) => {
                 descripcion:arrayObtenido[index+3],
                 numLote:arrayObtenido[index+4],
                 fechaCaducidad:arrayObtenido[index+5],
-                cantidad:arrayObtenido[index+6],
+                cantidad:qant,
             });
         }
     });

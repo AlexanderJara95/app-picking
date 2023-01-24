@@ -104,10 +104,28 @@ export const listarOrdenDetallePorId = (id) => async dispatch => {
 	var formData = new FormData();
     formData.append("envio", id);
     const response = await axios.post(`${API_BASE_URL}/servicioconsultardetalleorden.php`,formData);
+    //console.log("response.data ->",response.data);
+    var padres = (response.data).filter(x=>x.rama == "1");
+    var hijos = (response.data).filter(x=>x.rama == "2");
+    const obj=[];
+    padres.map((item)=>{
+        obj.push(item);
+        hijos.map((hItem)=>{
+            if(hItem.codigoHijo.includes(item.idArticulo+item.codigoArticulo)){
+                obj.push(hItem);
+            }
+        });
+    });
+
+    //console.log(obj);
+    //padres.push(hijos);
+    //console.log("padres",padres);
+    //console.log("hijos",hijos);
+
     return dispatch({
         type: LISTAR_ORDEN_DETALLE,
 		status: response.status,
-        detalleOrden: response.data
+        detalleOrden: obj
     })
 }
 
@@ -145,7 +163,6 @@ export const registrarDetalleArticulo = (paramData) => async dispatch => {
         data: response.data
     })  
 }  
-
 
 export const eliminarDetalleHijos = (paramData) => async dispatch => {
 	//console.log("Parammmm",paramData);
