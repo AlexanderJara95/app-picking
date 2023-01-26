@@ -9,7 +9,7 @@
                             WHERE asignadoA = $idUsuario
                             AND estado 
                             BETWEEN 2 AND 4
-                            ORDER BY idOrden");
+                            ORDER BY idOrden DESC");
         while ($row = mysqli_fetch_assoc($rs)) {
             $res[] = $row;
         }
