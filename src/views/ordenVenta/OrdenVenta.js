@@ -9,6 +9,7 @@ import store from '../../redux/Store';
 import Swal from 'sweetalert2';
 import { Card, List, ListItem, Title } from '@tremor/react';
 import logo from '../../img/logo-megalabs-green.webp';
+import { API_BASE_URL } from '../../config/Services';
 
 
 class OrdenVenta extends Component {
@@ -39,7 +40,7 @@ class OrdenVenta extends Component {
     }
 
     leerOrdenes() {
-        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarorden.php";
+        const rutaServicio = API_BASE_URL + "serviciolistarorden.php";
         fetch(rutaServicio)
             .then(
                 res => res.json() //indicamos que el objeto devuelto por dicha solicitud al servicio, sera un Json
@@ -55,7 +56,7 @@ class OrdenVenta extends Component {
     }
 
     leerUsuarios() {
-        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarusuarios.php"
+        const rutaServicio = API_BASE_URL + "serviciolistarusuarios.php"
         fetch(rutaServicio)
             .then(res => res.json())
             .then(
@@ -67,7 +68,7 @@ class OrdenVenta extends Component {
     }
 
     leerEstado() {
-        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarestadosorden.php"
+        const rutaServicio = API_BASE_URL + "serviciolistarestadosorden.php"
         fetch(rutaServicio)
             .then(res => res.json())
             .then(
@@ -207,7 +208,7 @@ class OrdenVenta extends Component {
     asignarOrden = (idOrden) => {
         if (this.state.ordenSeleccionada.idOrden !== null && this.state.usuarioAsignado !== 0) {
             //console.log("HUUUU");
-            const rutaServicio = "https://megalabs.digitalbroperu.com/servicioasignarorden.php"
+            const rutaServicio = API_BASE_URL + "servicioasignarorden.php"
             var formData = new FormData();
             formData.append("idOrden", this.state.ordenSeleccionada.idOrden);
             formData.append("asignadoPor", window.usuario.idUsuario);
@@ -260,7 +261,7 @@ class OrdenVenta extends Component {
                     console.log("ENTRO AL SERVICIO FECHA");
                     console.log(itemOrden.estado);
 
-                    const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizarfechacompletadaorden.php"
+                    const rutaServicio = API_BASE_URL + "servicioactualizarfechacompletadaorden.php"
                     var formData = new FormData();
                     var date = moment().format('DD/MM/YYYY h:mm:ss');
                     formData.append("idOrden", itemOrden.idOrden);
@@ -289,7 +290,7 @@ class OrdenVenta extends Component {
     actualizarFechaFinalizado = (itemOrden => {
         if (itemOrden.abierto != '1') {
         console.log("ENTRO AL SERVICIO FECHA");
-        const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizarfechacompletadaorden.php"
+        const rutaServicio = API_BASE_URL + "servicioactualizarfechacompletadaorden.php"
         var formData = new FormData();
         var date = moment().format('DD/MM/YYYY h:mm:ss');
         formData.append("idOrden", itemOrden.idOrden);
@@ -361,7 +362,7 @@ class OrdenVenta extends Component {
     mostrarEliminar = (itemOrden => {
         var respuesta = window.confirm("¿Está seguro que desea eliminar la Orden " + itemOrden.envio + "?")
         if (respuesta === true) {
-            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioeliminarorden.php"
+            const rutaServicio = API_BASE_URL + "servicioeliminarorden.php"
             var formData = new FormData();
             formData.append("idOrden", itemOrden.idOrden);
             fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
