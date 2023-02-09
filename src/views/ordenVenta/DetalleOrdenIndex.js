@@ -9,11 +9,7 @@ import ListadoDetalleVisual from "./components/ListadoDetalleVisual";
 const DetalleOrdenIndex = () =>{
     const param = useParams();
     const [progress,setProgress] = useState(0);
-
    
-    useEffect(()=>{
-        console.log("id",(param.id).split("-")[1]);
-    },[param]);
     return(
         <>        
           {/*  <Breadcrumb>

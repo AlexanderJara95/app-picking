@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEye, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons' //Esto es para importar iconos, se deben mencionar cada icono especifico
 import { Table, Button, Alert } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import moment from 'moment';
+import { API_BASE_URL } from '../../config/Services';
 
 
 class OrdenVentaPicker extends Component {
@@ -34,7 +34,7 @@ class OrdenVentaPicker extends Component {
     }
 
     leerOrdenes() {
-        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarordenpicker.php";
+        const rutaServicio = API_BASE_URL + "serviciolistarordenpicker.php";
         var formData = new FormData();
             formData.append("idUsuario", window.usuario.idUsuario);
             fetch(rutaServicio, {
@@ -54,7 +54,7 @@ class OrdenVentaPicker extends Component {
     }
 
     leerUsuarios() {
-        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarusuarios.php"
+        const rutaServicio = API_BASE_URL + "serviciolistarusuarios.php"
         fetch(rutaServicio)
             .then(res => res.json())
             .then(
@@ -66,7 +66,7 @@ class OrdenVentaPicker extends Component {
     }
 
     leerEstado() {
-        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarestadosorden.php"
+        const rutaServicio = API_BASE_URL + "serviciolistarestadosorden.php"
         fetch(rutaServicio)
             .then(res => res.json())
             .then(
@@ -127,7 +127,7 @@ class OrdenVentaPicker extends Component {
                                     <td  title="Estado de la orden" style={{ textAlign: 'center', fontSize: '10px' }}>{this.mostrarEstado(itemOrden.estado)}</td>
                                     <td title="Porcentaje de avance de la orden" >{itemOrden.avance}%</td>
                                     <td>{itemOrden.estado !== '6'? 
-                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.envio + "-" + itemOrden.estado}  onClick={() => this.actualizarFechaApertura(itemOrden)}>
+                                        <NavLink to={"/detalleorden/" + itemOrden.idOrden + "-" + itemOrden.envio + "-" + itemOrden.estado} >
                                             <Button className="btn secondary"  title="Ver detalle de orden" ><FontAwesomeIcon icon={faEye}/></Button></NavLink>
                                         :<Button className="btn secondary"  title="Ver detalle de orden" disabled><FontAwesomeIcon icon={faEye}/></Button>}</td>
                                         {/* estuctura para condicion:
@@ -153,7 +153,7 @@ class OrdenVentaPicker extends Component {
     asignarOrden = (idOrden) => {
         if (this.state.ordenSeleccionada.idOrden !== null && this.state.usuarioAsignado !== 0) {
             //console.log("HUUUU");
-            const rutaServicio = "https://megalabs.digitalbroperu.com/servicioasignarorden.php"
+            const rutaServicio = API_BASE_URL + "servicioasignarorden.php"
             var formData = new FormData();
             formData.append("idOrden", this.state.ordenSeleccionada.idOrden);
             formData.append("asignadoPor", window.usuario.idUsuario);
@@ -223,7 +223,7 @@ class OrdenVentaPicker extends Component {
     mostrarEliminar = (itemOrden => {
         var respuesta = window.confirm("¿Está seguro que desea eliminar la Orden " + itemOrden.envio + "?")
         if (respuesta === true) {
-            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioeliminarorden.php"
+            const rutaServicio = API_BASE_URL+"servicioeliminarorden.php"
             var formData = new FormData();
             formData.append("idOrden", itemOrden.idOrden);
             fetch(rutaServicio, { method: 'POST', body: formData })
@@ -234,23 +234,11 @@ class OrdenVentaPicker extends Component {
     anularOrden = (itemOrden => {
         var respuesta = window.confirm("¿Está seguro que desea anular la Orden " + itemOrden.envio + "?")
         if (respuesta === true) {
-            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioanularorden.php"
+            const rutaServicio = API_BASE_URL + "servicioanularorden.php"
             var formData = new FormData();
             formData.append("idOrden", itemOrden.idOrden);
             fetch(rutaServicio, { method: 'POST', body: formData })
                 .then(() => { this.leerOrdenes(); })
-        }
-    })
-
-    actualizarFechaApertura = (itemOrden => {
-        if (itemOrden.abierto != '0') {
-            const rutaServicio = "http://megalabs.digitalbroperu.com/servicioactualizarfechainicioorden.php"
-            var formData = new FormData();
-            var date = moment().format('DD/MM/YYYY h:mm:ss');
-            formData.append("idOrden", itemOrden.idOrden);
-            formData.append("abierto", '1');
-            formData.append("fechaInicio", date);
-            fetch(rutaServicio, { method: 'POST', body: formData }).then(() => { this.leerOrdenes(); })
         }
     })
 

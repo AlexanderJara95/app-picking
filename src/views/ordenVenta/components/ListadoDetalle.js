@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { eliminarDetalleHijos, listarOrdenDetallePorId, modificarAvanceOrden, modificarOrdenDetalle } from '../../../redux/ordenVenta/OrdenVentaActions';
+import { eliminarDetalleHijos, listarOrdenDetallePorId, modificarAvanceOrden, modificarFechaApertura, modificarOrdenDetalle } from '../../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../../redux/Store';
 import { StatusCodes } from 'http-status-codes';
 import { Button, FormCheck, ProgressBar, Table } from 'react-bootstrap';
@@ -29,15 +29,20 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             const response = await store.dispatch(listarOrdenDetallePorId(id));
             const progressDb = (100 / response.detalleOrden.filter(item => item.rama == 1).length) * response.detalleOrden.filter(item => item.listo == 1).length;
             if (response.status === StatusCodes.OK) {
-                if (progressDb == 100) setProgresoLocal(progressDb);
+                setProgresoLocal(Math.round(progressDb));
                 setProgress(progressDb == 0 ? 0 : progressDb);
                 setDatosTabla(response.detalleOrden);
                 setProgresoDb(progressDb);
+            }
+            //solo la primera vez que se acceda
+            if(progressDb===0){                
+                const response = await store.dispatch(modificarFechaApertura(cod));
             }
         } catch (error) {
             //console.log(error);
         }
     }
+
     const seleccionarOrden = (itemOrden) => {
         setOrdenSeleccionada(itemOrden);
         document.getElementById("li-articulo-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"   
@@ -73,6 +78,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
         //console.log('newsitem', newItems);
         return 3;
     }
+
     const atenderOrden = ()=>{
         try {
             const responseAtender = store.dispatch(modificarAvanceOrden({

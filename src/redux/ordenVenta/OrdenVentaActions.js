@@ -70,7 +70,25 @@ export const registrarOrdenDetalle = (paramData) => async dispatch => {
         status: response.status,
         data: response.data
     })  
+} 
+
+export const modificarFechaApertura = (id) => async dispatch => {
+	console.log("Param",id);
+	var formData = new FormData();
+    var date = moment().format('DD/MM/YYYY h:mm:ss');
+    formData.append("idOrden", id);
+    formData.append("abierto", '1');
+    formData.append("fechaInicio", date);    
+	const response = await axios.post(`${API_BASE_URL}/servicioactualizarfechainicioorden.php`,formData);
+    
+    return dispatch({
+        type: MODIFICAR_ORDEN_DETALLE,
+        status: response.status,
+        data: response.data
+    })  
 }  
+
+
 export const modificarOrdenDetalle = (paramData) => async dispatch => {
 	//console.log("Param Actu",paramData);
 	var formData = new FormData();
