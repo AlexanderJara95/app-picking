@@ -263,7 +263,7 @@ class OrdenVenta extends Component {
 
                     const rutaServicio = API_BASE_URL + "servicioactualizarfechacompletadaorden.php"
                     var formData = new FormData();
-                    var date = moment().format('DD/MM/YYYY h:mm:ss');
+                    var date = moment().format('DD/MM/YYYY HH:mm:ss');
                     formData.append("idOrden", itemOrden.idOrden);
                     formData.append("abierto", '2');
                     formData.append("fechaCompletado", date);
@@ -292,7 +292,7 @@ class OrdenVenta extends Component {
         console.log("ENTRO AL SERVICIO FECHA");
         const rutaServicio = API_BASE_URL + "servicioactualizarfechacompletadaorden.php"
         var formData = new FormData();
-        var date = moment().format('DD/MM/YYYY h:mm:ss');
+        var date = moment().format('DD/MM/YYYY HH:mm:ss');
         formData.append("idOrden", itemOrden.idOrden);
         formData.append("abierto", '2');
         formData.append("fechaCompletado", date);

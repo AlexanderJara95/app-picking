@@ -21,13 +21,12 @@ const ActividadUsuarios = () =>{
             console.log(error);
         }
     }
-    const listaUsuariosOrden = async(array)=>{
+    const listaUsuariosOrden = (array)=>{
         setUsuariosOrden([]);
         array.map((item)=>{
             setUsuariosOrden((prev) => [...prev, {
                 name: item.username,
                 value: item.ordenes==null?'0':item.ordenes,
-                icon: faUserCircle
            }]);
         });
     }
