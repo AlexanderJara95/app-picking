@@ -33,7 +33,7 @@ export const registrarOrden = (paramData) => async dispatch => {
     var day = dateObj.getDate();
     var year = dateObj.getFullYear();
 	var formData = new FormData();
-    var date = moment().format('YYYY-MM-DD h:mm:ss');
+    var date = moment().format('YYYY-MM-DD HH:mm:ss');
     formData.append("idClienteAx", paramData.codCliente);
     formData.append("emitido", paramData.emitido);
     formData.append("nombreCliente", paramData.nomCliente);
@@ -75,7 +75,7 @@ export const registrarOrdenDetalle = (paramData) => async dispatch => {
 export const modificarFechaApertura = (id) => async dispatch => {
 	console.log("Param",id);
 	var formData = new FormData();
-    var date = moment().format('DD/MM/YYYY h:mm:ss');
+    var date = moment().format('DD/MM/YYYY HH:mm:ss');
     formData.append("idOrden", id);
     formData.append("abierto", '1');
     formData.append("fechaInicio", date);    
