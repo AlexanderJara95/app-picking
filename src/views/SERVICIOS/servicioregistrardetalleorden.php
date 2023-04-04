@@ -12,15 +12,16 @@
     $fechaCaducidad = $_REQUEST["fechaCaducidad"];
     $cantidad = $_REQUEST["cantidad"];
     $rama = '1';
+    $estado = '7';
     $codigoHijo = $_REQUEST["codigoHijo"];
        
     //$date = getdate();
-     //echo $date[year],'-',$date[mon],'-',$date[mday],' ',$date[hours],':',$date[minutes],':',$date[seconds];
+    //echo $date[year],'-',$date[mon],'-',$date[mday],' ',$date[hours],':',$date[minutes],':',$date[seconds];
 
 	$rs = mysqli_query($cn,
-		"insert into Detalle_Orden (envio,codigoArticulo,descripcion,numeroLote, ubicacion,idPallet,fechaCaducidad,cantidad, rama) 
+		"insert into Detalle_Orden (envio,codigoArticulo,descripcion,numeroLote, ubicacion,idPallet,fechaCaducidad,cantidad, rama,estado) 
         values('".$envio."','".$codigoArticulo."','".$descripcion."',
-         '".$numeroLote."','".$ubicacion."','".$idPallet."', '".$fechaCaducidad."','".$cantidad."','".$rama."')");
+         '".$numeroLote."','".$ubicacion."','".$idPallet."', '".$fechaCaducidad."','".$cantidad."','".$rama."','".$estado."')");
 
 	echo mysqli_insert_id($cn); 
 	mysqli_close($cn);
