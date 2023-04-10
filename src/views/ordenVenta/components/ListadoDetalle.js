@@ -27,7 +27,8 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
     const listaOrdernesServicio = async (id) => {
         try {
             const response = await store.dispatch(listarOrdenDetallePorId(id));
-            const progressDb = (100 / response.detalleOrden.filter(item => item.rama == 1).length) * response.detalleOrden.filter(item => item.listo == 1).length;
+            const progressDb = (100 / response.detalleOrden.filter(item => item.rama == 1).length) * response.detalleOrden.filter(item => (item.estado == 5 || item.estado == 6)).length;
+            console.log("wer",progresoDb)
             if (response.status === StatusCodes.OK) {
                 setProgresoLocal(Math.round(progressDb));
                 setProgress(progressDb == 0 ? 0 : progressDb);
@@ -41,18 +42,6 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
         } catch (error) {
             //console.log(error);
         }
-    }
-
-    const seleccionarOrden = (itemOrden) => {
-        setOrdenSeleccionada(itemOrden);
-        document.getElementById("li-articulo-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"   
-        if (Object.keys(ordenSeleccionada).length !== 0) {
-            document.getElementById("li-articulo-" + ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
-        }
-        this.setState({ ordenSeleccionada: itemOrden })
-
-        document.getElementById("li-articulo-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
-
     }
 
     const cambiarProgreso = (e, idArticulo) => {
@@ -71,12 +60,6 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             rows.splice(index, 1);
             setRowDataArticulos(rows);
         }
-    }
-
-    const contadorfilashijo = (index) => {
-        const newItems = datosTabla.splice(0, index);
-        //console.log('newsitem', newItems);
-        return 3;
     }
 
     const atenderOrden = ()=>{
@@ -107,7 +90,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                 try {
                     const response = await store.dispatch(modificarOrdenDetalle({
                         idArticulo: item,
-                        listo: 1
+                        estado: 5
                     }));
                     //const estadoAvance = progreso < 100 && progreso > 0 ? 3 : 4;
                     const response2 = await store.dispatch(modificarAvanceOrden({
@@ -146,7 +129,7 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             //console.log("eliminación: ",response);
             const response2 = await store.dispatch(modificarOrdenDetalle({
                 idArticulo: itemDetalle.idArticulo,
-                listo: 0
+                estado: 7
             }));
 
             const nuevoProgreso = progreso - 100 / datosTabla.filter(item => item.rama == 1).length;
@@ -165,6 +148,36 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
         //limpiarImputs();
         //listaOrdernesServicio(id); 
     }
+    const anularDetalleArticuloHijo = async (itemDetalle) => {
+        try {
+
+            const response = await store.dispatch(eliminarDetalleHijos({
+                codigoHijo: cod + itemDetalle.idArticulo + itemDetalle.codigoArticulo
+                
+            }));
+            //console.log("eliminación: ",response);
+            const response2 = await store.dispatch(modificarOrdenDetalle({
+                idArticulo: itemDetalle.idArticulo,
+                estado: 6
+            }));
+            
+            const nuevoProgreso = progreso + 100 / datosTabla.filter(item => item.rama == 1).length;
+            setProgress(nuevoProgreso);
+            console.log("nuevoProgreso",nuevoProgreso);
+            const estadoAvance = nuevoProgreso < 100 && nuevoProgreso > 0 ? 3 : 4;
+            console.log("estado",estadoAvance);
+            const response3 = await store.dispatch(modificarAvanceOrden({
+                idOrden: cod,
+                estado: estadoAvance,
+                avance: nuevoProgreso
+            }));
+
+            limpiarImputs();
+
+        } catch (error) {
+            //console.log(error);
+        }
+    }
     const limpiarImputs = () => {
         setTimeout(() => {
             setOrdenSeleccionada({});
@@ -173,7 +186,29 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             listaOrdernesServicio(id);
         }, 500);
     }
-
+    const anularArticulo = (itemDetalle)=>{
+        Swal.fire({
+            title: '¿Está Seguro?',
+            text: "¿Desea anular este artículo de la Orden?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#369978',
+            confirmButtonText: 'Si, Eliminar',
+            cancelButtonText: 'Cancelar',
+            iconColor: '#dc3545'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const response = anularDetalleArticuloHijo(itemDetalle);
+                Swal.fire({
+                    title: '¡Eliminados!',
+                    text: "Productos eliminados correctamente",
+                    icon: 'success',
+                    confirmButtonColor: '#369978',
+                    confirmButtonText: 'Listo',
+                })
+            }
+        })
+    }
     const borrarHijos = (itemDetalle) => {
         Swal.fire({
             title: '¿Está Seguro?',
@@ -183,10 +218,10 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
             confirmButtonColor: '#369978',
             confirmButtonText: 'Si, Eliminar',
             cancelButtonText: 'Cancelar',
-            iconColor: '#dc3545'
+            iconColor: '#ffc107'
         }).then((result) => {
             if (result.isConfirmed) {
-                const response = store.dispatch(eliminarDetalleArticuloHijo(itemDetalle))
+                const response = eliminarDetalleArticuloHijo(itemDetalle);
                 Swal.fire({
                     title: '¡Eliminados!',
                     text: "Productos eliminados correctamente",
@@ -230,47 +265,56 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                     : null
                                 } */}
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.codigoArticulo}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.codigoArticulo}</td>
                                     : <td></td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.descripcion}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.descripcion}</td>
                                     : <td></td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '13px' }}>{itemDetalle.numeroLote}</td>
-                                    : <td style={{ fontSize: '11px' }}>{itemDetalle.numeroLote}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '13px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.numeroLote}</td>
+                                    : <td style={{ fontSize: '11px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.numeroLote}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.ubicacion}</td>
-                                    : <td style={{ fontSize: '11px' }}>{itemDetalle.ubicacion}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.ubicacion}</td>
+                                    : <td style={{ fontSize: '11px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.ubicacion}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.idPallet}</td>
-                                    : <td style={{ fontSize: '12px' }}>{itemDetalle.idPallet}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.idPallet}</td>
+                                    : <td style={{ fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.idPallet}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.fechaCaducidad}</td>
-                                    : <td style={{ fontSize: '12px' }}>{itemDetalle.fechaCaducidad}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.fechaCaducidad}</td>
+                                    : <td style={{ fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.fechaCaducidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ textAlign: 'center', width: '50px', fontWeight: 'bold', fontSize: '15px' }}>{itemDetalle.cantidad}</td>
-                                    : <td style={{ textAlign: 'center', width: '50px' }}>{itemDetalle.cantidad}</td>
+                                    ? <td style={{ textAlign: 'center', width: '50px', fontWeight: 'bold', fontSize: '15px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.cantidad}</td>
+                                    : <td style={{ textAlign: 'center', width: '50px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.cantidad}</td>
                                 }
-                                {itemDetalle.rama == 1
-                                    ? <td style={{ textAlign: 'center', width: '50px' }}>
-                                        {itemDetalle.listo == 1
-                                            ? <div className="form-check"><FormCheck disabled={true} checked /> </div>
-                                            : <div className="form-check"><input name={itemDetalle.idArticulo} className="form-check-input" type="checkbox" onChange={(e) => cambiarProgreso(e, itemDetalle.idArticulo)} /></div>
-                                        }
-                                    </td>
-                                    : <td></td>
-                                }
+                                <td style={{ textAlign: 'center', width: '50px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>
+                                    {itemDetalle.estado == 5 || itemDetalle.estado == 8
+                                        ? <div className="form-check" ><FormCheck disabled={true} checked /> </div>
+                                        : <>{itemDetalle.estado == 6 
+                                            ?
+                                            <span>Anulado</span>
+                                            :<div className="form-check"><input name={itemDetalle.idArticulo} className="form-check-input" type="checkbox" onChange={(e) => cambiarProgreso(e, itemDetalle.idArticulo)} /></div>
+                                        }</>
+                                    }
+                                </td>
                                 {itemDetalle.rama == 1
                                     ? <td style={{ textAlign: 'center', width: '100px', fontWeight: 'bold' }}>
-                                        {itemDetalle.listo == 0
-                                            ? <NavLink to={"/detallearticulo/" + cod + "-" + itemDetalle.idArticulo + "-" + (progresoDb + 100 / datosTabla.filter(item => item.rama == 1).length).toFixed(0)}><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>
-                                            : <Button className='btn-warning' onClick={() => {borrarHijos(itemDetalle)}}> <FontAwesomeIcon icon={faTrash} /> </Button>
+                                        {itemDetalle.estado == 7
+                                            ? <>
+                                                <NavLink to={"/detallearticulo/" + cod + "-" + itemDetalle.idArticulo + "-" + (progresoDb + 100 / datosTabla.filter(item => item.rama == 1).length).toFixed(0)}><Button><FontAwesomeIcon icon={faEdit} /></Button></NavLink>&nbsp;&nbsp;
+                                                <Button className='btn-danger' onClick={() => {anularArticulo(itemDetalle)}}> <FontAwesomeIcon icon={faX} /> </Button>
+                                            </>
+                                            : <>{itemDetalle.estado == 6
+                                                ?
+                                                <Button className='btn-warning' onClick={() => {borrarHijos(itemDetalle)}}> <FontAwesomeIcon icon={faTrash} /> </Button>
+                                                :
+                                                <Button className='btn-warning' onClick={() => {borrarHijos(itemDetalle)}}> <FontAwesomeIcon icon={faTrash} /> </Button>
+                                            }</>
                                             /*
                                                 <NavLink to={"/detallearticulo/" + cod+"-"+itemDetalle.idArticulo} onClick={() => {
                                                     if (window.confirm('¿Estas seguro que deseas eliminar el progreso de este articulo y asignarlos nuevamente?')) 
@@ -280,10 +324,10 @@ const ListadoDetalle = ({ id, progreso, setProgress, cod }) => {
                                                         <FontAwesomeIcon icon={faEdit} />
                                                     </Button>
                                                 </NavLink>
-                                            */
+                                            */                                            
                                         }
                                     </td>
-                                        : null
+                                        : <td></td>
                                 }
                             </tr>
                         )}

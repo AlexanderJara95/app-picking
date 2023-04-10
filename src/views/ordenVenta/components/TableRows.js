@@ -6,7 +6,7 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
         rowsData.map((data, index) => {
             const { idArticulo, envio, codigoArticulo, descripcion, numeroLote, ubicacion, idPallet, fechaCaducidad, cantidad } = data;
             //const fecha= fechaCaducidad.slice(6,10)+"-"+fechaCaducidad.slice(3,5)+"-"+fechaCaducidad.slice(0,2);
-            console.log("fecha",fechaCaducidad); //31/05/2024
+            console.log("fecha",fechaCaducidad);  //31/05/2024
             return (
                 <tr key={index}>
                     <td><input type="text" value={ubicacion} onChange={(evnt) => (handleChange(index, evnt))} name="ubicacion" className="form-control" /></td>

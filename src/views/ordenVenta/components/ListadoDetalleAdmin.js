@@ -22,8 +22,8 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
 
     const listaOrdernesServicio = async (id) => {
         try {
-            const response = await store.dispatch(listarOrdenDetallePorId(id));
-            const progressDb=(100/response.detalleOrden.filter(item=>item.rama==1).length)*response.detalleOrden.filter(item=>item.listo==1).length;
+           const response = await store.dispatch(listarOrdenDetallePorId(id));
+           const progressDb=(100/response.detalleOrden.filter(item=>item.rama==1).length)*response.detalleOrden.filter(item=>(item.estado==5||item.estado==6)).length;
             if (response.status === StatusCodes.OK) {
                 if(progressDb==100)setProgresoLocal(progressDb);
                 setProgress(progressDb==0?0:progressDb);
@@ -33,95 +33,7 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
             //console.log(error);
         }
     }
-    const seleccionarOrden = (itemOrden) => {
-        setOrdenSeleccionada(itemOrden);
-        document.getElementById("li-articulo-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"   
-        if (Object.keys(ordenSeleccionada).length !== 0) {
-            document.getElementById("li-articulo-" + ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
-        }
-        this.setState({ ordenSeleccionada: itemOrden })
-
-        document.getElementById("li-articulo-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
-
-
-    }
-
-    const cambiarProgreso = (e,idArticulo) => {
-        const checked = e.target.checked;
-        //console.log("checked", idArticulo);
-        if (checked) {
-            //console.log("datosTabla.length", datosTabla.filter(item=>item.rama==1).length);
-            //console.log("progreso", progreso);
-            setProgress(progreso + 100 / datosTabla.filter(item=>item.rama==1).length);
-            setRowDataArticulos((prev)=>[...prev,idArticulo]);
-        }
-        else {
-            setProgress(progreso - 100 / datosTabla.filter(item=>item.rama==1).length);      
-            const index=rowDataArticulos.indexOf(idArticulo);
-            const rows = [...rowDataArticulos];
-            rows.splice(index, 1);         
-            setRowDataArticulos(rows);             
-        }
-    }
-
-    const contadorfilashijo=(index)=>{
-        const newItems = datosTabla.splice(0,index);
-        //console.log('newsitem',newItems);
-        
-        return 3;
-    };
-
-    const leerUsuarios = () => {
-        const rutaServicio = "https://megalabs.digitalbroperu.com/serviciolistarusuarios.php"
-        fetch(rutaServicio)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        listaUsuarios: result
-                    });
-                })
-    }
     
-    const guardarArticulos = async(json) =>{
-        //console.log("json",json);
-        //validando que exista detalle de orden
-        //console.log("ddd",json);
-        if(json.length > 0){
-            try {
-                json.map(async(item)=>{
-                    try {
-                        console.log(item.envio);                      
-                        const response = await store.dispatch(modificarOrdenDetalle({
-                          idArticulo: item
-                        }));    
-                        if(response.status === StatusCodes.OK) {
-                            toastme.success(
-                                `Artículo Guardado`,
-                            );	
-                        }
-                        setProgresoLocal(progreso);
-                        listaOrdernesServicio(id);
-                        	  
-                    } catch (error) {
-                        //console.log(error);
-                    }
-                });                
-            } catch (error) {
-                toastme.error(
-                    error
-                );
-            }
-          }else{
-              toastme.error(
-                  `No hay Detalle de orden`
-              );
-          }
-          
-      }
-
-
-
     return (
         <section>
 
@@ -145,50 +57,52 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                     <tbody>
                         {datosTabla.map((itemDetalle, index) =>
                             <tr className='align-middle' scope="row" key={index}>
-                                {/*{itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.idArticulo}</td>
-                                    : <td colSpan={4}></td>
-                                }*/}
-                                {/*{itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.envio}</td>
-                                    : null
-                                }*/}
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.codigoArticulo}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.codigoArticulo}</td>
                                     : <td></td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.descripcion}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.descripcion}</td>
                                     : <td></td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.numeroLote}</td>
-                                    : <td>{itemDetalle.numeroLote}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.numeroLote}</td>
+                                    : <td style={{ fontSize: '11px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.numeroLote}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.ubicacion}</td>
-                                    : <td>{itemDetalle.ubicacion}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.ubicacion}</td>
+                                    : <td style={{ fontSize: '11px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.ubicacion}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.idPallet}</td>
-                                    : <td>{itemDetalle.idPallet}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.idPallet}</td>
+                                    : <td style={{ fontSize: '11px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.idPallet}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.fechaCaducidad}</td>
-                                    : <td>{itemDetalle.fechaCaducidad}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.fechaCaducidad}</td>
+                                    : <td style={{ fontSize: '11px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.fechaCaducidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td  style={{fontWeight:'bold'}}>{itemDetalle.cantidad}</td>
-                                    : <td>{itemDetalle.cantidad}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '15px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.cantidad}</td>
+                                    : <td style={{ fontSize: '13px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.cantidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{fontWeight:'bold', width: '100px'}} >
-                                        {itemDetalle.listo == 0?
+                                    ? <td style={{ textAlign: 'center', width: '50px'}}>
+                                        {itemDetalle.estado == 7 || itemDetalle.estado == 8?
                                         <NavLink to={"#"} className="nav"><Button className='btn-warning' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faExclamation} /></Button></NavLink>
-                                        :<NavLink to={"#"} className="nav"><Button className='btn-secondary' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faCheck} />&nbsp;&nbsp;&nbsp;Listo</Button></NavLink>
+                                        :<>
+                                            {itemDetalle.estado == 5 || itemDetalle.estado == 8 || itemDetalle.estado == 7
+                                                ? <NavLink to={"#"} className="nav"><Button className='btn-success' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faCheck} />&nbsp;&nbsp;&nbsp;Listo</Button></NavLink>
+                                                : <NavLink to={"#"} className="nav"><Button className='btn-secondary' disabled style={{fontWeight:'bold', width: '100px'}} >Anulado</Button></NavLink>
+                                            }
+                                        </>
                                         }
                                       </td>
-                                    : null
+                                    :<td>
+                                        {itemDetalle.estado == 5 || itemDetalle.estado == 8 || itemDetalle.estado == 7
+                                                ? <NavLink to={"#"} className="nav"><Button className='btn-success' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faCheck} />&nbsp;&nbsp;&nbsp;Listo</Button></NavLink>
+                                                : <NavLink to={"#"} className="nav"><Button className='btn-secondary' disabled style={{fontWeight:'bold', width: '100px'}} >Anulado</Button></NavLink>
+                                        }
+                                    </td>
                                 }
                             </tr>
                         )}
