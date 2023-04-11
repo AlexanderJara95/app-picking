@@ -108,7 +108,7 @@ const ListadoDetalleVisual = ({ id, progreso, setProgress, cod }) => {
                                     }
                                 </td>
 
-                                <td style={{ textAlign: 'center', width: '100px', fontWeight: 'bold' }}><NavLink to={"#"} className="nav"><Button className='btn-warning'><FontAwesomeIcon icon={faExclamation} /></Button></NavLink></td>
+                                <td style={{ textAlign: 'center', width: '100px', fontWeight: 'bold' }}><Button className='btn-warning'><FontAwesomeIcon icon={faExclamation} /></Button></td>
                             </tr>
                         )}
                     </tbody>
