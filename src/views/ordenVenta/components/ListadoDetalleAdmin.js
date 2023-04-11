@@ -87,20 +87,25 @@ const ListadoDetalleAdmin = ({ id, progreso, setProgress }) => {
                                 }
                                 {itemDetalle.rama == 1
                                     ? <td style={{ textAlign: 'center', width: '50px'}}>
-                                        {itemDetalle.estado == 7 || itemDetalle.estado == 8?
-                                        <NavLink to={"#"} className="nav"><Button className='btn-warning' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faExclamation} /></Button></NavLink>
+                                        {itemDetalle.estado == 7?
+                                        <Button className='btn-warning' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faExclamation} /></Button>
                                         :<>
-                                            {itemDetalle.estado == 5 || itemDetalle.estado == 8 || itemDetalle.estado == 7
-                                                ? <NavLink to={"#"} className="nav"><Button className='btn-success' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faCheck} />&nbsp;&nbsp;&nbsp;Listo</Button></NavLink>
-                                                : <NavLink to={"#"} className="nav"><Button className='btn-secondary' disabled style={{fontWeight:'bold', width: '100px'}} >Anulado</Button></NavLink>
+                                            {itemDetalle.estado == 5
+                                                ? <Button className='btn-success' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faCheck} />&nbsp;&nbsp;&nbsp;Listo</Button>
+                                                : <>
+                                                    {itemDetalle.estado == 8
+                                                        ? <Button className='btn-warning' disabled style={{fontWeight:'bold', width: '100px'}} >Modificado</Button>
+                                                        : <Button className='btn-secondary' disabled style={{fontWeight:'bold', width: '100px'}} >Anulado</Button>
+                                                    }
+                                                </> 
                                             }
                                         </>
                                         }
                                       </td>
-                                    :<td>
+                                    :<td style={{ textAlign: 'center', width: '50px'}}>
                                         {itemDetalle.estado == 5 || itemDetalle.estado == 8 || itemDetalle.estado == 7
-                                                ? <NavLink to={"#"} className="nav"><Button className='btn-success' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faCheck} />&nbsp;&nbsp;&nbsp;Listo</Button></NavLink>
-                                                : <NavLink to={"#"} className="nav"><Button className='btn-secondary' disabled style={{fontWeight:'bold', width: '100px'}} >Anulado</Button></NavLink>
+                                                ? <Button className='btn-success' disabled style={{fontWeight:'bold', width: '100px'}} ><FontAwesomeIcon icon={faCheck} />&nbsp;&nbsp;&nbsp;Listo</Button>
+                                                : <Button className='btn-secondary' disabled style={{fontWeight:'bold', width: '100px'}} >Anulado</Button>
                                         }
                                     </td>
                                 }
