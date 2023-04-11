@@ -249,7 +249,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,Remov
                               <NavLink to={"/detalleorden/"+cod+"-"+articulo.envio}><Button className='btn-secondary col-sm-12'>Cancelar</Button></NavLink>
                             </div>
                             <div className='col-6'>
-                              <Button onClick={()=>guardarArticulos(rowsData)} className='btn-success col-sm-12'>Guardar</Button>
+                              <NavLink to={"/detalleorden/"+cod+"-"+articulo.envio} className="text-white" ><Button onClick={()=>guardarArticulos(rowsData)} className='btn-success col-sm-12'>Guardar</Button></NavLink>
                             </div>
                           </>:
                           <>
