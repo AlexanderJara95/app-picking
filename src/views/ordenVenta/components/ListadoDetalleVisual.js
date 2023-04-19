@@ -28,7 +28,7 @@ const ListadoDetalleVisual = ({ id, progreso, setProgress, cod }) => {
         try {
             const response = await store.dispatch(listarOrdenDetallePorId(id));
             console.log("respons", response.detalleOrden);
-            const progressDb = (100 / response.detalleOrden.filter(item => item.rama == 1).length) * response.detalleOrden.filter(item => item.estado == 5 || item.estado == 6).length;
+            const progressDb = (100 / (response.detalleOrden.filter(item => item.rama == 1).length) * (response.detalleOrden.filter(item => (item.rama == 1) && (item.estado == 5 || item.estado == 6 || item.estado == 8)).length));
             if (response.status === StatusCodes.OK) {
                 if (progressDb == 100) setProgresoLocal(progressDb);
                 setProgress(progressDb == 0 ? 0 : progressDb);
