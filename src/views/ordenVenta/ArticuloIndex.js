@@ -12,6 +12,7 @@ const ArticuloIndex = () =>{
     const [resta,setResta] =useState(0);
     const [progreso, setProgreso] =useState();
     const addTableRows = useRef(null);
+    const RemoveTableRows = useRef(null);
 
     useEffect(()=>{
         if((param.id).split("-")[1])busquedaArticulo((param.id).split("-")[1]);  
@@ -55,12 +56,13 @@ const ArticuloIndex = () =>{
                         <h5><strong>Total: </strong>{articulo.cantidad}</h5>
                         <h5 style={{backgroundColor:"#ffc107",color:"#fff",borderRadius:"10px"}}>Faltan: {resta}</h5>
                     </div>
-                    <div className="col-2" style={{textAlign: "center",alignSelf:"center"}}>
-                        <Button onClick={()=>addTableRows.current()} className="btn-primary">Agregar +</Button>
+                    <div className="col-2 text-center" style={{alignSelf:"center"}}>
+                        <Button onClick={()=>addTableRows.current()} className="btn-primary">Agregar +</Button>&nbsp;&nbsp;
+                        <Button onClick={()=>RemoveTableRows.current()} className="btn-danger">Quitar -</Button>
                     </div>
                 </div>                
             </div>
-            <ModificarArticulo articulo={articulo} progreso={(param.id).split("-")[2]} cod={(param.id).split("-")[0]} setArticulo={setArticulo} setResta={setResta} addTableRows={addTableRows}></ModificarArticulo>
+            <ModificarArticulo articulo={articulo} progreso={(param.id).split("-")[2]} cod={(param.id).split("-")[0]} setArticulo={setArticulo} setResta={setResta} addTableRows={addTableRows} RemoveTableRows={RemoveTableRows}></ModificarArticulo>
         </>
     );
 }

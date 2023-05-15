@@ -27,7 +27,8 @@ const ListadoDetalleVisual = ({ id, progreso, setProgress, cod }) => {
     const listaOrdernesServicio = async (id) => {
         try {
             const response = await store.dispatch(listarOrdenDetallePorId(id));
-            const progressDb = (100 / response.detalleOrden.filter(item => item.rama == 1).length) * response.detalleOrden.filter(item => item.listo == 1).length;
+            console.log("respons", response.detalleOrden);
+            const progressDb = (100 / (response.detalleOrden.filter(item => item.rama == 1).length) * (response.detalleOrden.filter(item => (item.rama == 1) && (item.estado == 5 || item.estado == 6 || item.estado == 8)).length));
             if (response.status === StatusCodes.OK) {
                 if (progressDb == 100) setProgresoLocal(progressDb);
                 setProgress(progressDb == 0 ? 0 : progressDb);
@@ -38,127 +39,7 @@ const ListadoDetalleVisual = ({ id, progreso, setProgress, cod }) => {
             //console.log(error);
         }
     }
-    const seleccionarOrden = (itemOrden) => {
-        setOrdenSeleccionada(itemOrden);
-        document.getElementById("li-articulo-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"   
-        if (Object.keys(ordenSeleccionada).length !== 0) {
-            document.getElementById("li-articulo-" + ordenSeleccionada.idOrden).classList.remove("active"); //esto hace que se marque el elemento cliqueado como "activo"
-        }
-        this.setState({ ordenSeleccionada: itemOrden })
 
-        document.getElementById("li-articulo-" + itemOrden.idOrden).classList.add("active"); //esto hace que se marque el elemento cliqueado como "activo"
-
-    }
-
-    const cambiarProgreso = (e, idArticulo) => {
-        const checked = e.target.checked;
-        //console.log("checked", checked);
-        if (checked) {
-            //console.log("datosTabla.length", datosTabla.filter(item => item.rama == 1).length);
-            //console.log("progreso", progreso);
-            setProgress(progreso + 100 / datosTabla.filter(item => item.rama == 1).length);
-            setRowDataArticulos((prev) => [...prev, idArticulo]);
-        }
-        else {
-            setProgress(progreso - 100 / datosTabla.filter(item => item.rama == 1).length);
-            const index = rowDataArticulos.indexOf(idArticulo);
-            const rows = [...rowDataArticulos];
-            rows.splice(index, 1);
-            setRowDataArticulos(rows);
-        }
-    }
-
-    const contadorfilashijo = (index) => {
-        const newItems = datosTabla.splice(0, index);
-        //console.log('newsitem', newItems);
-        return 3;
-    }
-    const atenderOrden = ()=>{
-        try {
-            const responseAtender = store.dispatch(modificarAvanceOrden({
-                idOrden: cod,
-                estado: 4,
-                avance: progreso
-            }));  
-            Swal.fire({
-                title: '¡Orden Atendida!',
-                text: "Orden atendida correctamente",
-                icon: 'success',
-                confirmButtonColor: '#0d6efd',
-                confirmButtonText: 'Listo',
-                iconColor: '#0d6efd'
-            });
-        } catch (error) {
-            //console.log(error);
-        }
-    }
-    const guardarArticulos = async (json) => {
-        //console.log("json", json);
-        //validando que exista detalle de orden
-        ////console.log("ddd",json);
-        if (json.length > 0) {
-            json.map(async (item) => {
-                try {
-                    const response = await store.dispatch(modificarOrdenDetalle({
-                        idArticulo: item,
-                        listo: 1
-                    }));
-                    //const estadoAvance = progreso < 100 && progreso > 0 ? 3 : 4;
-                    const response2 = await store.dispatch(modificarAvanceOrden({
-                        idOrden: cod,
-                        estado: 3,
-                        avance: progreso
-                    }));
-                    if (response.status === StatusCodes.OK) {
-                        toastme.success(
-                            `Artículo Guardado`,
-                        );
-                    }
-                } catch (error) {
-                    //console.log(error);
-                }
-            });
-            //setProgresoLocal(progreso);
-            limpiarImputs();
-
-        } else {
-            toastme.error(
-                `No hay Cambios en la orden`
-            );
-        }
-    }
-
-    const eliminarDetalleArticuloHijo = async (itemDetalle) => {
-        try {
-            const response = await store.dispatch(eliminarDetalleHijos({
-                codigoHijo: cod + itemDetalle.idArticulo + itemDetalle.codigoArticulo
-                
-            }));
-            console.log("CODIGO HIJO EN ELIMINAR DETALLE HIJO", itemDetalle.idArticulo + itemDetalle.codigoArticulo)
-            console.log("ID ARTICULO", itemDetalle.idArticulo)
-            console.log("CODIGO ARTICULO", itemDetalle.codigoArticulo)
-            //console.log("eliminación: ",response);
-            const response2 = await store.dispatch(modificarOrdenDetalle({
-                idArticulo: itemDetalle.idArticulo,
-                listo: 0
-            }));
-
-            const nuevoProgreso = progreso - 100 / datosTabla.filter(item => item.rama == 1).length;
-            console.log("nuevoProgreso",nuevoProgreso);
-            const estadoAvance = nuevoProgreso < 100 && nuevoProgreso > 0 ? 3 : 2;
-            const response3 = await store.dispatch(modificarAvanceOrden({
-                idOrden: cod,
-                estado: estadoAvance,
-                avance: nuevoProgreso
-            }));
-            limpiarImputs();
-
-        } catch (error) {
-            //console.log(error);
-        }
-        //limpiarImputs();
-        //listaOrdernesServicio(id); 
-    }
     const limpiarImputs = () => {
         setTimeout(() => {
             setOrdenSeleccionada({});
@@ -168,29 +49,6 @@ const ListadoDetalleVisual = ({ id, progreso, setProgress, cod }) => {
         }, 500);
     }
 
-    const borrarHijos = (itemDetalle) => {
-        Swal.fire({
-            title: '¿Está Seguro?',
-            text: "¿Desea borrar el progreso guardado en esta Orden?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#369978',
-            confirmButtonText: 'Si, Eliminar',
-            cancelButtonText: 'Cancelar',
-            iconColor: '#dc3545'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const response = store.dispatch(eliminarDetalleArticuloHijo(itemDetalle))
-                Swal.fire({
-                    title: '¡Eliminados!',
-                    text: "Productos eliminados correctamente",
-                    icon: 'success',
-                    confirmButtonColor: '#369978',
-                    confirmButtonText: 'Listo',
-                })
-            }
-        })
-    }
     return (
         <section>
 
@@ -215,44 +73,42 @@ const ListadoDetalleVisual = ({ id, progreso, setProgress, cod }) => {
                     <tbody>
                         {datosTabla.map((itemDetalle, index) =>
                             <tr className='align-middle' scope="row" key={index}>
-                                {/* {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.idArticulo}</td>
-                                    : <td colSpan={4}></td>
-                                } */}
-                                {/*{itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold' }}>{itemDetalle.envio}</td>
-                                    : null
-                                } */}
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.codigoArticulo}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.codigoArticulo}</td>
                                     : <td></td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.descripcion}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.descripcion}</td>
                                     : <td></td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '13px' }}>{itemDetalle.numeroLote}</td>
-                                    : <td style={{ fontSize: '11px' }}>{itemDetalle.numeroLote}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '13px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.numeroLote}</td>
+                                    : <td style={{ fontSize: '11px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.numeroLote}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.ubicacion}</td>
-                                    : <td style={{ fontSize: '11px' }}>{itemDetalle.ubicacion}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.ubicacion}</td>
+                                    : <td style={{ fontSize: '11px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.ubicacion}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.idPallet}</td>
-                                    : <td style={{ fontSize: '12px' }}>{itemDetalle.idPallet}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.idPallet}</td>
+                                    : <td style={{ fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.idPallet}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px' }}>{itemDetalle.fechaCaducidad}</td>
-                                    : <td style={{ fontSize: '12px' }}>{itemDetalle.fechaCaducidad}</td>
+                                    ? <td style={{ fontWeight: 'bold', fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.fechaCaducidad}</td>
+                                    : <td style={{ fontSize: '12px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.fechaCaducidad}</td>
                                 }
                                 {itemDetalle.rama == 1
-                                    ? <td style={{ textAlign: 'center', width: '50px', fontWeight: 'bold', fontSize: '15px' }}>{itemDetalle.cantidad}</td>
-                                    : <td style={{ textAlign: 'center', width: '50px' }}>{itemDetalle.cantidad}</td>
+                                    ? <td style={{ textAlign: 'center', width: '50px', fontWeight: 'bold', fontSize: '15px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent' }}>{itemDetalle.cantidad}</td>
+                                    : <td style={{ textAlign: 'center', width: '50px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>{itemDetalle.cantidad}</td>
                                 }
-                                <td style={{ textAlign: 'center', width: '50px' }}><div className="form-check"><FormCheck disabled={true} checked /></div></td>
-                                <td style={{ textAlign: 'center', width: '100px', fontWeight: 'bold' }}><NavLink to={"#"} className="nav"><Button className='btn-warning'><FontAwesomeIcon icon={faExclamation} /></Button></NavLink></td>
+                                <td style={{ textAlign: 'center', width: '50px', backgroundColor: itemDetalle.estado==6 ? '#ffc7c7' : 'transparent'}}>
+                                    {itemDetalle.estado == 5 || itemDetalle.estado == 8 || itemDetalle.estado == 7
+                                        ? <div className="form-check" ><FormCheck disabled={true} checked /> </div>
+                                        : <span>Anulado</span>
+                                    }
+                                </td>
+
+                                <td style={{ textAlign: 'center', width: '100px', fontWeight: 'bold' }}><Button className='btn-warning'><FontAwesomeIcon icon={faExclamation} /></Button></td>
                             </tr>
                         )}
                     </tbody>

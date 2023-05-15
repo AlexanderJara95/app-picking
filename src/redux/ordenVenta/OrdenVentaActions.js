@@ -93,7 +93,7 @@ export const modificarOrdenDetalle = (paramData) => async dispatch => {
 	//console.log("Param Actu",paramData);
 	var formData = new FormData();
     formData.append("idArticulo", paramData.idArticulo);
-	formData.append("listo", paramData.listo);
+	formData.append("estado", paramData.estado);
     
 	const response = await axios.post(`${API_BASE_URL}/servicioactualizardetalleorden.php`,formData);
     //console.log("Actualizado",response.data);
@@ -171,6 +171,7 @@ export const registrarDetalleArticulo = (paramData) => async dispatch => {
 	formData.append("fechaCaducidad", paramData.fechaCaducidad);
     formData.append("cantidad", paramData.cantidad);
     formData.append("codigoHijo", paramData.codigoHijo);
+    formData.append("estado", paramData.estado);
 
 
 	const response = await axios.post(`${API_BASE_URL}/servicioregistrardetallearticulo.php`,formData);

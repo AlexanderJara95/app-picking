@@ -8,16 +8,17 @@ import { StatusCodes } from 'http-status-codes';
 import { NavLink } from 'react-router-dom';
 
 
-function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progreso}) {
+function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,RemoveTableRows,progreso}) {
 
     const [restaCantidad,setRestaCantidad] = useState(0);
     const [btnGuardar,setBtnGuardar] = useState(true); 
     const childFunc = React.useRef(null);
     useEffect(()=>{
       addTableRows.current = addTableRowsLocal;
+      RemoveTableRows.current = RemoveTableRowsLocal;
     });
     useEffect(()=>{
-      //console.log("articulo,",articulo);
+      console.log("articulo,",articulo);
       if(Object.keys(articulo).length !== 0){
         setRowsData([...rowsData, {
             idArticulo: articulo.idArticulo,
@@ -28,7 +29,8 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
             ubicacion: articulo.ubicacion,
             idPallet: articulo.idPallet,
             fechaCaducidad: articulo.fechaCaducidad,
-            cantidad: articulo.cantidad
+            cantidad: articulo.cantidad,
+            estado: 8
         }]);
       }
     },[articulo]);
@@ -53,7 +55,8 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
             ubicacion: articulo.ubicacion,
             idPallet: articulo.idPallet,
             fechaCaducidad: articulo.fechaCaducidad,
-            cantidad: articulo.cantidad - contador
+            cantidad: articulo.cantidad - contador,
+            estado: 8
           }
           setRowsData([...rowsData, rowsInput]);
           setResta(0);
@@ -66,6 +69,43 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
         }
 
     }
+
+    const RemoveTableRowsLocal = () => {
+      var contador=0;
+      rowsData.map((item)=>{
+        contador = contador + parseInt(item.cantidad);
+      });
+      //crear array constante con los campos a usar para las lineas
+      
+      //con esto usando solo el "rowsInput" es para agregar lineas usando el array constante creado arriba, con la instancia de useState "setRowsData"
+      //se agregar el "...rowsData" para que mantengan la linea/data ya ingresada y solo agregue una nueva posterior
+      if(contador < articulo.cantidad) {
+        const rowsInput = {
+          idArticulo: articulo.idArticulo,
+          envio: articulo.envio,
+          codigoArticulo: articulo.codigoArticulo,
+          descripcion: articulo.descripcion,
+          numeroLote: articulo.numeroLote,
+          ubicacion: articulo.ubicacion,
+          idPallet: articulo.idPallet,
+          fechaCaducidad: articulo.fechaCaducidad,
+          cantidad: articulo.cantidad - contador,
+          estado: 6
+        }
+        setRowsData([...rowsData, rowsInput]);
+        setResta(0);
+        console.log("lengwww: ",rowsData.length);
+        if(rowsData.length>0)setBtnGuardar(true);
+      }else{
+        toastme.info(
+          "No puede agregar más cantidades"
+        );
+      }
+
+  }
+
+
+
     //Eliminar lineas ejecutandolo en base al index de la linea clickeada, seleccionando solo la linea indicada, y no todas (por el "...rowsData")
     const deleteTableRows = (index) => {
       var contador=0;
@@ -117,7 +157,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
     
     const guardarArticulos = async(json) =>{
       //validando que exista detalle de orden
-      //console.log("ddd",json);
+      console.log("ddd",json);
       if(json.length > 0){
           try {
               json.map(async(item,index)=>{
@@ -133,7 +173,8 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
                         idPallet: item.idPallet,
                         fechaCaducidad: item.fechaCaducidad,
                         cantidad: item.cantidad,
-                        codigoHijo: cod + item.idArticulo + item.codigoArticulo
+                        codigoHijo: cod + item.idArticulo + item.codigoArticulo,
+                        estado: item.estado
                       }));
                       console.log("Codigo Hijo ACA: ",cod + item.idArticulo + item.codigoArticulo)
                       if (response.status === StatusCodes.OK) {
@@ -150,7 +191,7 @@ function ModificarArticulo({cod,articulo,setArticulo,setResta,addTableRows,progr
               });
               const response2 = await store.dispatch(modificarOrdenDetalle({
                 idArticulo: articulo.idArticulo,
-                listo: 1
+                estado: 8
               }));
 
               if (response2.status === StatusCodes.OK) {

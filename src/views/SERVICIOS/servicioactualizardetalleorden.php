@@ -4,12 +4,12 @@
     //$id = $_POST[uniqid()]  ;
     //$idDetalleOrden = $_REQUEST[uniqid()];
     $idArticulo = $_REQUEST["idArticulo"];
-    $listo = $_REQUEST["listo"];
+    $estado = $_REQUEST["estado"];
        
     //$date = getdate();
      //echo $date[year],'-',$date[mon],'-',$date[mday],' ',$date[hours],':',$date[minutes],':',$date[seconds];
 
 	$rs = mysqli_query($cn,
-		"update Detalle_Orden set listo = '".$listo."' where idArticulo = ".$idArticulo);
+		"update Detalle_Orden set estado = '".$estado."' where idArticulo = ".$idArticulo);
 	mysqli_close($cn);
 ?>
