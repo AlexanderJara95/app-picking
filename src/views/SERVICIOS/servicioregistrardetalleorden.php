@@ -17,6 +17,7 @@
        
     //$date = getdate();
     //echo $date[year],'-',$date[mon],'-',$date[mday],' ',$date[hours],':',$date[minutes],':',$date[seconds];
+    $descripcion = mysqli_real_escape_string($cn, $descripcion);
 
 	$rs = mysqli_query($cn,
 		"insert into Detalle_Orden (envio,codigoArticulo,descripcion,numeroLote, ubicacion,idPallet,fechaCaducidad,cantidad, rama,estado) 
