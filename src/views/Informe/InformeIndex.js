@@ -36,7 +36,7 @@ const InformeIndex = ()=> {
 
     const registrarOrdenPicking = async(json) =>{
         //validando que exista detalle de orden
-        console.log("ddd",json);
+        
         if(json.detalleOrden.length > 0){
             try {
                 const response2 = await store.dispatch(listarOrden());
@@ -68,13 +68,18 @@ const InformeIndex = ()=> {
                                     toastme.success(
                                         `Artículo agregado al Detalle`,
                                     );		
+                                }else{
+                                    toastme.error(
+                                        `Artículo no Agregado`,
+                                    );	
                                 }
                             } catch (error) {
                                 console.log(error);
                             }
                         });
+                        console.log("eee",json.detalleOrden);
                 }else{
-                    var resp = response2.listaOrden.filter(item => (json.envio == item.envio && item.estado !== 'Anulado'));
+                    var resp = response2.listaOrden.filter(item => (json.envio == item.envio && item.estado !== '6'));
                     //console.log("conslaa",resp);
                     if(resp.length != 0){
                         setListadeInformes([...listadeInformes,json.envio + " ya existe"])
