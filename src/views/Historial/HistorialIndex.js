@@ -16,9 +16,7 @@ const HistorialIndex = ()=> {
                         <h3>Listado de Informes de Picking</h3>
                     </div>
                 </div>
-                {(()=>{
-                    <OrdenVentaHistorial></OrdenVentaHistorial>
-            })()}
+                <OrdenVentaHistorial></OrdenVentaHistorial>
             </div>
         </>
     )

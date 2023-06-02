@@ -40,7 +40,7 @@ class OrdenVentaHistorial extends Component {
     }
 
     leerOrdenes() {
-        const rutaServicio = API_BASE_URL + "serviciolistarorden.php";
+        const rutaServicio = API_BASE_URL + "serviciolistarordenHistorial.php";
         fetch(rutaServicio)
             .then(
                 res => res.json() //indicamos que el objeto devuelto por dicha solicitud al servicio, sera un Json
