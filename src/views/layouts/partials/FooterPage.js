@@ -3,7 +3,7 @@ const FooterPage = () => (
 		© {new Date().getFullYear()}
 		<span className='mx-1 fw-bold'>SIS PICKING</span> Desarrollado por
 		<a
-			href='https://jazani.pe/'
+			href='#'
 			target='_blank'
 			className='ms-1'
 			rel='noreferrer'

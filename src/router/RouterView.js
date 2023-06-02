@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route} from 'react-router-dom';
 import { PrivateOutlet, PublicOutlet } from './CheckPageNavigation';
 
 //Publicas
@@ -9,6 +9,7 @@ import SendResetLink from '../views/auth/SendResetLink';
 import HomeIndex from '../views/home/HomeIndex';
 import UsuarioIndex from '../views/usuario/UsuarioIndex';
 import OrdenVentaIndex from '../views/ordenVenta/OrdenVentaIndex';
+import HistorialIndex from '../views/Historial/HistorialIndex';
 import InformeIndex from '../views/Informe/InformeIndex';
 import DetalleOrdenIndex from '../views/ordenVenta/DetalleOrdenIndex';
 import ArticuloIndex from '../views/ordenVenta/ArticuloIndex';
@@ -61,14 +62,20 @@ const RouterView = () => {
 				<Route path='' element={<HomeIndex />} />
 				</Route>
 			}
-			{nivel??
-			(nivel==1 || nivel==2)?
-				<Route path='/usuario' element={<PrivateOutlet />}>
-					<Route path='' element={<UsuarioIndex />} />
-				</Route>:<Route path='/' element={<PrivateOutlet />}>
-				<Route path='' element={<HomeIndex />} />
-				</Route>
-			}
+			
+			<Route path="/" element={<PrivateOutlet />}>
+				<Route path="/" element={<HomeIndex />} />
+				<Route path="/usuario" element={<UsuarioIndex />} />
+				<Route path="/historial" element={<HistorialIndex />} />
+				{nivel === 1 || nivel === 2 ? (
+					<Routes>
+						<Route path="/usuario" element={<UsuarioIndex />} />
+						<Route path="/historial" element={<HistorialIndex />} />
+					</Routes>
+				) : null}
+			</Route>
+
+
 			{nivel??
 			(nivel!=3)?
 				<Route path='/importar' element={<PrivateOutlet />}>
