@@ -11,7 +11,7 @@ const ActividadUsuarios = () =>{
 
     useEffect(()=>{
         listaUsuarios();
-    });
+    },[]);
 
     const listaUsuarios = async () =>{
         try {            

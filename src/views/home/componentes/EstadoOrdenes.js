@@ -9,7 +9,7 @@ const EstadoOrdenes =()=>{
 
     useEffect(()=>{
         listaOrdenes();
-    });
+    },[]);
 
     const listaOrdenes = async () =>{
         try {
