@@ -1,19 +1,22 @@
 <?php
-    require_once("config.php");
+require_once("config.php");
 
-    // Obtener la fecha de hace dos días
-    $fechaDosDiasAtras = date('Y-m-d', strtotime('-2 weekdays'));
+// Obtener la fecha actual
+$fechaActual = date("Y-m-d");
 
-    $rs = mysqli_query($cn,"SELECT idOrden, envio, pedidoVentas, idUsuario, idClienteAx, nombreCliente, referencia, asignadoPor, asignadoA, fechaSubida,fechaInicio, fechaCompletado, estado, avance, abierto, emitido
+// Obtener la fecha de ayer
+$fechaAyer = date("Y-m-d", strtotime("-1 day"));
+
+$rs = mysqli_query($cn,"SELECT idOrden, envio, pedidoVentas, idUsuario, idClienteAx, nombreCliente, referencia, asignadoPor, asignadoA, fechaSubida, fechaInicio, fechaCompletado, estado, avance, abierto, emitido
                         FROM Orden 
-                        WHERE fechaSubida >= '$fechaDosDiasAtras'
+                        WHERE DATE(fechaSubida) >= '$fechaAyer' OR DATE(fechaInicio) >= '$fechaAyer'
                         ORDER BY idOrden DESC");
 
-    $res = array();
-    while($row = mysqli_fetch_assoc($rs)){
-        $res[] = $row;
-    }
+$res = array();
+while($row = mysqli_fetch_assoc($rs)){
+    $res[] = $row;
+}
 
-    echo json_encode($res, JSON_UNESCAPED_UNICODE);
-    mysqli_close($cn);
+echo json_encode($res, JSON_UNESCAPED_UNICODE);
+mysqli_close($cn);
 ?>
