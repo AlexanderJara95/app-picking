@@ -35,9 +35,9 @@ class OrdenVentaHistorial extends Component {
         this.leerUsuarios();
     }
 
-    componentDidUpdate() {
+    /*componentDidUpdate() {
         this.leerOrdenes();
-    }
+    }*/
 
     leerOrdenes() {
         const rutaServicio = API_BASE_URL + "serviciolistarordenHistorial.php";

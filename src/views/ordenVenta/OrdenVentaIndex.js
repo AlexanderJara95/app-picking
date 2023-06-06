@@ -1,6 +1,7 @@
 import {useEffect,useState} from 'react';
 import OrdenVenta from './OrdenVenta';
 import OrdenVentaPicker from './OrdenVentaPicker';
+import RefreshButton from '../layouts/partials/RefreshButton';
 
 const OrdenVentaIndex = ()=> {
 
@@ -17,6 +18,7 @@ const OrdenVentaIndex = ()=> {
                         <h3>Listado de Informes de Picking</h3>
                     </div>
                 </div>
+                <RefreshButton></RefreshButton>
                 {(()=>{
                 //console.log("window.usuario.nivelUsuario",window.usuario.nivelUsuario);
                 switch(window.usuario.nivelUsuario){

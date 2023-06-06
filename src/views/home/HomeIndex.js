@@ -7,6 +7,7 @@ import { listarUsuarios } from '../../redux/usuario/UsuarioActions';
 import ActividadPorUsuario from './componentes/ActividadPorUsuario';
 import ActividadUsuarios from './componentes/ActividadUsuarios';
 import EstadoOrdenes from './componentes/EstadoOrdenes';
+import RefreshButton from '../layouts/partials/RefreshButton';
 
 const HomeIndex = ()=> {
 
@@ -20,6 +21,7 @@ const HomeIndex = ()=> {
     
     return (
         <div className='container-fluid pt-5'>
+            <RefreshButton></RefreshButton>
             <Card decoration="top" decorationColor="emerald"
                 hFull={false}
                 shadow={true}>

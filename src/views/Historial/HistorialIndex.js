@@ -1,5 +1,6 @@
 import {useEffect,useState} from 'react';
 import OrdenVentaHistorial from '../ordenVenta/OrdenVentaHistorial';
+import RefreshButton from '../layouts/partials/RefreshButton';
 
 const HistorialIndex = ()=> {
 
@@ -16,6 +17,7 @@ const HistorialIndex = ()=> {
                         <h3>Listado de Informes de Picking</h3>
                     </div>
                 </div>
+                <RefreshButton></RefreshButton>
                 <OrdenVentaHistorial></OrdenVentaHistorial>
             </div>
         </>

@@ -28,10 +28,11 @@ class OrdenVentaPicker extends Component {
         this.leerEstado();
         this.leerUsuarios();
     }
-
+    /*
     componentDidUpdate() {
         this.leerOrdenes();
     }
+    */
 
     leerOrdenes() {
         const rutaServicio = API_BASE_URL + "serviciolistarordenpicker.php";

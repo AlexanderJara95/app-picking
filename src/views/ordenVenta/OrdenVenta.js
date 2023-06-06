@@ -35,10 +35,11 @@ class OrdenVenta extends Component {
         this.leerUsuarios();
     }
 
+    /*
     componentDidUpdate() {
         this.leerOrdenes();
     }
-
+    */
     leerOrdenes() {
         const rutaServicio = API_BASE_URL + "serviciolistarorden.php";
         fetch(rutaServicio)
