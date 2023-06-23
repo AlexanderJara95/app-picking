@@ -95,7 +95,7 @@ class OrdenVenta extends Component {
     dibujarTabla(datosTabla) {
         if (datosTabla !== null) {
             return (
-                <Table className="table-sm " id="tabla" role="tabpanel" aria-labelledby="home-tab" responsive hover >
+                <Table className="table table-sm  table-striped" id="tabla" role="tabpanel" aria-labelledby="home-tab" responsive hover >
                     <thead className="thead-dark bg-dark text-white">
                         <tr className='align-middle'
                             scope="col"
@@ -105,7 +105,7 @@ class OrdenVenta extends Component {
                             <th scope="col">#PV</th>
                             {/* <th scope="col">Id Cliente</th>*/}
                             <th scope="col">Nombre Cliente</th>
-                            {/* <th scope="col" width="200px">Referencia</th>*/}
+                            <th scope="col" width="200px">Referencia</th>
                             <th scope="col" width="100px">Asignar</th>
                             <th scope="col" width="100px">Responsable</th>
                             {/* <th scope="col">Fecha de Subida</th>
@@ -130,7 +130,7 @@ class OrdenVenta extends Component {
                                 <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.pedidoVentas}</td>
                                 {/*<td style={{ textAlign: 'center', fontSize: '8px' }}>{itemOrden.idClienteAx}</td>*/}
                                 <td style={{ textTransform: 'uppercase', textAlign: 'left', fontSize: '15px'  }}>{itemOrden.nombreCliente}</td>
-                                {/*<td style={{ textTransform: 'lowercase', textAlign: 'left' }}>{itemOrden.referencia}</td>*/}
+                                <td style={{ textTransform: 'lowercase', textAlign: 'center' }}>{itemOrden.referencia}</td>
                                 <td title="Personal disponible para asignar la orden" >
                                     {itemOrden.estado !== '6' ?
                                         <>
