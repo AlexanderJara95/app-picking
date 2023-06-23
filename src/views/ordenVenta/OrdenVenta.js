@@ -104,8 +104,8 @@ class OrdenVenta extends Component {
                             <th scope="col">#ENV</th>
                             <th scope="col">#PV</th>
                             {/* <th scope="col">Id Cliente</th>*/}
-                            <th scope="col">Nombre Cliente</th>
-                            <th scope="col" width="200px">Referencia</th>
+                            <th scope="col" width="300px">Nombre Cliente</th>
+                            <th scope="col" width="100px">Referencia</th>
                             <th scope="col" width="100px">Asignar</th>
                             <th scope="col" width="100px">Responsable</th>
                             {/* <th scope="col">Fecha de Subida</th>
@@ -129,7 +129,7 @@ class OrdenVenta extends Component {
                                 <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.envio}</td>
                                 <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.pedidoVentas}</td>
                                 {/*<td style={{ textAlign: 'center', fontSize: '8px' }}>{itemOrden.idClienteAx}</td>*/}
-                                <td style={{ textTransform: 'uppercase', textAlign: 'left', fontSize: '15px'  }}>{itemOrden.nombreCliente}</td>
+                                <td style={{ textTransform: 'uppercase', textAlign: 'left', fontSize: '13px'  }}>{itemOrden.nombreCliente}</td>
                                 <td style={{ textTransform: 'lowercase', textAlign: 'center' }}>{itemOrden.referencia}</td>
                                 <td title="Personal disponible para asignar la orden" >
                                     {itemOrden.estado !== '6' ?
