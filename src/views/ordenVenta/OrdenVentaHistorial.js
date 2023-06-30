@@ -94,7 +94,7 @@ class OrdenVentaHistorial extends Component {
     dibujarTabla(datosTabla) {
         if (datosTabla !== null) {
             return (
-                <Table className="table-sm " id="tabla" role="tabpanel" aria-labelledby="home-tab" responsive hover >
+                <Table className="table table-sm  table-striped" id="tabla" role="tabpanel" aria-labelledby="home-tab" responsive hover >
                     <thead className="thead-dark bg-dark text-white">
                         <tr className='align-middle'
                             scope="col"
@@ -104,14 +104,14 @@ class OrdenVentaHistorial extends Component {
                             <th scope="col">#PV</th>
                             {/* <th scope="col">Id Cliente</th>*/}
                             <th scope="col">Nombre Cliente</th>
-                            {/* <th scope="col" width="200px">Referencia</th>*/}
-                            <th scope="col" width="100px">Asignar</th>
-                            <th scope="col" width="100px">Responsable</th>
+                            <th scope="col">Referencia</th>
+                            <th scope="col">Asignar</th>
+                            <th scope="col">Responsable</th>
                             {/* <th scope="col">Fecha de Subida</th>
                                 <th scope="col">Fecha de Inicio</th> */}
-                            <th scope="col" width="100px">Iniciado</th>
-                            <th scope="col" width="100px">Finalizado</th>
-                            <th scope="col" width="100px">Estado</th>
+                            <th scope="col">Iniciado</th>
+                            <th scope="col">Finalizado</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">Avance</th>
                             <th colSpan={3}>Acciones</th>
                         </tr>
@@ -122,19 +122,19 @@ class OrdenVentaHistorial extends Component {
                             key={itemOrden.idOrden} 
                             ref={ref => (this.accordionContent[itemOrden.idOrden] = ref)} 
                             id={"li-orden-" + itemOrden.idOrden} 
-                            style={{ textAlign: 'center', fontSize: '12px' }} 
+                            style={{ textAlign: 'center', fontSize: '11px' }} 
                             onClick={() => this.seleccionarOrden(itemOrden, itemOrden.idOrden)}>
                                 {/*<td>{itemOrden.idOrden}</td>*/}
-                                <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.envio}</td>
-                                <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.pedidoVentas}</td>
+                                <td style={{ textAlign: 'center', fontSize: '11px' }}>{itemOrden.envio}</td>
+                                <td style={{ textAlign: 'center', fontSize: '11px' }}>{itemOrden.pedidoVentas}</td>
                                 {/*<td style={{ textAlign: 'center', fontSize: '8px' }}>{itemOrden.idClienteAx}</td>*/}
-                                <td style={{ textTransform: 'uppercase', textAlign: 'left', fontSize: '15px'  }}>{itemOrden.nombreCliente}</td>
-                                {/*<td style={{ textTransform: 'lowercase', textAlign: 'left' }}>{itemOrden.referencia}</td>*/}
+                                <td style={{ textTransform: 'uppercase', textAlign: 'left' }}>{itemOrden.nombreCliente}</td>
+                                <td style={{ textTransform: 'uppercase', textAlign: 'center' }}>{itemOrden.referencia}</td>
                                 <td title="Personal disponible para asignar la orden" >
                                     {itemOrden.estado !== '6' ?
                                         <>
                                             {itemOrden.estado == '1' || itemOrden.estado == '2' ?
-                                                <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={this.seleccionarUsuario} style={{ width: '100px', fontSize: "10px" }}>
+                                                <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={this.seleccionarUsuario} style={{ fontSize: "10px" }}>
                                                     <option value='0'>Seleccione</option>
                                                     {this.state.listaUsuarios.map((usuario) => {
                                                         if (usuario.nivelUsuario == 3 && usuario.estado == 1) {
@@ -159,7 +159,7 @@ class OrdenVentaHistorial extends Component {
                                 </td>
                                 <td style={{ textAlign: 'center', }}>{this.state.listaUsuarios.map((usuario) => (
                                     usuario.idUsuario == itemOrden.asignadoA 
-                                    ? <span style={{ backgroundColor: "#00ff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }} 
+                                    ? <span style={{ backgroundColor: "#00ff00", color: '#000000', borderRadius: '20px', padding: '2px', paddingLeft: '10px', paddingRight: '10px', fontWeight: 'bolder' }} 
                                     key={usuario.idUsuario}>{usuario.username}</span> 
                                     : null
                                 ))}</td>

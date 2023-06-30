@@ -104,15 +104,15 @@ class OrdenVenta extends Component {
                             <th scope="col">#ENV</th>
                             <th scope="col">#PV</th>
                             {/* <th scope="col">Id Cliente</th>*/}
-                            <th scope="col" width="300px">Nombre Cliente</th>
-                            <th scope="col" width="100px">Referencia</th>
-                            <th scope="col" width="100px">Asignar</th>
-                            <th scope="col" width="100px">Responsable</th>
+                            <th scope="col">Nombre Cliente</th>
+                            <th scope="col">Referencia</th>
+                            <th scope="col">Asignar</th>
+                            <th scope="col">Responsable</th>
                             {/* <th scope="col">Fecha de Subida</th>
                                 <th scope="col">Fecha de Inicio</th> */}
-                            <th scope="col" width="100px">Iniciado</th>
-                            <th scope="col" width="100px">Finalizado</th>
-                            <th scope="col" width="100px">Estado</th>
+                            <th scope="col">Iniciado</th>
+                            <th scope="col">Finalizado</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">Avance</th>
                             <th colSpan={3}>Acciones</th>
                         </tr>
@@ -123,19 +123,19 @@ class OrdenVenta extends Component {
                             key={itemOrden.idOrden} 
                             ref={ref => (this.accordionContent[itemOrden.idOrden] = ref)} 
                             id={"li-orden-" + itemOrden.idOrden} 
-                            style={{ textAlign: 'center', fontSize: '12px' }} 
+                            style={{ textAlign: 'center', fontSize: '11px' }} 
                             onClick={() => this.seleccionarOrden(itemOrden, itemOrden.idOrden)}>
                                 {/*<td>{itemOrden.idOrden}</td>*/}
-                                <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.envio}</td>
-                                <td style={{ textAlign: 'center', fontSize: '12px' }}>{itemOrden.pedidoVentas}</td>
+                                <td style={{ textAlign: 'center', fontSize: '11px' }}>{itemOrden.envio}</td>
+                                <td style={{ textAlign: 'center', fontSize: '11px' }}>{itemOrden.pedidoVentas}</td>
                                 {/*<td style={{ textAlign: 'center', fontSize: '8px' }}>{itemOrden.idClienteAx}</td>*/}
-                                <td style={{ textTransform: 'uppercase', textAlign: 'left', fontSize: '13px'  }}>{itemOrden.nombreCliente}</td>
-                                <td style={{ textTransform: 'lowercase', textAlign: 'center' }}>{itemOrden.referencia}</td>
+                                <td style={{ textTransform: 'uppercase', textAlign: 'left' }}>{itemOrden.nombreCliente}</td>
+                                <td style={{ textTransform: 'uppercase', textAlign: 'center' }}>{itemOrden.referencia}</td>
                                 <td title="Personal disponible para asignar la orden" >
                                     {itemOrden.estado !== '6' ?
                                         <>
                                             {itemOrden.estado == '1' || itemOrden.estado == '2' ?
-                                                <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={this.seleccionarUsuario} style={{ width: '100px', fontSize: "10px" }}>
+                                                <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={this.seleccionarUsuario} style={{ fontSize: "10px" }}>
                                                     <option value='0'>Seleccione</option>
                                                     {this.state.listaUsuarios.map((usuario) => {
                                                         if (usuario.nivelUsuario == 3 && usuario.estado == 1) {
@@ -160,7 +160,7 @@ class OrdenVenta extends Component {
                                 </td>
                                 <td style={{ textAlign: 'center', }}>{this.state.listaUsuarios.map((usuario) => (
                                     usuario.idUsuario == itemOrden.asignadoA 
-                                    ? <span style={{ backgroundColor: "#00ff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }} 
+                                    ? <span style={{ backgroundColor: "#00ff00", color: '#000000', borderRadius: '20px', padding: '2px', paddingLeft: '10px', paddingRight: '10px', fontWeight: 'bolder' }} 
                                     key={usuario.idUsuario}>{usuario.username}</span> 
                                     : null
                                 ))}</td>
@@ -341,17 +341,17 @@ class OrdenVenta extends Component {
     mostrarEstado(estado) {
         switch (estado) {
             case '1':
-                return <span style={{ backgroundColor: "#ffff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Pendiente</span>
+                return <span style={{ backgroundColor: "#ffff00", color: '#000000', borderRadius: '20px', padding: '2px', paddingLeft: '8px', paddingRight: '8px', fontWeight: 'bolder' }}>Pendiente</span>
             case '2':
-                return <span style={{ backgroundColor: "#00ff00", color: '#000000', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Asignado</span>
+                return <span style={{ backgroundColor: "#00ff00", color: '#000000', borderRadius: '20px', padding: '2px', paddingLeft: '8px', paddingRight: '8px', fontWeight: 'bolder' }}>Asignado</span>
             case '3':
-                return <span style={{ backgroundColor: "#ff3333", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>En Curso</span>
+                return <span style={{ backgroundColor: "#ff3333", color: '#ffffff', borderRadius: '20px', padding: '2px', paddingLeft: '8px', paddingRight: '8px', fontWeight: 'bolder' }}>En Curso</span>
             case '4':
-                return <span style={{ backgroundColor: "#3366ff", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Atendido</span>
+                return <span style={{ backgroundColor: "#3366ff", color: '#ffffff', borderRadius: '20px', padding: '2px', paddingLeft: '8px', paddingRight: '8px', fontWeight: 'bolder' }}>Atendido</span>
             case '5':
-                return <span style={{ backgroundColor: "#00802b", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Finalizado</span>
+                return <span style={{ backgroundColor: "#00802b", color: '#ffffff', borderRadius: '20px', padding: '2px', paddingLeft: '8px', paddingRight: '8px', fontWeight: 'bolder' }}>Finalizado</span>
             case '6':
-                return <span style={{ backgroundColor: "#8c8c8c", color: '#ffffff', borderRadius: '20px', padding: '5px', paddingLeft: '15px', paddingRight: '15px', fontWeight: 'bolder' }}>Anulado</span>
+                return <span style={{ backgroundColor: "#8c8c8c", color: '#ffffff', borderRadius: '20px', padding: '2px', paddingLeft: '8px', paddingRight: '8px', fontWeight: 'bolder' }}>Anulado</span>
         }
     }
 
