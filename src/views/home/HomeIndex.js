@@ -8,6 +8,7 @@ import ActividadPorUsuario from './componentes/ActividadPorUsuario';
 import ActividadUsuarios from './componentes/ActividadUsuarios';
 import EstadoOrdenes from './componentes/EstadoOrdenes';
 import RefreshButton from '../layouts/partials/RefreshButton';
+import ButtonExport from '../ordenVenta/components/ButtonExport';
 
 const HomeIndex = ()=> {
 
@@ -62,6 +63,14 @@ const HomeIndex = ()=> {
                                 <Text><Bold>Órdenes</Bold></Text>
                             </Flex>
                             <EstadoOrdenes></EstadoOrdenes>
+                        </Card>
+                        <br></br>
+                        <Card>
+                            <Title>Reporte General</Title>
+                            <Flex justifyContent="justify-between" marginTop="mt-4">
+                                <Text><Bold>Descargar (.xlsx)</Bold></Text>
+                            </Flex>
+                            <ButtonExport></ButtonExport>
                         </Card>
                     </Col>
                 </>
