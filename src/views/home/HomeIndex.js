@@ -66,10 +66,7 @@ const HomeIndex = ()=> {
                         </Card>
                         <br></br>
                         <Card>
-                            <Title>Reporte General</Title>
-                            <Flex justifyContent="justify-between" marginTop="mt-4">
-                                <Text><Bold>Descargar (.xlsx)</Bold></Text>
-                            </Flex>
+                            <Title>Reporte General</Title>                            
                             <ButtonExport></ButtonExport>
                         </Card>
                     </Col>
