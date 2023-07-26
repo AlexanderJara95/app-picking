@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload} from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faXmarkCircle} from '@fortawesome/free-solid-svg-icons';
 import { API_BASE_URL } from "../../../config/Services";
 import * as XLSX from 'xlsx';
 import { DateRangePicker, Flex, Text, Bold } from "@tremor/react";
@@ -9,6 +9,7 @@ import { Col, Row } from "react-bootstrap";
 
 const ButtonExport = () =>{
     const [listaOrdenes, setListaOrdenes] = useState([]);
+    const [vacioError, setVacioError] = useState(false);
     const [fechaRango, setFechaRango] = useState([
         new Date(new Date().getFullYear(), 0, 1),
         new Date()
@@ -19,7 +20,7 @@ const ButtonExport = () =>{
       
     const leerOrdenes = () => { 
         const fechaDesde = formatoFecha(fechaRango[0]);
-        const fechaHasta = formatoFecha(fechaRango[1])    
+        const fechaHasta = formatoFecha(fechaRango[1]);    
         console.log("fechadesde", fechaDesde);
         console.log("fechahasta", fechaHasta);
 
@@ -28,7 +29,13 @@ const ButtonExport = () =>{
             fetch(rutaServicio)
               .then((res) => res.json())
               .then((result) => {
-                setListaOrdenes(result);
+                if(result && result.length !== 0){
+                    setListaOrdenes(result);                    
+                    setVacioError(false);
+                }else{
+                    setListaOrdenes([]);
+                    setVacioError(true);
+                }
               });
         }
     };
@@ -42,26 +49,28 @@ const ButtonExport = () =>{
     };
 
     const exportToExcel = () =>{
-        const data = listaOrdenes.map((orden) => ({
-            "Envío": orden.envio,
-            "Pedido Ventas": orden.pedidoVentas,
-            "Nombre Cliente": orden.nombreCliente,
-            "Referencia": orden.referencia,
-            "Estado": orden.estado,//estadoActual(orden.estado),            
-            "Asignado por": orden.asignadoPorNombre,
-            "Asignado a": orden.asignadoANombre +' ('+orden.asignadoAUsuario+')',
-            "Fecha de Emisión": orden.emitido,
-            "Fecha Inicio": orden.fechaInicio,
-            "Fecha Término": orden.fechaCompletado,
-            "Avance": orden.avance
-        }));
-
-        const worksheet = XLSX.utils.json_to_sheet(data);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Órdenes");
-
-        // Guardar el archivo Excel
-        XLSX.writeFile(workbook, "reporte-ordenes.xlsx");
+        if(listaOrdenes && listaOrdenes.length !== 0){            
+            const data = listaOrdenes.map((orden) => ({
+                "Envío": orden.envio,
+                "Pedido Ventas": orden.pedidoVentas,
+                "Nombre Cliente": orden.nombreCliente,
+                "Referencia": orden.referencia,
+                "Estado": orden.estado,//estadoActual(orden.estado),            
+                "Asignado por": orden.asignadoPorNombre,
+                "Asignado a": orden.asignadoANombre +' ('+orden.asignadoAUsuario+')',
+                "Fecha de Emisión": orden.emitido,
+                "Fecha Inicio": orden.fechaInicio,
+                "Fecha Término": orden.fechaCompletado,
+                "Avance": orden.avance
+            }));
+    
+            const worksheet = XLSX.utils.json_to_sheet(data);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Órdenes");
+    
+            // Guardar el archivo Excel
+            XLSX.writeFile(workbook, "reporte-ordenes.xlsx");   
+        }        
     };
 
     /*const estadoActual = (estado) =>{
@@ -94,10 +103,22 @@ const ButtonExport = () =>{
                 <Col>
                     <Flex justifyContent="justify-between" marginTop="mt-4">
                         <Text><Bold>Descargar (.xlsx)</Bold></Text>
-                    </Flex>
-                    <button onClick={exportToExcel} className="btn btn-success mt-1">
-                        Órdenes &nbsp;&nbsp;<FontAwesomeIcon icon={faDownload} style={{ display: 'inline-block', marginRight: '5px' }}/>                
-                    </button>
+                    </Flex>                    
+                    {vacioError == true ? (
+                        <button className="btn btn-secondary mt-1">
+                            No hay registros &nbsp;&nbsp;<FontAwesomeIcon icon={faXmarkCircle} style={{ display: 'inline-block', marginRight: '5px' }}/>                
+                        </button>
+                    ) : (
+                        <>
+                            <button onClick={exportToExcel} className="btn btn-success mt-1">
+                                Órdenes &nbsp;&nbsp;<FontAwesomeIcon icon={faDownload} style={{ display: 'inline-block', marginRight: '5px' }}/>                
+                            </button>
+                            <Flex justifyContent="justify-between" marginTop="mt-1">
+                                <p className="text-success"><Bold>Se encontraron {listaOrdenes.length} órdenes entre esas fechas</Bold></p>
+                            </Flex> 
+                        </>
+                        
+                    )}                           
                 </Col>
             </Row>
         </>
