@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faEye, faPrint, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
-import { Table, Button, Alert, CardImg } from 'react-bootstrap';
+import { faCheck, faEye, faPrint, faTimes, faSearch} from '@fortawesome/free-solid-svg-icons';
+import { Table, Button, Alert, CardImg, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment/moment';
 import { modificarAvanceOrden, anularOrden } from '../../redux/ordenVenta/OrdenVentaActions';
@@ -14,10 +14,13 @@ import { API_BASE_URL } from '../../config/Services';
 const OrdenVenta = () => {
   const accordionContent = useRef([]);
   const [listaOrdenes, setListaOrdenes] = useState([]);
+  const [originalListaOrdenes, setOriginalListaOrdenes] = useState([]);
   const [listaUsuarios, setListaUsuarios] = useState([]);
   const [listaEstados, setListaEstados] = useState([]);
+  const [textoBusqueda, setTextoBusqueda] = useState();
   const [ordenSeleccionada, setOrdenSeleccionada] = useState('');
   const [usuarioAsignado, setUsuarioAsignado] = useState(0);
+  const [loading, setLoading] = useState(true); // State for loading indicator
 
   useEffect(() => {
     leerOrdenes();
@@ -27,11 +30,36 @@ const OrdenVenta = () => {
 
   const leerOrdenes = () => {
     const rutaServicio = API_BASE_URL + 'serviciolistarordenHistorial.php';
+    setLoading(true);
     fetch(rutaServicio)
       .then((res) => res.json())
       .then((result) => {
+        setLoading(false);
         setListaOrdenes(result);
+        setOriginalListaOrdenes(result);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoading(false); // Hide loading indicator on error
       });
+  };
+  const filtrarOrdenes = () => {
+    const filteredOrdenes = originalListaOrdenes.filter(
+      item =>
+        (item.envio &&
+        typeof item.envio === 'string' &&
+        item.envio.toUpperCase().includes(textoBusqueda.trim().toUpperCase())||
+        item.pedidoVentas &&
+        typeof item.pedidoVentas === 'string' &&
+        item.pedidoVentas.toUpperCase().includes(textoBusqueda.trim().toUpperCase())||
+        item.nombreCliente &&
+        typeof item.nombreCliente === 'string' &&
+        item.nombreCliente.toUpperCase().includes(textoBusqueda.trim().toUpperCase())||
+        item.referencia &&
+        typeof item.referencia === 'string' &&
+        item.referencia.toUpperCase().includes(textoBusqueda.trim().toUpperCase()))
+    );
+    setListaOrdenes(filteredOrdenes);
   };
 
   const leerUsuarios = () => {
@@ -100,8 +128,13 @@ const OrdenVenta = () => {
               <th scope="col">Avance</th>
               <th colSpan={3}>Acciones</th>
             </tr>
-          </thead>
+          </thead> 
           <tbody>
+            {loading?
+              <tr>
+                <td colSpan="11"><h2 className='text-center pt-3'>Cargando...</h2></td>
+              </tr>:
+            null}   
             {datosTabla.map((itemOrden) => (
               <tr
                 className="align-middle"
@@ -249,7 +282,7 @@ const OrdenVenta = () => {
                   )}
                 </td>
               </tr>
-            ))}
+                  ))}
             <tr></tr>
           </tbody>
         </Table>
@@ -415,7 +448,27 @@ const OrdenVenta = () => {
 
   return (
     <section id="orden" className="padded">
-      {dibujarTabla(listaOrdenes)}
+      <div className='m-3 p-3 text-center'>
+        <Row className="justify-content-md-center">
+          <Col xs={6}>
+            <InputGroup>
+              <FormControl
+                  type='input'
+                  name='textoBusqueda'
+                  value={textoBusqueda}
+                  onChange={(e) => setTextoBusqueda(e.target.value)}
+                  placeholder='Ingrese Código de Envío, Pedido de Venta, o Referencia'
+                  required
+                  autoFocus
+              />
+              <button onClick={filtrarOrdenes} className="btn btn-success">
+                Buscar &nbsp;&nbsp;<FontAwesomeIcon icon={faSearch} style={{ display: 'inline-block', marginRight: '5px' }}/>                
+              </button>
+            </InputGroup>
+          </Col>
+        </Row>        
+      </div>      
+      {dibujarTabla(listaOrdenes)}      
       <div id="printInfo">
         <br></br>
         <br></br>

@@ -10,9 +10,9 @@ const HistorialIndex = ()=> {
 
     return (
         <>
-            <div className="container-fluid p-3" style={{backgroundColor:'#ffffff'}}>
-                <div className="row py-3">
-                    <div className="col-8 m-0 font-weight-bold text-primary pb-3" >
+            <div className="container-fluid pt-3" style={{backgroundColor:'#ffffff'}}>
+                <div className="row">
+                    <div className="col m-0 font-weight-bold text-primary text-center" >
                         <h1><strong>Historial de Órdenes</strong></h1>
                         <h3>Listado de Informes de Picking</h3>
                     </div>
