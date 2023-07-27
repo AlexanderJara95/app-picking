@@ -1,28 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faEye, faPrint, faTimes, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
-import { Table, Button, Alert, CardImg } from 'react-bootstrap';
+import { faCheck, faEye, faPrint, faSearch, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { Table, Button, Alert, CardImg, Col, Row, InputGroup, FormControl } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment/moment';
 import { modificarAvanceOrden, anularOrden } from '../../redux/ordenVenta/OrdenVentaActions';
 import store from '../../redux/Store';
 import Swal from 'sweetalert2';
-import { Card, List, ListItem, Title } from '@tremor/react';
+import { Card, List, ListItem, TextInput, Title } from '@tremor/react';
 import logo from '../../img/logo-megalabs-green.webp';
 import { API_BASE_URL } from '../../config/Services';
 
 const OrdenVenta = () => {
   const accordionContent = useRef([]);
   const [listaOrdenes, setListaOrdenes] = useState([]);
+  const [originalListaOrdenes, setOriginalListaOrdenes] = useState([]);
   const [listaUsuarios, setListaUsuarios] = useState([]);
   const [listaEstados, setListaEstados] = useState([]);
+  const [textoBusqueda, setTextoBusqueda] = useState();
   const [ordenSeleccionada, setOrdenSeleccionada] = useState('');
   const [usuarioAsignado, setUsuarioAsignado] = useState(0);
 
   useEffect(() => {
-    leerOrdenes();
+    leerOrdenes();    
     leerEstado();
-    leerUsuarios();
+    leerUsuarios();       
   }, []);
 
   const leerOrdenes = () => {
@@ -31,7 +33,27 @@ const OrdenVenta = () => {
       .then((res) => res.json())
       .then((result) => {
         setListaOrdenes(result);
+        setOriginalListaOrdenes(result);
       });
+  };
+
+  const filtrarOrdenes = () => {
+    const filteredOrdenes = originalListaOrdenes.filter(
+      item =>
+        (item.envio &&
+        typeof item.envio === 'string' &&
+        item.envio.toUpperCase().includes(textoBusqueda.trim().toUpperCase())||
+        item.pedidoVentas &&
+        typeof item.pedidoVentas === 'string' &&
+        item.pedidoVentas.toUpperCase().includes(textoBusqueda.trim().toUpperCase())||
+        item.nombreCliente &&
+        typeof item.nombreCliente === 'string' &&
+        item.nombreCliente.toUpperCase().includes(textoBusqueda.trim().toUpperCase())||
+        item.referencia &&
+        typeof item.referencia === 'string' &&
+        item.referencia.toUpperCase().includes(textoBusqueda.trim().toUpperCase()))
+    );
+    setListaOrdenes(filteredOrdenes);
   };
 
   const leerUsuarios = () => {
@@ -415,6 +437,26 @@ const OrdenVenta = () => {
 
   return (
     <section id="orden" className="padded">
+      <div className='m-3 p-3 text-center'>
+        <Row className="justify-content-md-center">
+          <Col xs={6}>
+            <InputGroup>
+              <FormControl
+                  type='input'
+                  name='textoBusqueda'
+                  value={textoBusqueda}
+                  onChange={(e) => setTextoBusqueda(e.target.value)}
+                  placeholder='Ingrese Código de Envío, Pedido de Venta, o Referencia'
+                  required
+                  autoFocus
+              />
+              <button onClick={filtrarOrdenes} className="btn btn-success">
+                Buscar &nbsp;&nbsp;<FontAwesomeIcon icon={faSearch} style={{ display: 'inline-block', marginRight: '5px' }}/>                
+              </button>
+            </InputGroup>
+          </Col>
+        </Row>        
+      </div>
       {dibujarTabla(listaOrdenes)}
       <div id="printInfo">
         <br></br>

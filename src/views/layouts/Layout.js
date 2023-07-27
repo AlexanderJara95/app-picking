@@ -9,7 +9,7 @@ const Layout = () => {
 	if(auth) {
 		let data = obtenerAutorizacion();
     	window.usuario = data;
-    	console.log("window.user",window.usuario);
+    	//console.log("window.user",window.usuario);
 	}
 	return (
 		<>
