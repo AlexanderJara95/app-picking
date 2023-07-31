@@ -288,10 +288,12 @@ const OrdenVenta = () => {
   const asignarOrden = (idOrden) => {
     if (ordenSeleccionada.idOrden !== null && usuarioAsignado !== 0) {
       const rutaServicio = API_BASE_URL + 'servicioasignarorden.php';
+      var date = moment().format('DD/MM/YYYY HH:mm:ss');         
       var formData = new FormData();
       formData.append('idOrden', ordenSeleccionada.idOrden);
       formData.append('asignadoPor', window.usuario.idUsuario);
       formData.append('asignadoA', usuarioAsignado);
+      formData.append("fechaAsignacion", date);
       fetch(rutaServicio, {
         method: 'POST',
         body: formData,

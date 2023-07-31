@@ -29,9 +29,9 @@ export const listarOrdenUsuarios = () => async dispatch => {
 }
 export const registrarOrden = (paramData) => async dispatch => {
 	var dateObj = new Date();
-    var month = ((dateObj.getMonth() + 1 )<10)?'0'+(dateObj.getMonth() + 1 ):(dateObj.getMonth() + 1 ); //months from 1-12
-    var day = dateObj.getDate();
-    var year = dateObj.getFullYear();
+    //var month = ((dateObj.getMonth() + 1 )<10)?'0'+(dateObj.getMonth() + 1 ):(dateObj.getMonth() + 1 ); //months from 1-12
+    //var day = dateObj.getDate();
+    //var year = dateObj.getFullYear();
 	var formData = new FormData();
     var date = moment().format('YYYY-MM-DD HH:mm:ss');
     formData.append("idClienteAx", paramData.codCliente);
