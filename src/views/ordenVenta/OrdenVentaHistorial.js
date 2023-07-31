@@ -12,8 +12,11 @@ import logo from '../../img/logo-megalabs-green.webp';
 import { API_BASE_URL } from '../../config/Services';
 
 const OrdenVenta = () => {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1;
   const accordionContent = useRef([]);
   const [listaOrdenes, setListaOrdenes] = useState([]);
+  const [consulta, setConsulta] = useState(currentMonth);
   const [originalListaOrdenes, setOriginalListaOrdenes] = useState([]);
   const [listaUsuarios, setListaUsuarios] = useState([]);
   const [listaEstados, setListaEstados] = useState([]);
@@ -24,12 +27,13 @@ const OrdenVenta = () => {
 
   useEffect(() => {
     leerOrdenes();
+    setConsulta(currentMonth);
     leerEstado();
     leerUsuarios();
   }, []);
 
   const leerOrdenes = () => {
-    const rutaServicio = API_BASE_URL + 'serviciolistarordenHistorial.php';
+    const rutaServicio = API_BASE_URL + 'serviciolistarordenHistorial.php?mes=' + consulta;
     setLoading(true);
     fetch(rutaServicio)
       .then((res) => res.json())
