@@ -19,7 +19,7 @@
     //$fechaCompletado = $_REQUEST["fechaCompletado"];
     $estado = $_REQUEST["estado"];
 
-    
+    $nombreCliente = mysqli_real_escape_string($cn, $nombreCliente);
     //$date = getdate();
      //echo $date[year],'-',$date[mon],'-',$date[mday],' ',$date[hours],':',$date[minutes],':',$date[seconds];
 
