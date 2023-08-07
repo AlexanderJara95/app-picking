@@ -22,8 +22,11 @@ const HtmlToJson = (html) => {
         pedidoVentas:venta_sin_con_fecha=="  "?arrayObtenido[35]:venta_sin_con_fecha,
         detalleOrden:[]
     }
-    arrayObtenido.map((item,index)=>{        
-        if((item.slice(0,1)==="P" && item.slice(3,4)==="N" && item.slice(6,7)==="U" && item.length === 9) || (item =='ExtLlegada')){
+    arrayObtenido.map((item,index)=>{     
+        console.log("item0",item);           
+        if((item.slice(0,1)==="P" && item.slice(3,4)==="N" && item.slice(6,7)==="U" && item.length === 9) ||
+            (item.slice(0,1)==="P" && item.slice(4,5)==="N" && item.slice(7,8)==="U" && item.length === 10) || (item =='ExtLlegada')){
+            console.log("item",item); 
             var qant=arrayObtenido[index+6].replace(',','');
             ordenPicking.detalleOrden.push({
                 ubicacion:arrayObtenido[index],
